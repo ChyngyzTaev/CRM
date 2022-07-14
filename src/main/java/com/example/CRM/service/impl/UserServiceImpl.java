@@ -77,7 +77,7 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(()
                         ->
                         new NotFoundException
-                                ("Id" + id + "не найден!"));
+                                ("Пользоватль связонный с id " + id + "не найден!"));
     }
 
     @Override

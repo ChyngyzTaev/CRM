@@ -12,6 +12,7 @@ import javax.persistence.Table;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class SubscriptionTypes extends BaseEntity {
     @Column(name = "name", unique = true)

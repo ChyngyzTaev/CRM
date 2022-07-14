@@ -1,4 +1,7 @@
 package com.example.CRM.service.impl;
 
-public class GeneralRecordServiceImpl {
+import com.example.CRM.service.GeneralRecordService;
+
+public class GeneralRecordServiceImpl implements GeneralRecordService {
+
 }

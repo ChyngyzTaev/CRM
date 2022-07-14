@@ -1,4 +1,6 @@
 package com.example.CRM.service.impl;
 
-public class RoleServiceImpl {
+import com.example.CRM.service.RoleService;
+
+public class RoleServiceImpl implements RoleService {
 }

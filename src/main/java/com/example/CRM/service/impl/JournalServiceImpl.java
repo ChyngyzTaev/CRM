@@ -1,4 +1,7 @@
 package com.example.CRM.service.impl;
 
-public class JournalServiceImpl {
+import com.example.CRM.service.JournalService;
+
+public class JournalServiceImpl implements JournalService {
+
 }

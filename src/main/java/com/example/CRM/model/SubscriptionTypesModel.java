@@ -8,4 +8,7 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class SubscriptionTypesModel extends BaseModel{
+    String name;
+
+    Long countMonth;
 }

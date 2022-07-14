@@ -1,7 +1,6 @@
 package com.example.CRM.security;
 
 import com.example.CRM.security.jwt.JwtFilter;
-import com.example.CRM.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;

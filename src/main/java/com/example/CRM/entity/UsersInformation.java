@@ -11,6 +11,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UsersInformation extends BaseEntity{
     @Column(name = "full_name")

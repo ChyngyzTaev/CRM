@@ -3,11 +3,16 @@ package com.example.CRM.controller;
 import com.example.CRM.exception.BadRequestException;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.model.UsersModel;
+import com.example.CRM.request.AuthenticationRequest;
+import com.example.CRM.response.AuthenticationResponse;
+import com.example.CRM.security.jwt.JwtUtil;
 import com.example.CRM.service.UserService;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,6 +20,11 @@ import org.springframework.web.bind.annotation.*;
 public class UsersController {
     @Autowired
     private UserService userService;
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody AuthenticationRequest authenticationRequest) {
+       return userService.login(authenticationRequest);
+    }
 
     @PostMapping("/add-new-user")
     public ResponseEntity<?> addNewUser(@RequestBody UsersModel usersModel){
@@ -37,7 +47,7 @@ public class UsersController {
     @GetMapping("/get-all-users")
     public ResponseEntity<?> getAllUsers(){
         try {
-            return new ResponseEntity<>( userService.getAllUsers(), HttpStatus.OK);
+            return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
         }catch (NotFoundException notFoundException){
             return new ResponseEntity<>(notFoundException.getMessage(),HttpStatus.NOT_FOUND);
         }

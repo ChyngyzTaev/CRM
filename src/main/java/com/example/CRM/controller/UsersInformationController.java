@@ -26,7 +26,7 @@ public class UsersInformationController {
     }
 
     @GetMapping("/get-info-by{id}")
-    public ResponseEntity<?> getUserInfoById(@PathVariable Long id) {
+    public ResponseEntity<?> getUserInfoById(@PathVariable ("id") Long id) {
         try {
             return new ResponseEntity<>(informationService.getUserInfoById(id), HttpStatus.OK);
         } catch (NotFoundException notFoundException) {
@@ -44,7 +44,7 @@ public class UsersInformationController {
     }
 
     @PutMapping("/update-user-info")
-    public ResponseEntity<?> updateUserInfo(UsersInformationModel informationModel){
+    public ResponseEntity<?> updateUserInfo(@RequestBody UsersInformationModel informationModel){
         try {
             return new ResponseEntity<>(informationService.updateUserInfo(informationModel), HttpStatus.OK);
         }catch (Exception e){
@@ -53,7 +53,7 @@ public class UsersInformationController {
     }
 
     @DeleteMapping("/delete-user-info-by{id}")
-    public void deleteUserInoById(Long id){
+    public void deleteUserInoById(@PathVariable("id") Long id){
         informationService.deleteUserInfoById(id);
     }
 }

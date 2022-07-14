@@ -8,7 +8,7 @@ import java.util.List;
 public interface UsersInformationService {
     UsersInformationModel addUserInfo(UsersInformationModel informationModel);
 
-    UsersInformation getInfoById(Long id);
+    UsersInformation getUserInfoById(Long id);
 
     List<UsersInformation> getAllUserInfo(UsersInformationModel informationModel);
 

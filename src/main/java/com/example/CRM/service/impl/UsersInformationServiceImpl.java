@@ -28,7 +28,7 @@ public class UsersInformationServiceImpl implements UsersInformationService {
     }
 
     @Override
-    public UsersInformation getInfoById(Long id) {
+    public UsersInformation getUserInfoById(Long id) {
         return informationRepository.findById(id).
                 orElseThrow(()->
                         new NotFoundException("Информация о пользователе связанный с Id" + id + "не найдено"));

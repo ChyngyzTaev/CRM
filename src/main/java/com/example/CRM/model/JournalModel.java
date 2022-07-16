@@ -1,5 +1,6 @@
 package com.example.CRM.model;
 
+import com.example.CRM.entity.GeneralRecord;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -8,4 +9,5 @@ import lombok.experimental.FieldDefaults;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class JournalModel extends BaseModel{
+    GeneralRecord generalRecord;
 }

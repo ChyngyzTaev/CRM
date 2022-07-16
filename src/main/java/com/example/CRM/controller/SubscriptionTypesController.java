@@ -11,12 +11,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("api/subscription")
+@RequestMapping("/api/subscription")
 public class SubscriptionTypesController {
     @Autowired
     private SubscriptionTypesService service;
 
-    @PostMapping("/add-subscription")
+    @PostMapping("/add-new-subscription")
     public ResponseEntity<?> addSubscription(@RequestBody SubscriptionTypesModel subscriptionTypesModel){
         try {
             return new ResponseEntity<>(service.addSubscription(subscriptionTypesModel) , HttpStatus.OK);
@@ -25,7 +25,7 @@ public class SubscriptionTypesController {
         }
     }
 
-    @GetMapping("/get-subscription-by/{id}")
+    @GetMapping("/get-subscription/{id}")
     public ResponseEntity<?> getSubscriptionById(@PathVariable ("id") Long id){
         try {
             return new ResponseEntity<>(service.getSubscriptionById(id),HttpStatus.OK);
@@ -34,7 +34,7 @@ public class SubscriptionTypesController {
         }
     }
 
-    @DeleteMapping("delete-subscription-by{id}")
+    @DeleteMapping("delete-subscription/{id}")
     public void deleteSubscriptionById(@PathVariable ("id") Long id){
         service.deleteSubscriptionById(id);
     }

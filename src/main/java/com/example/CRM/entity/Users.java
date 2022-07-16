@@ -2,10 +2,13 @@ package com.example.CRM.entity;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -25,4 +28,8 @@ public class Users extends BaseEntity{
 
     @Column(name = "is_active")
     boolean isActive;
+
+    @ManyToMany
+    @JoinColumn(name = "role_id", nullable = false)
+    private List<Role> role;
 }

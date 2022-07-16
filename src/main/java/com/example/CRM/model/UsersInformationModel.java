@@ -4,6 +4,7 @@ import com.example.CRM.entity.Users;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDate;
 
 @Getter
@@ -11,6 +12,9 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UsersInformationModel extends BaseModel{
+
+    // " " "" null
+    @NotBlank
     String fullName;
 
     LocalDate birthday;

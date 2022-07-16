@@ -10,8 +10,6 @@ import java.util.List;
 public interface UserService {
     UsersModel addNewUser(UsersModel usersModel);
 
-    ResponseEntity<?> login(AuthenticationRequest authenticationRequest);
-
     Users getUserById(Long id);
 
     List<Users> getAllUsers();

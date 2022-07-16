@@ -10,25 +10,27 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/api/information")
 public class UsersInformationController {
     @Autowired
-    private UsersInformationService informationService;
+    private UsersInformationService service;
 
-    @PostMapping("/add-user-info")
+    @PostMapping("/add-new-user-info")
     public ResponseEntity<?> addUserInfo(@RequestBody UsersInformationModel informationModel) {
         try {
-            return new ResponseEntity<>(informationService.addUserInfo(informationModel), HttpStatus.OK);
+            return new ResponseEntity<>(service.addUserInfo(informationModel), HttpStatus.OK);
         } catch (BadRequestException badRequestException) {
             return new ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
-    @GetMapping("/get-info-by{id}")
+    @GetMapping("/get-info/{id}")
     public ResponseEntity<?> getUserInfoById(@PathVariable ("id") Long id) {
         try {
-            return new ResponseEntity<>(informationService.getUserInfoById(id), HttpStatus.OK);
+            return new ResponseEntity<>(service.getUserInfoById(id), HttpStatus.OK);
         } catch (NotFoundException notFoundException) {
             return new ResponseEntity<>(notFoundException.getMessage(), HttpStatus.BAD_REQUEST);
         }
@@ -37,23 +39,23 @@ public class UsersInformationController {
     @GetMapping("/get-all-user-info")
     public ResponseEntity<?> getAllUserInfo(UsersInformationModel informationModel) {
         try {
-            return new ResponseEntity<>(informationService.getAllUserInfo(informationModel), HttpStatus.OK);
+            return new ResponseEntity<>(service.getAllUserInfo(informationModel), HttpStatus.OK);
         } catch (NotFoundException notFoundException) {
             return new ResponseEntity<>(notFoundException.getMessage(), HttpStatus.BAD_REQUEST);
         }
     }
 
     @PutMapping("/update-user-info")
-    public ResponseEntity<?> updateUserInfo(@RequestBody UsersInformationModel informationModel){
+    public ResponseEntity<?> updateUserInfo(@Valid @RequestBody UsersInformationModel informationModel){
         try {
-            return new ResponseEntity<>(informationService.updateUserInfo(informationModel), HttpStatus.OK);
+            return new ResponseEntity<>(service.updateUserInfo(informationModel), HttpStatus.OK);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.EXPECTATION_FAILED);
         }
     }
 
-    @DeleteMapping("/delete-user-info-by{id}")
+    @DeleteMapping("/delete-user-info/{id}")
     public void deleteUserInoById(@PathVariable("id") Long id){
-        informationService.deleteUserInfoById(id);
+        service.deleteUserInfoById(id);
     }
 }

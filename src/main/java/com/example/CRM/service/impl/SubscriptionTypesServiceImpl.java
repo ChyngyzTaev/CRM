@@ -30,6 +30,11 @@ public class SubscriptionTypesServiceImpl implements SubscriptionTypesService {
     }
 
     @Override
+    public SubscriptionTypesModel updateSubscription(SubscriptionTypesModel subscriptionTypesModel) {
+        return null;
+    }
+
+    @Override
     public void deleteSubscriptionById(Long id) {
         repository.deleteById(id);
     }

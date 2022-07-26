@@ -1,14 +1,15 @@
 package com.example.CRM.model;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.FieldDefaults;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class RoleModel extends BaseModel{
-    String roleName;
+public class ChartModel extends BaseModel{
 
-    boolean isActive;
 }

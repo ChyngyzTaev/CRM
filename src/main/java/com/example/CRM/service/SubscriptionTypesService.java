@@ -8,5 +8,7 @@ public interface SubscriptionTypesService {
 
     SubscriptionTypes getSubscriptionById(Long id);
 
+    SubscriptionTypesModel updateSubscription(SubscriptionTypesModel subscriptionTypesModel);
+
     void deleteSubscriptionById(Long id);
 }

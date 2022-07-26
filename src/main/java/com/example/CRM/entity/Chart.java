@@ -2,18 +2,17 @@ package com.example.CRM.entity;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import javax.persistence.*;
+
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Entity
-@Table(name = "role")
+@Table(name = "chart")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Role extends BaseEntity{
-    @Column(name = "role_name")
-    String roleName;
+public class Chart extends BaseEntity{
 
-    boolean isActive;
 }

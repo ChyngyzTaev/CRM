@@ -48,7 +48,6 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUserById(Long id) {
         Users users = new Users();
-        users.getId();
         users.setActive(false);
         repository.save(users);
     }

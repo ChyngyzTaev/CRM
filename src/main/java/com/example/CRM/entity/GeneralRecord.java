@@ -23,10 +23,4 @@ public class GeneralRecord extends BaseEntity {
     @OneToOne
     @JoinColumn(name = "subscription_types_id", nullable = false, unique = true)
     SubscriptionTypes types;
-
-    boolean isTrainer;
-
-    @OneToOne
-    @JoinColumn(name = "trainer_id")
-    Users trainer;
 }

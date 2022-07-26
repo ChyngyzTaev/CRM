@@ -31,5 +31,5 @@ public class Users extends BaseEntity{
 
     @ManyToMany
     @JoinColumn(name = "role_id", nullable = false)
-    private List<Role> role;
+    List<Role> role;
 }

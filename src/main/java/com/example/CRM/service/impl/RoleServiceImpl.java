@@ -37,4 +37,11 @@ public class RoleServiceImpl implements RoleService {
     public List<Role> getAllRole() {
         return repository.findAll();
     }
+
+    @Override
+    public void deleteRole(Long id) {
+        Role role = new Role();
+        role.setActive(false);
+        repository.save(role);
+    }
 }

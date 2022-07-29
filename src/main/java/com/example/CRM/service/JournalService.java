@@ -8,9 +8,9 @@ import java.util.List;
 public interface JournalService extends BaseService<Journal> {
     JournalModel addNewJournal(JournalModel journalModel);
 
-    Journal getJournalById(Long id);
+    JournalModel getJournalById(Long id);
 
-    List<Journal> getAllJournal();
+    List<JournalModel> getAllJournal();
 
     void deleteJournalById(Long id);
 }

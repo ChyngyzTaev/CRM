@@ -1,16 +1,19 @@
 package com.example.CRM.service;
 
 import com.example.CRM.entity.Trainer;
+
 import com.example.CRM.model.TrainerModel;
 
 import java.util.List;
 
 public interface TrainerService extends BaseService<Trainer> {
-    TrainerModel createNameTrainer(TrainerModel trainerModel);
+    TrainerModel addNewTrainer(TrainerModel trainerModel);
+
+    Trainer setInActiveUser(Trainer trainer, Long status);
 
     TrainerModel getTrainerById(Long id);
 
     List<TrainerModel> getAllTrainer();
 
-    void deleteTrainer();
+    TrainerModel deleteTrainerById(Long id);
 }

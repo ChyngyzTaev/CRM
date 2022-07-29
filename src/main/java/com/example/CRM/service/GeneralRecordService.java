@@ -8,11 +8,9 @@ import java.util.List;
 public interface GeneralRecordService extends BaseService<GeneralRecord>{
     GeneralRecordModel addNewGeneralRecord(GeneralRecordModel generalRecordModel);
 
-    GeneralRecord getGeneralRecordById(Long id);
+    GeneralRecordModel getGeneralRecordById(Long id);
 
-    List<GeneralRecord> getAllGeneralRecord();
-
-    GeneralRecordModel updateGeneralRecord(GeneralRecordModel generalRecordModel);
+    List<GeneralRecordModel> getAllGeneralRecord();
 
     GeneralRecordModel deleteGeneralRecordById(Long id);
 }

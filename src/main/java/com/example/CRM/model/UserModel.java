@@ -15,7 +15,5 @@ public class UserModel extends BaseModel{
 
     String password;
 
-    boolean isActive;
-
     List<RoleModel> roles;
 }

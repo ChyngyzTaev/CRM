@@ -11,4 +11,6 @@ public interface ChartService extends BaseService<Chart> {
     ChartModel getChartById(Long id);
 
     List<ChartModel> getAllChart();
+
+    void deleteChartById(Long id);
 }

@@ -1,7 +1,6 @@
 package com.example.CRM.service.impl;
 
 import com.example.CRM.entity.GeneralRecord;
-import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.model.GeneralRecordModel;
 import com.example.CRM.repository.GeneralRecordRepository;
 import com.example.CRM.service.GeneralRecordService;
@@ -37,17 +36,12 @@ public class GeneralRecordServiceImpl implements GeneralRecordService {
     }
 
     @Override
-    public GeneralRecord getGeneralRecordById(Long id) {
+    public GeneralRecordModel getGeneralRecordById(Long id) {
         return null;
     }
 
     @Override
-    public List<GeneralRecord> getAllGeneralRecord() {
-        return null;
-    }
-
-    @Override
-    public GeneralRecordModel updateGeneralRecord(GeneralRecordModel generalRecordModel) {
+    public List<GeneralRecordModel> getAllGeneralRecord() {
         return null;
     }
 

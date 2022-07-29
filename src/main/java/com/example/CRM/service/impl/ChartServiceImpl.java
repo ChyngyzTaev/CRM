@@ -23,6 +23,11 @@ public class ChartServiceImpl implements ChartService {
     }
 
     @Override
+    public void deleteChartById(Long id) {
+
+    }
+
+    @Override
     public Chart save(Chart chart) {
         return null;
     }

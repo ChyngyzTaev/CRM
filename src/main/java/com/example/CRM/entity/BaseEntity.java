@@ -20,6 +20,8 @@ public class BaseEntity {
     @Column(name = "create_date")
     LocalDateTime createDate;
 
+    boolean isActive;
+
     @PrePersist
     public void prePersist() {
         this.createDate = LocalDateTime.now();

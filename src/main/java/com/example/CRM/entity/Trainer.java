@@ -20,6 +20,8 @@ public class Trainer extends BaseEntity{
     @Column(name = "age")
     Long age;
 
+    boolean isActive;
+
     @ManyToMany
     @JoinColumn(name = "chart_id")
     List<Chart> charts;

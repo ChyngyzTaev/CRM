@@ -1,14 +1,17 @@
 package com.example.CRM.service;
 
 import com.example.CRM.entity.SubscriptionTypes;
+import com.example.CRM.entity.Trainer;
 import com.example.CRM.model.SubscriptionTypesModel;
 
 public interface SubscriptionTypesService extends BaseService<SubscriptionTypes>{
     SubscriptionTypesModel addSubscription(SubscriptionTypesModel subscriptionTypesModel);
 
-    SubscriptionTypes getSubscriptionById(Long id);
+    SubscriptionTypes setInActiveUser(SubscriptionTypes subscriptionTypes, Long status);
+
+    SubscriptionTypesModel getSubscriptionById(Long id);
 
     SubscriptionTypesModel updateSubscription(SubscriptionTypesModel subscriptionTypesModel);
 
-    void deleteSubscriptionById(Long id);
+    SubscriptionTypesModel deleteSubscriptionById(Long id);
 }

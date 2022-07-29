@@ -1,5 +1,6 @@
 package com.example.CRM.model;
 
+import com.example.CRM.entity.User;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 

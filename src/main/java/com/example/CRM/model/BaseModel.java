@@ -18,6 +18,8 @@ import java.time.LocalDateTime;
 public class BaseModel {
     Long id;
 
+    boolean isActive;
+
     LocalDateTime createDate;
 
     LocalDateTime updateDate;

@@ -8,11 +8,13 @@ import java.util.List;
 public interface UsersInformationService extends BaseService<UsersInformation>{
     UserInformationModel addUserInfo(UserInformationModel informationModel);
 
-    UsersInformation getUserInfoById(Long id);
+    UsersInformation setInActiveUser(UsersInformation information, Long status);
 
-    List<UsersInformation> getAllUserInfo(UserInformationModel informationModel);
+    UserInformationModel getUserInfoById(Long id);
 
-    boolean updateUserInfo(UserInformationModel informationModel);
+    List<UserInformationModel> getAllUserInfo();
 
-    void deleteUserInfoById(Long id);
+    UserInformationModel updateUserInfo(UserInformationModel informationModel);
+
+    UserInformationModel deleteUserInfoById(Long id);
 }

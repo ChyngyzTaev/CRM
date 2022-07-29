@@ -2,10 +2,10 @@ package com.example.CRM.convert;
 
 import java.util.function.Function;
 
-public class BaseConvert <Model, Entity>{
+public class BaseConvert<Model, Entity> {
     private final Function<Model, Entity> fromModel;
 
-    private final Function<Entity , Model> fromEntity;
+    private final Function<Entity, Model> fromEntity;
 
     public BaseConvert(final Function<Model, Entity> fromModel, final Function<Entity, Model> fromEntity) {
         this.fromModel = fromModel;

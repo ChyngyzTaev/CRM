@@ -39,7 +39,7 @@ public class UsersInformationController {
     @GetMapping("/get-all-user-info")
     public ResponseEntity<?> getAllUserInfo(UserInformationModel informationModel) {
         try {
-            return new ResponseEntity<>(service.getAllUserInfo(informationModel), HttpStatus.OK);
+            return new ResponseEntity<>(service.getAllUserInfo(), HttpStatus.OK);
         } catch (NotFoundException notFoundException) {
             return new ResponseEntity<>(notFoundException.getMessage(), HttpStatus.BAD_REQUEST);
         }

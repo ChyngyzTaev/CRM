@@ -23,6 +23,8 @@ public class UsersInformation extends BaseEntity{
     @Column(name = "phone_number")
     String phoneNumber;
 
+    boolean isActive;
+
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false, unique = true)
     User users;

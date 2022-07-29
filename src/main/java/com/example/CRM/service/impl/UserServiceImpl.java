@@ -3,6 +3,7 @@ package com.example.CRM.service.impl;
 import com.example.CRM.convert.BaseConvert;
 import com.example.CRM.entity.Role;
 import com.example.CRM.entity.User;
+import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.model.UserModel;
 import com.example.CRM.repository.UserRepository;
 import com.example.CRM.service.RoleService;
@@ -52,8 +53,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserModel getUserById(Long id) {
-        return convert
-                .convertFromEntity(getById(id));
+        return convert.convertFromEntity(getById(id));
     }
 
     @Override
@@ -86,7 +86,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getById(Long id) {
-        return repository.findById(id).orElse(null);
+        return repository
+                .findById(id)
+                .orElseThrow(() ->
+                        new NotFoundException("id связанный с идентификатором " + id + " не найдено"));
     }
 
     @Override

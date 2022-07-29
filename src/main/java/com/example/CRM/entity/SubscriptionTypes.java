@@ -15,9 +15,12 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class SubscriptionTypes extends BaseEntity {
-    @Column(name = "name", unique = true)
-    String name;
+    @Column(name = "number_of_month")
+    Long numberOfMonth;
 
-    @Column(name = "count_month")
-    Long countMonth;
+    @Column(name = "number_of_week")
+    Long numberOfWeek;
+
+    @Column(name = "number_of_day")
+    Long numberOfDay;
 }

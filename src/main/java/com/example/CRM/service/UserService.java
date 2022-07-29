@@ -1,18 +1,18 @@
 package com.example.CRM.service;
 
-import com.example.CRM.entity.Users;
-import com.example.CRM.model.UsersModel;
-import com.example.CRM.request.AuthenticationRequest;
-import org.springframework.http.ResponseEntity;
+import com.example.CRM.entity.User;
+import com.example.CRM.model.UserModel;
 
 import java.util.List;
 
-public interface UserService {
-    UsersModel addNewUser(UsersModel usersModel);
+public interface UserService extends BaseService<User> {
+    UserModel addNewUser(UserModel userModel);
 
-    Users getUserById(Long id);
+    User setInActiveUser(User user, Long status);
 
-    List<Users> getAllUsers();
+    UserModel getUserById(Long id);
 
-    void deleteUserById(Long id);
+    List<UserModel> getAllUsers();
+
+    UserModel deleteUserById(Long id);
 }

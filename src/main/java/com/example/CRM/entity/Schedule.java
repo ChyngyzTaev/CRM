@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "chart")
@@ -12,12 +13,10 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Chart extends BaseEntity{
-    @OneToOne
-    @JoinColumn(name = "weekday_id")
-    Weekday weekday;
+public class Schedule extends BaseEntity{
+    String nameExercise;
 
-    @OneToMany
-    @JoinColumn(name = "schedule_id")
-    Schedule schedule;
+    @ManyToOne
+    @JoinColumn(name = "users_id")
+    List<User> users;
 }

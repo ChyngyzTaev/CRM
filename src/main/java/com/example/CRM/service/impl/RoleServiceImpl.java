@@ -16,32 +16,39 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleRepository repository;
 
+
     @Override
-    public RoleModel addNewRole(RoleModel roleModel) {
-        Role role = new Role();
-        role.setId(roleModel.getId());
-        role.setCreateDate(roleModel.getCreateDate());
-        role.setRoleName(roleModel.getRoleName());
-        repository.save(role);
-        return roleModel;
+    public Role save(Role role) {
+        return null;
+    }
+
+    @Override
+    public Role getById(Long id) {
+        return null;
+    }
+
+    @Override
+    public List<Role> getAll() {
+        return null;
+    }
+
+    @Override
+    public RoleModel addNewRole(RoleModel roleMode) {
+        return null;
     }
 
     @Override
     public Role getRoleById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(()-> new
-                        NotFoundException("Роль пользователя связонный с id " + id + " не найдено"));
+        return null;
     }
 
     @Override
     public List<Role> getAllRole() {
-        return repository.findAll();
+        return null;
     }
 
     @Override
     public void deleteRole(Long id) {
-        Role role = new Role();
-        role.setActive(false);
-        repository.save(role);
+
     }
 }

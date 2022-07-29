@@ -3,7 +3,7 @@ package com.example.CRM.service.impl;
 import com.example.CRM.entity.UsersInformation;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.exception.UserNotFoundException;
-import com.example.CRM.model.UsersInformationModel;
+import com.example.CRM.model.UserInformationModel;
 import com.example.CRM.repository.UsersInformationRepository;
 import com.example.CRM.service.UsersInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class UsersInformationServiceImpl implements UsersInformationService {
     private UsersInformationRepository repository;
 
     @Override
-    public UsersInformationModel addUserInfo(UsersInformationModel informationModel) {
+    public UserInformationModel addUserInfo(UserInformationModel informationModel) {
         UsersInformation usersInformation = new UsersInformation();
         informationModel.setFullName(usersInformation.getFullName());
         informationModel.setBirthday(usersInformation.getBirthDay());
@@ -37,12 +37,12 @@ public class UsersInformationServiceImpl implements UsersInformationService {
     }
 
     @Override
-    public List<UsersInformation> getAllUserInfo(UsersInformationModel informationModel) {
+    public List<UsersInformation> getAllUserInfo(UserInformationModel informationModel) {
         return repository.findAll();
     }
 
     @Override
-    public boolean updateUserInfo(UsersInformationModel informationModel) {
+    public boolean updateUserInfo(UserInformationModel informationModel) {
 
         //Валидация @Valid
         if (informationModel == null) {
@@ -73,5 +73,20 @@ public class UsersInformationServiceImpl implements UsersInformationService {
     @Override
     public void deleteUserInfoById(Long id) {
         repository.deleteById(id);
+    }
+
+    @Override
+    public UsersInformation save(UsersInformation usersInformation) {
+        return null;
+    }
+
+    @Override
+    public UsersInformation getById(Long id) {
+        return null;
+    }
+
+    @Override
+    public List<UsersInformation> getAll() {
+        return null;
     }
 }

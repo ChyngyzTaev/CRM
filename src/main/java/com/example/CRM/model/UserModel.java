@@ -1,11 +1,8 @@
 package com.example.CRM.model;
 
-import com.example.CRM.entity.Role;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import javax.persistence.Column;
-import java.time.LocalDate;
 import java.util.List;
 
 @Getter
@@ -13,14 +10,12 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UsersModel extends BaseModel{
-    String userName;
-
-    LocalDate birthDay;
-
+public class UserModel extends BaseModel{
     String email;
 
     String password;
+
+    boolean isActive;
 
     List<RoleModel> roles;
 }

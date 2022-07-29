@@ -5,7 +5,7 @@ import com.example.CRM.model.JournalModel;
 
 import java.util.List;
 
-public interface JournalService {
+public interface JournalService extends BaseService<Journal> {
     JournalModel addNewJournal(JournalModel journalModel);
 
     Journal getJournalById(Long id);

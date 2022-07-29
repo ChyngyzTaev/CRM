@@ -2,12 +2,9 @@ package com.example.CRM.entity;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -17,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Users extends BaseEntity{
+public class User extends BaseEntity{
 
     @Column(name = "email", length = 100, nullable = false, unique = true)
     @Email

@@ -8,25 +8,37 @@ import com.example.CRM.service.SubscriptionTypesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class SubscriptionTypesServiceImpl implements SubscriptionTypesService {
     @Autowired
     private SubscriptionTypesRepository repository;
 
+
+    @Override
+    public SubscriptionTypes save(SubscriptionTypes subscriptionTypes) {
+        return null;
+    }
+
+    @Override
+    public SubscriptionTypes getById(Long id) {
+        return null;
+    }
+
+    @Override
+    public List<SubscriptionTypes> getAll() {
+        return null;
+    }
+
     @Override
     public SubscriptionTypesModel addSubscription(SubscriptionTypesModel subscriptionTypesModel) {
-        SubscriptionTypes subscriptionTypes = new SubscriptionTypes();
-        subscriptionTypes.setName(subscriptionTypesModel.getName());
-        subscriptionTypes.setCountMonth(subscriptionTypesModel.getCountMonth());
-        repository.save(subscriptionTypes);
-        return subscriptionTypesModel;
+        return null;
     }
 
     @Override
     public SubscriptionTypes getSubscriptionById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() ->
-                        new NotFoundException("Абонемент связонный с id " + id + " не найден"));
+        return null;
     }
 
     @Override
@@ -36,6 +48,6 @@ public class SubscriptionTypesServiceImpl implements SubscriptionTypesService {
 
     @Override
     public void deleteSubscriptionById(Long id) {
-        repository.deleteById(id);
+
     }
 }

@@ -1,54 +1,96 @@
 package com.example.CRM.service.impl;
 
+import com.example.CRM.convert.BaseConvert;
 import com.example.CRM.entity.Role;
-import com.example.CRM.entity.Users;
-import com.example.CRM.exception.NotFoundException;
-import com.example.CRM.model.UsersModel;
-import com.example.CRM.repository.UsersRepository;
+import com.example.CRM.entity.User;
+import com.example.CRM.model.UserModel;
+import com.example.CRM.repository.UserRepository;
+import com.example.CRM.service.RoleService;
 import com.example.CRM.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
-    private UsersRepository repository;
+    private UserRepository repository;
+
+    @Autowired
+    private BaseConvert<UserModel, User> convert;
+
+    private final PasswordEncoder passwordEncoder;
+
+    private final RoleService roleService;
+
+    public UserServiceImpl(PasswordEncoder passwordEncoder, RoleService roleService) {
+        this.passwordEncoder = passwordEncoder;
+        this.roleService = roleService;
+    }
+
 
     @Override
-    public UsersModel addNewUser(UsersModel usersModel) {
-        Users users = new Users();
-        List<Role> roles = users.getRole();
-        users.setRole(roles);
-        //Получить из бд роли по usersModel.roles
-        //засетить этот список в users.setRole()
-        users.setId(usersModel.getId());
-        users.setCreateDate(usersModel.getCreateDate());
-        users.setEmail(usersModel.getEmail());
-        users.setPassword(usersModel.getPassword());
-        users.setActive(true);
-        repository.save(users);
-        return usersModel;
+    public UserModel addNewUser(UserModel userModel) {
+        User user = new User();
+        user.setId(userModel.getId());
+        user.setCreateDate(userModel.getCreateDate());
+        user.setEmail(userModel.getEmail());
+        user.setPassword(userModel.getPassword());
+        user.setActive(true);
+        repository.save(user);
+        return userModel;
     }
 
     @Override
-    public Users getUserById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() ->
-                        new NotFoundException("Пользователь связонный с id " + id + " не найден"));
+    public User setInActiveUser(User user, Long status) {
+        user.setActive(true);
+        return repository.save(user);
     }
 
     @Override
-    public List<Users> getAllUsers() {
+    public UserModel getUserById(Long id) {
+        return convert
+                .convertFromEntity(getById(id));
+    }
+
+    @Override
+    public List<UserModel> getAllUsers() {
+        return getAll()
+                .stream()
+                .map(convert::convertFromEntity)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public UserModel deleteUserById (Long id){
+        User user = getById(id);
+        User deleteUSer =setInActiveUser(user, -1L);
+        return convert.convertFromEntity(deleteUSer);
+    }
+
+
+    @Override
+    public User save(User user) {
+        user.setEmail(passwordEncoder.encode(user.getPassword()));
+        user.setActive(true);
+        repository.save(user);
+
+        roleService.save(Role.builder()
+                .roleName("ROLE_USER")
+                .build());
+        return user;
+    }
+
+    @Override
+    public User getById(Long id) {
+        return repository.findById(id).orElse(null);
+    }
+
+    @Override
+    public List<User> getAll() {
         return repository.findAll();
-    }
-
-
-    @Override
-    public void deleteUserById(Long id) {
-        Users users = new Users();
-        users.setActive(false);
-        repository.save(users);
     }
 }

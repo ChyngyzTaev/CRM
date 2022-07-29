@@ -5,7 +5,7 @@ import com.example.CRM.model.GeneralRecordModel;
 
 import java.util.List;
 
-public interface GeneralRecordService {
+public interface GeneralRecordService extends BaseService<GeneralRecord>{
     GeneralRecordModel addNewGeneralRecord(GeneralRecordModel generalRecordModel);
 
     GeneralRecord getGeneralRecordById(Long id);

@@ -15,25 +15,35 @@ public class GeneralRecordServiceImpl implements GeneralRecordService {
     @Autowired
     private GeneralRecordRepository repository;
 
+
+    @Override
+    public GeneralRecord save(GeneralRecord generalRecord) {
+        return null;
+    }
+
+    @Override
+    public GeneralRecord getById(Long id) {
+        return null;
+    }
+
+    @Override
+    public List<GeneralRecord> getAll() {
+        return null;
+    }
+
     @Override
     public GeneralRecordModel addNewGeneralRecord(GeneralRecordModel generalRecordModel) {
-        GeneralRecord generalRecord = new GeneralRecord();
-        generalRecord.setUsers(generalRecordModel.getUsers());
-        generalRecord.setTypes(generalRecordModel.getTypes());
-        repository.save(generalRecord);
-        return generalRecordModel;
+        return null;
     }
 
     @Override
     public GeneralRecord getGeneralRecordById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(() ->
-                        new NotFoundException("Запись не надена"));
+        return null;
     }
 
     @Override
     public List<GeneralRecord> getAllGeneralRecord() {
-        return repository.findAll();
+        return null;
     }
 
     @Override

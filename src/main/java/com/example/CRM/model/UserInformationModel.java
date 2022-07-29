@@ -1,6 +1,5 @@
 package com.example.CRM.model;
 
-import com.example.CRM.entity.Users;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -11,7 +10,7 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UsersInformationModel extends BaseModel{
+public class UserInformationModel extends BaseModel{
 
     // " " "" null
     @NotBlank
@@ -20,6 +19,4 @@ public class UsersInformationModel extends BaseModel{
     LocalDate birthday;
 
     String phoneNumber;
-
-    Users users;
 }

@@ -16,28 +16,39 @@ public class JournalServiceImpl implements JournalService {
     @Autowired
     private JournalRepository repository;
 
+
+    @Override
+    public Journal save(Journal journal) {
+        return null;
+    }
+
+    @Override
+    public Journal getById(Long id) {
+        return null;
+    }
+
+    @Override
+    public List<Journal> getAll() {
+        return null;
+    }
+
     @Override
     public JournalModel addNewJournal(JournalModel journalModel) {
-        Journal journal = new Journal();
-        journal.setGeneralRecord(journalModel.getGeneralRecord());
-        repository.save(journal);
-        return journalModel;
+        return null;
     }
 
     @Override
     public Journal getJournalById(Long id) {
-        return repository.findById(id)
-                .orElseThrow(()-> new
-                        NotFoundException("Журнал связонный с id " + id + " не найден"));
+        return null;
     }
 
     @Override
     public List<Journal> getAllJournal() {
-        return repository.findAll();
+        return null;
     }
 
     @Override
     public void deleteJournalById(Long id) {
-        repository.deleteById(id);
+
     }
 }

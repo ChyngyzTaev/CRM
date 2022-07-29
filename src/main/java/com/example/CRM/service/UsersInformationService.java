@@ -1,18 +1,18 @@
 package com.example.CRM.service;
 
 import com.example.CRM.entity.UsersInformation;
-import com.example.CRM.model.UsersInformationModel;
+import com.example.CRM.model.UserInformationModel;
 
 import java.util.List;
 
-public interface UsersInformationService {
-    UsersInformationModel addUserInfo(UsersInformationModel informationModel);
+public interface UsersInformationService extends BaseService<UsersInformation>{
+    UserInformationModel addUserInfo(UserInformationModel informationModel);
 
     UsersInformation getUserInfoById(Long id);
 
-    List<UsersInformation> getAllUserInfo(UsersInformationModel informationModel);
+    List<UsersInformation> getAllUserInfo(UserInformationModel informationModel);
 
-    boolean updateUserInfo(UsersInformationModel informationModel);
+    boolean updateUserInfo(UserInformationModel informationModel);
 
     void deleteUserInfoById(Long id);
 }

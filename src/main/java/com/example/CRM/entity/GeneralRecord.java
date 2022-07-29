@@ -18,7 +18,7 @@ import javax.persistence.Table;
 public class GeneralRecord extends BaseEntity {
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false, unique = true)
-    Users users;
+    User users;
 
     @OneToOne
     @JoinColumn(name = "subscription_types_id", nullable = false, unique = true)

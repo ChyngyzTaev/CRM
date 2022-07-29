@@ -1,8 +1,9 @@
 package com.example.CRM.controller;
 
+import com.example.CRM.entity.User;
 import com.example.CRM.exception.BadRequestException;
 import com.example.CRM.exception.NotFoundException;
-import com.example.CRM.model.UsersModel;
+import com.example.CRM.model.UserModel;
 import com.example.CRM.request.AuthenticationRequest;
 import com.example.CRM.response.AuthenticationResponse;
 import com.example.CRM.security.jwt.JwtUtil;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/user")
-public class UsersController {
+public class UserController {
     @Autowired
     private UserService service;
 
@@ -56,7 +57,7 @@ public class UsersController {
 
 
     @PostMapping("/add-new-user")
-    public ResponseEntity<?> addNewUser(@RequestBody UsersModel usersModel){
+    public ResponseEntity<?> addNewUser(@RequestBody UserModel usersModel){
         try {
             return new ResponseEntity<>(service.addNewUser(usersModel), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
@@ -83,7 +84,7 @@ public class UsersController {
     }
 
     @DeleteMapping("/delete-user/{id}")
-    public void deleteUserById(@PathVariable ("id") Long id){
+    public void deleteUserById(@PathVariable ("id") User users, Long id){
         service.deleteUserById(id);
     }
 

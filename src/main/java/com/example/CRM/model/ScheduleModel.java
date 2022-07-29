@@ -10,8 +10,6 @@ import lombok.experimental.FieldDefaults;
 @Setter
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ChartModel extends BaseModel{
-    WeekdayModel weekdayModel;
-
-    ScheduleModel scheduleModel;
+public class ScheduleModel extends BaseModel{
+    String nameExercise;
 }

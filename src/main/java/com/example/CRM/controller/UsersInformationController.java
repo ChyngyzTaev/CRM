@@ -2,7 +2,7 @@ package com.example.CRM.controller;
 
 import com.example.CRM.exception.BadRequestException;
 import com.example.CRM.exception.NotFoundException;
-import com.example.CRM.model.UserInformationModel;
+import com.example.CRM.model.UsersInformationModel;
 import com.example.CRM.service.UsersInformationService;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ public class UsersInformationController {
     private UsersInformationService service;
 
     @PostMapping("/add-new-user-info")
-    public ResponseEntity<?> addUserInfo(@RequestBody UserInformationModel informationModel) {
+    public ResponseEntity<?> addUserInfo(@RequestBody UsersInformationModel informationModel) {
         try {
             return new ResponseEntity<>(service.addUserInfo(informationModel), HttpStatus.OK);
         } catch (BadRequestException badRequestException) {
@@ -37,7 +37,7 @@ public class UsersInformationController {
     }
 
     @GetMapping("/get-all-user-info")
-    public ResponseEntity<?> getAllUserInfo(UserInformationModel informationModel) {
+    public ResponseEntity<?> getAllUserInfo(UsersInformationModel informationModel) {
         try {
             return new ResponseEntity<>(service.getAllUserInfo(), HttpStatus.OK);
         } catch (NotFoundException notFoundException) {
@@ -46,7 +46,7 @@ public class UsersInformationController {
     }
 
     @PutMapping("/update-user-info")
-    public ResponseEntity<?> updateUserInfo(@Valid @RequestBody UserInformationModel informationModel){
+    public ResponseEntity<?> updateUserInfo(@Valid @RequestBody UsersInformationModel informationModel){
         try {
             return new ResponseEntity<>(service.updateUserInfo(informationModel), HttpStatus.OK);
         }catch (Exception e){

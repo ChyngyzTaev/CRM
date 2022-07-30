@@ -2,18 +2,19 @@ package com.example.CRM.service.impl;
 
 import com.example.CRM.convert.BaseConvert;
 import com.example.CRM.entity.Schedule;
-import com.example.CRM.entity.SubscriptionTypes;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.exception.UserNotFoundException;
 import com.example.CRM.model.ScheduleModel;
 import com.example.CRM.repository.ScheduleRepository;
 import com.example.CRM.service.ScheduleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class ScheduleServiceImpl implements ScheduleService {
     @Autowired
     private ScheduleRepository repository;
@@ -33,7 +34,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     @Override
-    public Schedule setInActiveUser(Schedule schedule, Long status) {
+    public Schedule setInActiveSchedule(Schedule schedule, Long status) {
         schedule.setActive(true);
         return repository.save(schedule);
     }
@@ -75,7 +76,7 @@ public class ScheduleServiceImpl implements ScheduleService {
     @Override
     public ScheduleModel deleteScheduleById(Long id) {
         Schedule schedule = getById(id);
-        Schedule deleteSchedule = setInActiveUser(schedule, -1L);
+        Schedule deleteSchedule = setInActiveSchedule(schedule, -1L);
         return convert.convertFromEntity(deleteSchedule);
     }
 
@@ -89,7 +90,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         return repository
                 .findById(id)
                 .orElseThrow(() ->
-                        new NotFoundException("id связанный с идентификатором " + id + " не найдено"));
+                        new NotFoundException("Расписание связанный с идентификатором " + id + " не найдено"));
     }
 
     @Override

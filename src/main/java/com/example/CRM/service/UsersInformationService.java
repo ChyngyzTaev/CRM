@@ -1,20 +1,20 @@
 package com.example.CRM.service;
 
 import com.example.CRM.entity.UsersInformation;
-import com.example.CRM.model.UserInformationModel;
+import com.example.CRM.model.UsersInformationModel;
 
 import java.util.List;
 
 public interface UsersInformationService extends BaseService<UsersInformation>{
-    UserInformationModel addUserInfo(UserInformationModel informationModel);
+    UsersInformationModel addUserInfo(UsersInformationModel informationModel);
 
-    UsersInformation setInActiveUser(UsersInformation information, Long status);
+    UsersInformation setInActiveUserInformation(UsersInformation information, Long status);
 
-    UserInformationModel getUserInfoById(Long id);
+    UsersInformationModel getUserInfoById(Long id);
 
-    List<UserInformationModel> getAllUserInfo();
+    List<UsersInformationModel> getAllUserInfo();
 
-    UserInformationModel updateUserInfo(UserInformationModel informationModel);
+    UsersInformationModel updateUserInfo(UsersInformationModel informationModel);
 
-    UserInformationModel deleteUserInfoById(Long id);
+    UsersInformationModel deleteUserInfoById(Long id);
 }

@@ -2,7 +2,6 @@ package com.example.CRM.service.impl;
 
 import com.example.CRM.convert.BaseConvert;
 import com.example.CRM.entity.SubscriptionTypes;
-import com.example.CRM.entity.UsersInformation;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.exception.UserNotFoundException;
 import com.example.CRM.model.SubscriptionTypesModel;
@@ -36,7 +35,7 @@ public class SubscriptionTypesServiceImpl implements SubscriptionTypesService {
     }
 
     @Override
-    public SubscriptionTypes setInActiveUser(SubscriptionTypes subscriptionTypes, Long status) {
+    public SubscriptionTypes setInActiveSubscriptionTypes(SubscriptionTypes subscriptionTypes, Long status) {
         subscriptionTypes.setActive(true);
         return repository.save(subscriptionTypes);
     }
@@ -72,7 +71,7 @@ public class SubscriptionTypesServiceImpl implements SubscriptionTypesService {
     @Override
     public SubscriptionTypesModel deleteSubscriptionById(Long id) {
         SubscriptionTypes subscriptionTypes = getById(id);
-        SubscriptionTypes deleteSubscription = setInActiveUser(subscriptionTypes, -1L);
+        SubscriptionTypes deleteSubscription = setInActiveSubscriptionTypes(subscriptionTypes, -1L);
         return convert.convertFromEntity(deleteSubscription);
     }
 
@@ -86,7 +85,7 @@ public class SubscriptionTypesServiceImpl implements SubscriptionTypesService {
         return repository
                 .findById(id)
                 .orElseThrow(() ->
-                        new NotFoundException("id связанный с идентификатором " + id + " не найдено"));
+                        new NotFoundException("Абонемент связанный с идентификатором " + id + " не найдено"));
     }
 
     @Override

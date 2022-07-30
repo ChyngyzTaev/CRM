@@ -4,9 +4,8 @@ import com.example.CRM.convert.BaseConvert;
 import com.example.CRM.entity.UsersInformation;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.exception.UserNotFoundException;
-import com.example.CRM.model.UserInformationModel;
+import com.example.CRM.model.UsersInformationModel;
 import com.example.CRM.repository.UsersInformationRepository;
-import com.example.CRM.service.BaseService;
 import com.example.CRM.service.UsersInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,31 +21,31 @@ public class UsersInformationServiceImpl implements UsersInformationService {
     private UsersInformationRepository repository;
 
     @Autowired
-    private BaseConvert<UserInformationModel, UsersInformation> convert;
+    private BaseConvert<UsersInformationModel, UsersInformation> convert;
 
     @Override
-    public UserInformationModel addUserInfo(UserInformationModel informationModel) {
+    public UsersInformationModel addUserInfo(UsersInformationModel informationModel) {
         UsersInformation usersInformation = new UsersInformation();
-        informationModel.setFullName(usersInformation.getFullName());
-        informationModel.setBirthday(usersInformation.getBirthDay());
-        informationModel.setPhoneNumber(usersInformation.getPhoneNumber());
+        usersInformation.setFullName(informationModel.getFullName());
+        usersInformation.setBirthDay(informationModel.getBirthday());
+        usersInformation.setPhoneNumber(informationModel.getPhoneNumber());
         repository.save(usersInformation);
         return informationModel;
     }
 
     @Override
-    public UsersInformation setInActiveUser(UsersInformation information, Long status) {
+    public UsersInformation setInActiveUserInformation(UsersInformation information, Long status) {
         information.setActive(true);
         return repository.save(information);
     }
 
     @Override
-    public UserInformationModel getUserInfoById(Long id) {
+    public UsersInformationModel getUserInfoById(Long id) {
         return convert.convertFromEntity(getById(id));
     }
 
     @Override
-    public List<UserInformationModel> getAllUserInfo() {
+    public List<UsersInformationModel> getAllUserInfo() {
         return getAll()
                 .stream()
                 .map(convert::convertFromEntity)
@@ -54,7 +53,7 @@ public class UsersInformationServiceImpl implements UsersInformationService {
     }
 
     @Override
-    public UserInformationModel updateUserInfo(UserInformationModel informationModel) {
+    public UsersInformationModel updateUserInfo(UsersInformationModel informationModel) {
 
         //Валидация @Valid
         if (informationModel == null) {
@@ -82,9 +81,9 @@ public class UsersInformationServiceImpl implements UsersInformationService {
     }
 
     @Override
-    public UserInformationModel deleteUserInfoById(Long id) {
+    public UsersInformationModel deleteUserInfoById(Long id) {
         UsersInformation usersInformation = getById(id);
-        UsersInformation deleteUSer =setInActiveUser(usersInformation, -1L);
+        UsersInformation deleteUSer = setInActiveUserInformation(usersInformation, -1L);
         return convert.convertFromEntity(deleteUSer);
     }
 
@@ -97,7 +96,8 @@ public class UsersInformationServiceImpl implements UsersInformationService {
     public UsersInformation getById(Long id) {
         return repository
                 .findById(id).orElseThrow(()->
-                        new NotFoundException("id связанный с идентификатором " + id + " не найдено"));
+                        new NotFoundException("Информация о пользователе связанный с идентификатором "
+                                + id + " не найдено"));
     }
 
     @Override

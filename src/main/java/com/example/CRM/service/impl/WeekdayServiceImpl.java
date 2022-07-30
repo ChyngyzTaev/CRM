@@ -7,10 +7,13 @@ import com.example.CRM.model.WeekdayModel;
 import com.example.CRM.repository.WeekdayRepository;
 import com.example.CRM.service.WeekdayService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
+@Service
 public class WeekdayServiceImpl implements WeekdayService {
     @Autowired
     private WeekdayRepository repository;
@@ -36,7 +39,7 @@ public class WeekdayServiceImpl implements WeekdayService {
         return repository
                 .findById(id)
                 .orElseThrow(() ->
-                        new NotFoundException("id связанный с идентификатором " + id + "" + " не найдено"));
+                        new NotFoundException("День связанный с идентификатором " + id + "" + " не найдено"));
     }
 
     @Override

@@ -3,9 +3,11 @@ package com.example.CRM.service.impl;
 import com.example.CRM.entity.Chart;
 import com.example.CRM.model.ChartModel;
 import com.example.CRM.service.ChartService;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ChartServiceImpl implements ChartService {
     @Override
     public ChartModel addNewChart(ChartModel chartModel) {

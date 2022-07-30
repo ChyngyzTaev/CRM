@@ -7,10 +7,12 @@ import com.example.CRM.model.TrainerModel;
 import com.example.CRM.repository.TrainerRepository;
 import com.example.CRM.service.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class TrainerServiceImpl implements TrainerService {
     @Autowired
     private TrainerRepository repository;
@@ -31,7 +33,7 @@ public class TrainerServiceImpl implements TrainerService {
     }
 
     @Override
-    public Trainer setInActiveUser(Trainer trainer, Long status) {
+    public Trainer setInActiveTrainer(Trainer trainer, Long status) {
         trainer.setActive(true);
         return repository.save(trainer);
     }
@@ -52,7 +54,7 @@ public class TrainerServiceImpl implements TrainerService {
     @Override
     public TrainerModel deleteTrainerById(Long id) {
         Trainer trainer = getById(id);
-        Trainer deleteTrainer = setInActiveUser(trainer, -1L);
+        Trainer deleteTrainer = setInActiveTrainer(trainer, -1L);
         return convert.convertFromEntity(deleteTrainer);
     }
 
@@ -66,7 +68,7 @@ public class TrainerServiceImpl implements TrainerService {
         return repository
                 .findById(id)
                 .orElseThrow(() ->
-                        new NotFoundException("id связанный с идентификатором " + id + " не найдено"));
+                        new NotFoundException("Тренер связанный с идентификатором " + id + " не найдено"));
     }
 
     @Override

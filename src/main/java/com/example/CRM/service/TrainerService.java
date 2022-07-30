@@ -9,7 +9,7 @@ import java.util.List;
 public interface TrainerService extends BaseService<Trainer> {
     TrainerModel addNewTrainer(TrainerModel trainerModel);
 
-    Trainer setInActiveUser(Trainer trainer, Long status);
+    Trainer setInActiveTrainer(Trainer trainer, Long status);
 
     TrainerModel getTrainerById(Long id);
 

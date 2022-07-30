@@ -34,7 +34,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role setInActiveUser(Role role, Long status) {
+    public Role setInActiveRole(Role role, Long status) {
         role.setActive(true);
         return repository.save(role);
     }
@@ -55,7 +55,7 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public RoleModel deleteRole(Long id) {
         Role role = getById(id);
-        Role deleteRole = setInActiveUser(role, -1L);
+        Role deleteRole = setInActiveRole(role, -1L);
         return convert.convertFromEntity(deleteRole);
     }
 

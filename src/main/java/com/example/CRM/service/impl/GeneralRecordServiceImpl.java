@@ -2,6 +2,7 @@ package com.example.CRM.service.impl;
 
 import com.example.CRM.convert.BaseConvert;
 import com.example.CRM.entity.GeneralRecord;
+import com.example.CRM.entity.Role;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.model.GeneralRecordModel;
 import com.example.CRM.repository.GeneralRecordRepository;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class GeneralRecordServiceImpl implements GeneralRecordService {
@@ -22,22 +24,26 @@ public class GeneralRecordServiceImpl implements GeneralRecordService {
 
     @Override
     public GeneralRecordModel addNewGeneralRecord(GeneralRecordModel generalRecordModel) {
-        return null;
+        GeneralRecord generalRecord = new GeneralRecord();
+        generalRecord.setId(generalRecordModel.getId());
+        generalRecord.prePersist();
+        generalRecord.prePersist();
+        repository.save(generalRecord);
+        return generalRecordModel;
     }
+
 
     @Override
     public GeneralRecordModel getGeneralRecordById(Long id) {
-        return null;
+        return convert.convertFromEntity(getById(id));
     }
 
     @Override
     public List<GeneralRecordModel> getAllGeneralRecord() {
-        return null;
-    }
-
-    @Override
-    public GeneralRecordModel deleteGeneralRecordById(Long id) {
-        return null;
+        return getAll()
+                .stream()
+                .map(convert::convertFromEntity)
+                .collect(Collectors.toList());
     }
 
     @Override

@@ -55,7 +55,6 @@ public class UserController {
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }
 
-
     @PostMapping("/add-new-user")
     public ResponseEntity<?> addNewUser(@RequestBody UserModel usersModel){
         try {

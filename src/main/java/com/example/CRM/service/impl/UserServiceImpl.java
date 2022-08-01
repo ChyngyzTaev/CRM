@@ -37,9 +37,9 @@ public class UserServiceImpl implements UserService {
     public UserModel addNewUser(UserModel userModel) {
         User user = new User();
         user.setId(userModel.getId());
-        user.setCreateDate(userModel.getCreateDate());
         user.setEmail(userModel.getEmail());
         user.setPassword(userModel.getPassword());
+        user.setCreateDate(userModel.getCreateDate());
         user.setActive(true);
         repository.save(user);
         return userModel;
@@ -77,10 +77,6 @@ public class UserServiceImpl implements UserService {
         user.setEmail(passwordEncoder.encode(user.getPassword()));
         user.setActive(true);
         repository.save(user);
-
-        roleService.save(Role.builder()
-                .roleName("ROLE_USER")
-                .build());
         return user;
     }
 

@@ -22,6 +22,22 @@ public class WeekdayServiceImpl implements WeekdayService {
     private BaseConvert<WeekdayModel, Weekday> convert;
 
     @Override
+    public WeekdayModel addWeekday(WeekdayModel weekdayModel) {
+        Weekday weekday = new Weekday();
+        weekday.setId(weekdayModel.getId());
+        weekday.setMonday(weekdayModel.getMonday());
+        weekday.setTuesday(weekdayModel.getTuesday());
+        weekday.setWednesday(weekdayModel.getWednesday());
+        weekday.setThursday(weekdayModel.getThursday());
+        weekday.setFriday(weekdayModel.getFriday());
+        weekday.setSaturday(weekdayModel.getSaturday());
+        weekday.setSunday(weekdayModel.getSunday());
+        weekday.prePersist();
+        repository.save(weekday);
+        return weekdayModel;
+    }
+
+    @Override
     public List<WeekdayModel> getAllWeekday() {
         return getAll()
                 .stream()

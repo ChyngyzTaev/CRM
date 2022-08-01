@@ -29,6 +29,7 @@ public class UsersInformationServiceImpl implements UsersInformationService {
         usersInformation.setFullName(informationModel.getFullName());
         usersInformation.setBirthDay(informationModel.getBirthday());
         usersInformation.setPhoneNumber(informationModel.getPhoneNumber());
+        usersInformation.setCreateDate(informationModel.getCreateDate());
         repository.save(usersInformation);
         return informationModel;
     }

@@ -2,7 +2,6 @@ package com.example.CRM.service.impl;
 
 import com.example.CRM.convert.BaseConvert;
 import com.example.CRM.entity.Journal;
-import com.example.CRM.entity.Role;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.model.JournalModel;
 import com.example.CRM.repository.JournalRepository;
@@ -28,7 +27,6 @@ public class JournalServiceImpl implements JournalService {
         Journal journal = new Journal();
         journal.setId(journalModel.getId());
         journal.setCreateDate(journalModel.getCreateDate());
-        journal.setGeneralRecord(journalModel.getGeneralRecord());
         repository.save(journal);
         return journalModel;
     }
@@ -53,10 +51,9 @@ public class JournalServiceImpl implements JournalService {
     }
 
     @Override
-    public JournalModel deleteJournalById(Long id) {
-        Journal journal = getById(id);
-        Journal deleteJournal = setInActiveJournal(journal, -1L);
-        return convert.convertFromEntity(deleteJournal);
+    public boolean deleteJournalById(Long id) {
+        repository.deleteById(id);
+        return true;
     }
 
     @Override

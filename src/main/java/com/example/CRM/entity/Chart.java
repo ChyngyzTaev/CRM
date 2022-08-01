@@ -14,10 +14,10 @@ import javax.persistence.*;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Chart extends BaseEntity{
     @OneToOne
-    @JoinColumn(name = "weekday_id")
+    @JoinColumn(name = "weekday_id", unique = true, nullable = false)
     Weekday weekday;
 
-    @OneToMany
+    @OneToOne
     @JoinColumn(name = "schedule_id")
     Schedule schedule;
 }

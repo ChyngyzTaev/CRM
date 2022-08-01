@@ -1,7 +1,6 @@
 package com.example.CRM.service;
 
 import com.example.CRM.entity.Journal;
-import com.example.CRM.entity.Role;
 import com.example.CRM.model.JournalModel;
 
 import java.util.List;
@@ -15,5 +14,5 @@ public interface JournalService extends BaseService<Journal> {
 
     List<JournalModel> getAllJournal();
 
-    JournalModel deleteJournalById(Long id);
+    boolean deleteJournalById(Long id);
 }

@@ -1,6 +1,7 @@
 package com.example.CRM.service;
 
 import com.example.CRM.entity.Chart;
+import com.example.CRM.entity.Journal;
 import com.example.CRM.model.ChartModel;
 
 import java.util.List;

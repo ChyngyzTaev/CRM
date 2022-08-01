@@ -27,8 +27,9 @@ public class ScheduleServiceImpl implements ScheduleService {
     public ScheduleModel addNewSchedule(ScheduleModel scheduleModel) {
         Schedule schedule = new Schedule();
         schedule.setId(scheduleModel.getId());
-        schedule.setCreateDate(scheduleModel.getCreateDate());
         schedule.setNameExercise(scheduleModel.getNameExercise());
+        schedule.prePersist();
+        schedule.setActive(true);
         repository.save(schedule);
         return scheduleModel;
     }

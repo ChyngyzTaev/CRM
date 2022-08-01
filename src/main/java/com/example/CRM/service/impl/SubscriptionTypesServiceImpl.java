@@ -30,6 +30,7 @@ public class SubscriptionTypesServiceImpl implements SubscriptionTypesService {
         subscriptionTypes.setNumberOfWeek(subscriptionTypesModel.getNumberOfWeek());
         subscriptionTypes.setNumberOfDay(subscriptionTypesModel.getNumberOfDay());
         subscriptionTypes.setCreateDate(subscriptionTypesModel.getCreateDate());
+        subscriptionTypes.setActive(true);
         repository.save(subscriptionTypes);
         return subscriptionTypesModel;
     }

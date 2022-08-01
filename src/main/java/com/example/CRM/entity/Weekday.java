@@ -15,24 +15,24 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Weekday extends BaseEntity{
-    @Column(name = "monday", unique = true, nullable = false)
+    @Column(name = "monday", unique = true)
     String monday;
 
-    @Column(name = "tuesday", unique = true, nullable = false)
+    @Column(name = "tuesday", unique = true)
     String tuesday;
 
-    @Column(name = "wednesday", unique = true, nullable = false)
+    @Column(name = "wednesday", unique = true)
     String wednesday;
 
-    @Column(name = "thursday", unique = true, nullable = false)
+    @Column(name = "thursday", unique = true)
     String thursday;
 
-    @Column(name = "friday", unique = true, nullable = false)
+    @Column(name = "friday", unique = true)
     String friday;
 
-    @Column(name = "saturday", unique = true, nullable = false)
+    @Column(name = "saturday", unique = true)
     String saturday;
 
-    @Column(name = "sunday", unique = true, nullable = false)
+    @Column(name = "sunday", unique = true)
     String sunday;
 }

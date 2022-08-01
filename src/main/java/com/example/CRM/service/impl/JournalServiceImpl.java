@@ -51,9 +51,8 @@ public class JournalServiceImpl implements JournalService {
     }
 
     @Override
-    public boolean deleteJournalById(Long id) {
+    public void deleteJournalById(Long id) {
         repository.deleteById(id);
-        return true;
     }
 
     @Override

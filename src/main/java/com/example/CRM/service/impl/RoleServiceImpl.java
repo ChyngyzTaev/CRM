@@ -53,7 +53,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public RoleModel deleteRole(Long id) {
+    public RoleModel deleteRoleById(Long id) {
         Role role = getById(id);
         Role deleteRole = setInActiveRole(role, -1L);
         return convert.convertFromEntity(deleteRole);

@@ -38,6 +38,11 @@ public class WeekdayServiceImpl implements WeekdayService {
     }
 
     @Override
+    public WeekdayModel getWeekdayById(Long id) {
+        return convert.convertFromEntity(getById(id));
+    }
+
+    @Override
     public List<WeekdayModel> getAllWeekday() {
         return getAll()
                 .stream()

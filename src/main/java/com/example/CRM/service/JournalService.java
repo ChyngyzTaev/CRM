@@ -14,5 +14,5 @@ public interface JournalService extends BaseService<Journal> {
 
     List<JournalModel> getAllJournal();
 
-    boolean deleteJournalById(Long id);
+    void deleteJournalById(Long id);
 }

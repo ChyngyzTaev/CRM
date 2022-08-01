@@ -14,5 +14,5 @@ public interface RoleService extends BaseService<Role>{
 
     List<RoleModel> getAllRole();
 
-    RoleModel deleteRole(Long id);
+    RoleModel deleteRoleById(Long id);
 }

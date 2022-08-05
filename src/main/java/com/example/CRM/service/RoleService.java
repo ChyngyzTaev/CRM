@@ -5,7 +5,7 @@ import com.example.CRM.model.RoleModel;
 
 import java.util.List;
 
-public interface RoleService extends BaseService<Role>{
+public interface RoleService{
     RoleModel addNewRole(RoleModel roleModel);
 
     Role setInActiveRole(Role role, Long status);

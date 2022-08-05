@@ -2,11 +2,12 @@ package com.example.CRM.service;
 
 import com.example.CRM.entity.Trainer;
 
-import com.example.CRM.model.TrainerModel;
+import com.example.CRM.model.*;
 
 import java.util.List;
 
-public interface TrainerService extends BaseService<Trainer> {
+public interface TrainerService {
+
     TrainerModel addNewTrainer(TrainerModel trainerModel);
 
     Trainer setInActiveTrainer(Trainer trainer, Long status);

@@ -1,7 +1,5 @@
 package com.example.CRM.service.impl;
 
-import com.example.CRM.convert.BaseConvert;
-import com.example.CRM.entity.Role;
 import com.example.CRM.entity.User;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.model.UserModel;
@@ -19,18 +17,6 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository repository;
-
-    @Autowired
-    private BaseConvert<UserModel, User> convert;
-
-    private final PasswordEncoder passwordEncoder;
-
-    private final RoleService roleService;
-
-    public UserServiceImpl(PasswordEncoder passwordEncoder, RoleService roleService) {
-        this.passwordEncoder = passwordEncoder;
-        this.roleService = roleService;
-    }
 
 
     @Override
@@ -53,14 +39,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserModel getUserById(Long id) {
-        return convert.convertFromEntity(getById(id));
+        User user = repository
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException
+                        ("Пользователь связанный с идентификатором " + id + " не найден"));
+        return user.toModel();
     }
 
     @Override
     public List<UserModel> getAllUsers() {
-        return getAll()
+        return repository
+                .findAll()
                 .stream()
-                .map(convert::convertFromEntity)
+                .map(User::toModel)
                 .collect(Collectors.toList());
     }
 
@@ -68,28 +59,15 @@ public class UserServiceImpl implements UserService {
     public UserModel deleteUserById (Long id){
         User user = getById(id);
         User deleteUSer =setInActiveUser(user, -1L);
-        return convert.convertFromEntity(deleteUSer);
+        return deleteUSer.toModel();
     }
 
 
-    @Override
-    public User save(User user) {
-        user.setEmail(passwordEncoder.encode(user.getPassword()));
-        user.setActive(true);
-        repository.save(user);
-        return user;
-    }
-
-    @Override
     public User getById(Long id) {
         return repository
                 .findById(id)
                 .orElseThrow(() ->
-                        new NotFoundException("Пользоватлеь связанный с идентификатором " + id + " не найдено"));
-    }
-
-    @Override
-    public List<User> getAll() {
-        return repository.findAll();
+                        new NotFoundException
+                                ("Пользоватлеь связанный с идентификатором " + id + " не найдено"));
     }
 }

@@ -22,29 +22,41 @@ public class JournalController {
             return new ResponseEntity<>(service.addNewJournal(journalModel), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
             return new ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping("/get-journal/{id}")
-    public ResponseEntity<?> getJournalById(@PathVariable ("id") Long id){
+    @GetMapping("/get-journal-by-id/{id}")
+    public ResponseEntity<?> getJournalById(@PathVariable Long id){
         try {
             return new ResponseEntity<>(service.getJournalById(id), HttpStatus.OK);
+        }catch (BadRequestException badRequestException){
+            return new ResponseEntity<>(badRequestException.getMessage(),HttpStatus.BAD_REQUEST);
         }catch (NotFoundException notFoundException){
-            return new ResponseEntity<>(notFoundException.getMessage(), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(notFoundException.getMessage(),HttpStatus.NOT_FOUND);
+        } catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/get-all-journal")
-    public ResponseEntity<?> getAllHJournal(){
+    public ResponseEntity<?> getAllJournal(){
         try {
             return new ResponseEntity<>(service.getAllJournal(), HttpStatus.OK);
         }catch (NotFoundException notFoundException){
             return new ResponseEntity<>(notFoundException.getMessage(), HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @DeleteMapping("delete-journal/{id}")
-    public void deleteJournalById(@PathVariable ("id") Long id){
-        service.deleteJournalById(id);
+    @DeleteMapping("/delete-journal-by-id/{id}")
+    public void deleteJournalById(@PathVariable Long id){
+        try {
+            service.deleteJournalById(id);
+        }catch (BadRequestException badRequestException){
+            System.out.println(badRequestException.getMessage());
+        }
     }
 }

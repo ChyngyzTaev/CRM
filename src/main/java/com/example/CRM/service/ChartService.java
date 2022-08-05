@@ -1,11 +1,10 @@
 package com.example.CRM.service;
 
-import com.example.CRM.entity.Chart;
 import com.example.CRM.model.ChartModel;
 
 import java.util.List;
 
-public interface ChartService extends BaseService<Chart> {
+public interface ChartService{
     ChartModel addNewChart(ChartModel chartModel);
 
     ChartModel getChartById(Long id);

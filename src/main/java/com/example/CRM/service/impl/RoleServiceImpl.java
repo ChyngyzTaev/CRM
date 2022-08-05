@@ -1,6 +1,5 @@
 package com.example.CRM.service.impl;
 
-import com.example.CRM.convert.BaseConvert;
 import com.example.CRM.entity.Role;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.model.RoleModel;
@@ -17,9 +16,6 @@ public class RoleServiceImpl implements RoleService {
 
     @Autowired
     private RoleRepository repository;
-
-    @Autowired
-    private BaseConvert<RoleModel, Role> convert;
 
 
     @Override
@@ -41,14 +37,18 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public RoleModel getRoleById(Long id) {
-        return convert.convertFromEntity(getById(id));
+        Role role = repository
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException("Роль связанный с идентификатором " + id + " не найден"));
+        return role.toModel();
     }
 
     @Override
     public List<RoleModel> getAllRole() {
-        return getAll()
+        return repository
+                .findAll()
                 .stream()
-                .map(convert::convertFromEntity)
+                .map(Role::toModel)
                 .collect(Collectors.toList());
     }
 
@@ -56,24 +56,15 @@ public class RoleServiceImpl implements RoleService {
     public RoleModel deleteRoleById(Long id) {
         Role role = getById(id);
         Role deleteRole = setInActiveRole(role, -1L);
-        return convert.convertFromEntity(deleteRole);
+        return deleteRole.toModel();
     }
 
-    @Override
-    public Role save(Role role) {
-        return repository.save(role);
-    }
 
-    @Override
     public Role getById(Long id) {
         return repository
                 .findById(id)
                 .orElseThrow(() -> new
-                        NotFoundException("Роль связанный с идентификатором " + id + " не найдено "));
-    }
-
-    @Override
-    public List<Role> getAll() {
-        return repository.findAll();
+                        NotFoundException
+                        ("Роль связанный с идентификатором " + id + " не найдено "));
     }
 }

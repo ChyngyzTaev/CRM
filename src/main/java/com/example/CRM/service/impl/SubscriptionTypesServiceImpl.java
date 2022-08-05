@@ -1,6 +1,5 @@
 package com.example.CRM.service.impl;
 
-import com.example.CRM.convert.BaseConvert;
 import com.example.CRM.entity.SubscriptionTypes;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.exception.UserNotFoundException;
@@ -18,9 +17,6 @@ public class SubscriptionTypesServiceImpl implements SubscriptionTypesService {
     @Autowired
     private SubscriptionTypesRepository repository;
 
-    @Autowired
-    private BaseConvert<SubscriptionTypesModel, SubscriptionTypes> convert;
-
 
     @Override
     public SubscriptionTypesModel addSubscription(SubscriptionTypesModel subscriptionTypesModel) {
@@ -30,6 +26,7 @@ public class SubscriptionTypesServiceImpl implements SubscriptionTypesService {
         subscriptionTypes.setNumberOfWeek(subscriptionTypesModel.getNumberOfWeek());
         subscriptionTypes.setNumberOfDay(subscriptionTypesModel.getNumberOfDay());
         subscriptionTypes.setCreateDate(subscriptionTypesModel.getCreateDate());
+        subscriptionTypes.setUpdateDate(subscriptionTypesModel.getUpdateDate());
         subscriptionTypes.setActive(true);
         repository.save(subscriptionTypes);
         return subscriptionTypesModel;
@@ -43,7 +40,11 @@ public class SubscriptionTypesServiceImpl implements SubscriptionTypesService {
 
     @Override
     public SubscriptionTypesModel getSubscriptionById(Long id) {
-        return convert.convertFromEntity(getById(id));
+        SubscriptionTypes subscriptionTypes = repository
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException
+                        ("Абонемент связанный с идентификатором " + id + " не найден"));
+        return subscriptionTypes.toModel();
     }
 
     @Override
@@ -73,24 +74,15 @@ public class SubscriptionTypesServiceImpl implements SubscriptionTypesService {
     public SubscriptionTypesModel deleteSubscriptionById(Long id) {
         SubscriptionTypes subscriptionTypes = getById(id);
         SubscriptionTypes deleteSubscription = setInActiveSubscriptionTypes(subscriptionTypes, -1L);
-        return convert.convertFromEntity(deleteSubscription);
+        return deleteSubscription.toModel();
     }
 
-    @Override
-    public SubscriptionTypes save(SubscriptionTypes subscriptionTypes) {
-        return repository.save(subscriptionTypes);
-    }
 
-    @Override
     public SubscriptionTypes getById(Long id) {
         return repository
                 .findById(id)
                 .orElseThrow(() ->
-                        new NotFoundException("Абонемент связанный с идентификатором " + id + " не найдено"));
-    }
-
-    @Override
-    public List<SubscriptionTypes> getAll() {
-        return repository.findAll();
+                        new NotFoundException
+                                ("Абонемент связанный с идентификатором " + id + " не найдено"));
     }
 }

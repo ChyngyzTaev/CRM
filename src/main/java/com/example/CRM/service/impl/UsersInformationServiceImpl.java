@@ -1,12 +1,11 @@
 package com.example.CRM.service.impl;
 
-import com.example.CRM.convert.BaseConvert;
 import com.example.CRM.entity.UsersInformation;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.exception.UserNotFoundException;
 import com.example.CRM.model.UsersInformationModel;
 import com.example.CRM.repository.UsersInformationRepository;
-import com.example.CRM.service.UsersInformationService;
+import com.example.CRM.service.UserInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,13 +14,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UsersInformationServiceImpl implements UsersInformationService {
+public class UsersInformationServiceImpl implements UserInformationService {
 
     @Autowired
     private UsersInformationRepository repository;
 
-    @Autowired
-    private BaseConvert<UsersInformationModel, UsersInformation> convert;
 
     @Override
     public UsersInformationModel addUserInfo(UsersInformationModel informationModel) {
@@ -42,14 +39,19 @@ public class UsersInformationServiceImpl implements UsersInformationService {
 
     @Override
     public UsersInformationModel getUserInfoById(Long id) {
-        return convert.convertFromEntity(getById(id));
+        UsersInformation usersInformation = repository
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException
+                        ("Информайия о пользователе связанный с идентификатором " + id + " не найден"));
+        return usersInformation.toModel();
     }
 
     @Override
     public List<UsersInformationModel> getAllUserInfo() {
-        return getAll()
+        return repository
+                .findAll()
                 .stream()
-                .map(convert::convertFromEntity)
+                .map(UsersInformation:: toModel)
                 .collect(Collectors.toList());
     }
 
@@ -85,24 +87,14 @@ public class UsersInformationServiceImpl implements UsersInformationService {
     public UsersInformationModel deleteUserInfoById(Long id) {
         UsersInformation usersInformation = getById(id);
         UsersInformation deleteUSer = setInActiveUserInformation(usersInformation, -1L);
-        return convert.convertFromEntity(deleteUSer);
+        return deleteUSer.toModel();
     }
 
-    @Override
-    public UsersInformation save(UsersInformation usersInformation) {
-        return repository.save(usersInformation);
-    }
 
-    @Override
     public UsersInformation getById(Long id) {
         return repository
                 .findById(id).orElseThrow(()->
-                        new NotFoundException("Информация о пользователе связанный с идентификатором "
-                                + id + " не найдено"));
-    }
-
-    @Override
-    public List<UsersInformation> getAll() {
-        return repository.findAll();
+                        new NotFoundException
+                                ("Информация о пользователе связанный с идентификатором " + id + " не найдено"));
     }
 }

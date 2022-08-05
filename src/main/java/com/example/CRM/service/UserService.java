@@ -5,7 +5,7 @@ import com.example.CRM.model.UserModel;
 
 import java.util.List;
 
-public interface UserService extends BaseService<User> {
+public interface UserService {
     UserModel addNewUser(UserModel userModel);
 
     User setInActiveUser(User user, Long status);

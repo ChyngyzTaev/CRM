@@ -25,15 +25,21 @@ public class RoleController {
             return new ResponseEntity<>(service.addNewRole(roleModel), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
             return new ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping("/get-role{id}")
-    public ResponseEntity<?> getRoleById(@PathVariable ("id") Long id){
+    @GetMapping("/get-role-by-id/{id}")
+    public ResponseEntity<?> getRoleById(@PathVariable Long id){
         try {
             return new ResponseEntity<>(service.getRoleById(id), HttpStatus.OK);
+        }catch (BadRequestException badRequestException){
+            return new ResponseEntity<>(badRequestException.getMessage(),HttpStatus.BAD_REQUEST);
         }catch (NotFoundException notFoundException){
-            return new ResponseEntity<>(notFoundException.getMessage(), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(notFoundException.getMessage(),HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -43,6 +49,19 @@ public class RoleController {
             return new ResponseEntity<>(service.getAllRole(),HttpStatus.OK);
         }catch (NotFoundException notFoundException){
             return new ResponseEntity<>(notFoundException.getMessage(), HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/delete-role-by-id/{id}")
+    public ResponseEntity<?> deleteRoleById(@PathVariable Long id){
+        try {
+            return new ResponseEntity<>(service.deleteRoleById(id), HttpStatus.OK);
+        }catch (BadRequestException badRequestException){
+            return new ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

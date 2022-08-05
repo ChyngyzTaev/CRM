@@ -3,7 +3,7 @@ package com.example.CRM.controller;
 import com.example.CRM.exception.BadRequestException;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.model.UsersInformationModel;
-import com.example.CRM.service.UsersInformationService;
+import com.example.CRM.service.UserInformationService;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api/information")
+@RequestMapping("/api/-users-information")
 public class UsersInformationController {
     @Autowired
-    private UsersInformationService service;
+    private UserInformationService service;
 
     @PostMapping("/add-new-user-info")
     public ResponseEntity<?> addUserInfo(@RequestBody UsersInformationModel informationModel) {
@@ -24,24 +24,32 @@ public class UsersInformationController {
             return new ResponseEntity<>(service.addUserInfo(informationModel), HttpStatus.OK);
         } catch (BadRequestException badRequestException) {
             return new ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/get-info/{id}")
-    public ResponseEntity<?> getUserInfoById(@PathVariable ("id") Long id) {
+    public ResponseEntity<?> getUserInfoById(@PathVariable Long id) {
         try {
             return new ResponseEntity<>(service.getUserInfoById(id), HttpStatus.OK);
+        }catch (BadRequestException badRequestException){
+            return new ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (NotFoundException notFoundException) {
-            return new ResponseEntity<>(notFoundException.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(notFoundException.getMessage(), HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/get-all-user-info")
-    public ResponseEntity<?> getAllUserInfo(UsersInformationModel informationModel) {
+    public ResponseEntity<?> getAllUserInfo() {
         try {
             return new ResponseEntity<>(service.getAllUserInfo(), HttpStatus.OK);
         } catch (NotFoundException notFoundException) {
-            return new ResponseEntity<>(notFoundException.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(notFoundException.getMessage(), HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -49,13 +57,21 @@ public class UsersInformationController {
     public ResponseEntity<?> updateUserInfo(@Valid @RequestBody UsersInformationModel informationModel){
         try {
             return new ResponseEntity<>(service.updateUserInfo(informationModel), HttpStatus.OK);
+        }catch (BadRequestException badRequestException){
+            return new ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
         }catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @DeleteMapping("/delete-user-info/{id}")
-    public void deleteUserInoById(@PathVariable("id") Long id){
-        service.deleteUserInfoById(id);
+    @DeleteMapping("/delete-user-info-by-id/{id}")
+    public ResponseEntity<?> deleteUserInoById(@PathVariable Long id){
+        try {
+            return new ResponseEntity<>(service.deleteUserInfoById(id), HttpStatus.OK);
+        }catch (BadRequestException badRequestException){
+            return new ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

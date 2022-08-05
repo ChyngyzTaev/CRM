@@ -1,7 +1,9 @@
 package com.example.CRM.entity;
 
+import com.example.CRM.model.UsersInformationModel;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -10,6 +12,7 @@ import java.time.LocalDate;
 @Table(name = "users_information")
 @Getter
 @Setter
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -23,9 +26,19 @@ public class UsersInformation extends BaseEntity{
     @Column(name = "phone_number")
     String phoneNumber;
 
-    boolean isActive;
-
     @OneToOne
     @JoinColumn(name = "user_id", nullable = false, unique = true)
-    User users;
+    User user;
+
+    public UsersInformationModel toModel(){
+        return UsersInformationModel.builder()
+                .id(this.getId())
+                .fullName(fullName)
+                .birthday(birthDay)
+                .phoneNumber(phoneNumber)
+                .createDate(this.getCreateDate())
+                .updateDate(this.getUpdateDate())
+                .isActive(true)
+                .build();
+    }
 }

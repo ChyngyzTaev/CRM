@@ -1,8 +1,6 @@
 package com.example.CRM.service.impl;
 
-import com.example.CRM.convert.BaseConvert;
 import com.example.CRM.entity.GeneralRecord;
-import com.example.CRM.entity.Role;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.model.GeneralRecordModel;
 import com.example.CRM.repository.GeneralRecordRepository;
@@ -18,15 +16,11 @@ public class GeneralRecordServiceImpl implements GeneralRecordService {
     @Autowired
     private GeneralRecordRepository repository;
 
-    @Autowired
-    private BaseConvert<GeneralRecordModel, GeneralRecord> convert;
-
 
     @Override
     public GeneralRecordModel addNewGeneralRecord(GeneralRecordModel generalRecordModel) {
         GeneralRecord generalRecord = new GeneralRecord();
         generalRecord.setId(generalRecordModel.getId());
-        generalRecord.prePersist();
         generalRecord.prePersist();
         repository.save(generalRecord);
         return generalRecordModel;
@@ -35,32 +29,18 @@ public class GeneralRecordServiceImpl implements GeneralRecordService {
 
     @Override
     public GeneralRecordModel getGeneralRecordById(Long id) {
-        return convert.convertFromEntity(getById(id));
+        GeneralRecord generalRecord = repository
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException
+                        ("Общая запись связанная с идентификатором " + id + " не найдена"));
+        return generalRecord.toModel();
     }
 
     @Override
     public List<GeneralRecordModel> getAllGeneralRecord() {
-        return getAll()
+        return repository.findAll()
                 .stream()
-                .map(convert::convertFromEntity)
+                .map(GeneralRecord::toModel)
                 .collect(Collectors.toList());
-    }
-
-    @Override
-    public GeneralRecord save(GeneralRecord generalRecord) {
-        return repository.save(generalRecord);
-    }
-
-    @Override
-    public GeneralRecord getById(Long id) {
-        return repository
-                .findById(id)
-                .orElseThrow(() ->
-                        new NotFoundException("Запись связанный с идентификатором " + id + "не найдено"));
-    }
-
-    @Override
-    public List<GeneralRecord> getAll() {
-        return repository.findAll();
     }
 }

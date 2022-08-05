@@ -1,6 +1,5 @@
 package com.example.CRM.controller;
 
-import com.example.CRM.entity.User;
 import com.example.CRM.exception.BadRequestException;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.model.UserModel;
@@ -61,15 +60,21 @@ public class UserController {
             return new ResponseEntity<>(service.addNewUser(usersModel), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
             return new ResponseEntity<>(badRequestException.getMessage(),HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping("/get-user/{id}")
-    public ResponseEntity<?> getUserById (@PathVariable ("id") Long id){
+    @GetMapping("/get-user-by-id/{id}")
+    public ResponseEntity<?> getUserById (@PathVariable Long id){
         try {
             return new ResponseEntity<>(service.getUserById(id), HttpStatus.OK);
+        }catch (BadRequestException badRequestException){
+            return new  ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
         }catch (NotFoundException notFoundException){
-            return new  ResponseEntity<>(notFoundException.getMessage(), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(notFoundException.getMessage(),HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -79,12 +84,20 @@ public class UserController {
             return new ResponseEntity<>(service.getAllUsers(), HttpStatus.OK);
         }catch (NotFoundException notFoundException){
             return new ResponseEntity<>(notFoundException.getMessage(),HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @DeleteMapping("/delete-user/{id}")
-    public void deleteUserById(@PathVariable ("id") User users, Long id){
-        service.deleteUserById(id);
+    @DeleteMapping("/delete-user-by-id/{id}")
+    public ResponseEntity<?> deleteUserById(@PathVariable Long id){
+        try {
+            return new ResponseEntity<>(service.deleteUserById(id), HttpStatus.OK);
+        }catch (BadRequestException badRequestException){
+            return new ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     private ResponseEntity<?> getErrorAuthorizationMessage(String message) {

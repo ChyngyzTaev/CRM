@@ -1,6 +1,5 @@
 package com.example.CRM.service.impl;
 
-import com.example.CRM.convert.BaseConvert;
 import com.example.CRM.entity.Trainer;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.model.TrainerModel;
@@ -17,8 +16,6 @@ public class TrainerServiceImpl implements TrainerService {
     @Autowired
     private TrainerRepository repository;
 
-    @Autowired
-    private BaseConvert<TrainerModel, Trainer> convert;
 
     @Override
     public TrainerModel addNewTrainer(TrainerModel trainerModel) {
@@ -40,14 +37,19 @@ public class TrainerServiceImpl implements TrainerService {
 
     @Override
     public TrainerModel getTrainerById(Long id) {
-        return convert.convertFromEntity(getById(id));
+        Trainer trainer = repository
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException
+                        ("Тренер связанный с идентификатором " + id + " не найден"));
+        return trainer.toModel();
     }
 
     @Override
     public List<TrainerModel> getAllTrainer() {
-        return getAll()
+        return repository
+                .findAll()
                 .stream()
-                .map(convert::convertFromEntity)
+                .map(Trainer::toModel)
                 .collect(Collectors.toList());
     }
 
@@ -55,24 +57,14 @@ public class TrainerServiceImpl implements TrainerService {
     public TrainerModel deleteTrainerById(Long id) {
         Trainer trainer = getById(id);
         Trainer deleteTrainer = setInActiveTrainer(trainer, -1L);
-        return convert.convertFromEntity(deleteTrainer);
+        return deleteTrainer.toModel();
     }
 
-    @Override
-    public Trainer save(Trainer trainer) {
-        return repository.save(trainer);
-    }
-
-    @Override
     public Trainer getById(Long id) {
         return repository
                 .findById(id)
                 .orElseThrow(() ->
-                        new NotFoundException("Тренер связанный с идентификатором " + id + " не найдено"));
-    }
-
-    @Override
-    public List<Trainer> getAll() {
-        return repository.findAll();
+                        new NotFoundException
+                                ("Тренер связанный с идентификатором " + id + " не найдено"));
     }
 }

@@ -5,7 +5,7 @@ import com.example.CRM.model.UsersInformationModel;
 
 import java.util.List;
 
-public interface UsersInformationService extends BaseService<UsersInformation>{
+public interface UserInformationService{
     UsersInformationModel addUserInfo(UsersInformationModel informationModel);
 
     UsersInformation setInActiveUserInformation(UsersInformation information, Long status);

@@ -1,14 +1,11 @@
 package com.example.CRM.service;
 
-import com.example.CRM.entity.Journal;
 import com.example.CRM.model.JournalModel;
 
 import java.util.List;
 
-public interface JournalService extends BaseService<Journal> {
+public interface JournalService {
     JournalModel addNewJournal(JournalModel journalModel);
-
-    Journal setInActiveJournal(Journal journal, Long status);
 
     JournalModel getJournalById(Long id);
 

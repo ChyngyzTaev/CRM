@@ -1,36 +1,45 @@
 package com.example.CRM.entity;
 
 import com.example.CRM.enums.WeekDayEnum;
-import com.example.CRM.model.ChartModel;
+import com.example.CRM.model.ListExercisesModel;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(name = "chart")
+@Table(name = "list_exercises")
 @Getter
 @Setter
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Chart extends BaseEntity {
-    @Enumerated
+//Cписок упражений
+public class ListExercises extends BaseEntity{
+
+    @Column(name = "name_exercise")
+    String nameExercise;
+
+    @OneToMany
+    @JoinColumn(name = "user_id")
+    List<User> user;
+
+    @Enumerated(EnumType.STRING)
     @Column(name = "weekday_enums")
     WeekDayEnum weekDayEnum;
 
-    @OneToOne
-    @JoinColumn(name = "schedule_id")
-    ListExercises schedule;
 
-    public ChartModel toModel() {
-        return ChartModel.builder()
+
+    public ListExercisesModel toModel(){
+        return ListExercisesModel.builder()
                 .id(this.getId())
+                .nameExercise(nameExercise)
                 .createDate(this.getCreateDate())
-                .isActive(true)
                 .updateDate(this.getUpdateDate())
+                .isActive(true)
                 .build();
     }
 }

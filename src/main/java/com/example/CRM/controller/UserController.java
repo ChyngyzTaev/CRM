@@ -1,10 +1,8 @@
 package com.example.CRM.controller;
 
-import com.example.CRM.entity.Role;
 import com.example.CRM.exception.BadRequestException;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.model.user.CreateUserModel;
-import com.example.CRM.model.user.UserModel;
 import com.example.CRM.request.AuthenticationRequest;
 import com.example.CRM.response.AuthenticationResponse;
 import com.example.CRM.security.jwt.JwtUtil;
@@ -20,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/user")
 public class UserController {
     @Autowired
-    private UserService service;
+    private UserService userService;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -31,7 +29,7 @@ public class UserController {
     @PostMapping("/add-new-user")
     public ResponseEntity<?> addNewUser(@RequestBody CreateUserModel createUserModel){
         try {
-            return new ResponseEntity<>(service.addNewUser(createUserModel), HttpStatus.OK);
+            return new ResponseEntity<>(userService.addNewUser(createUserModel), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
             return new ResponseEntity<>(badRequestException.getMessage(),HttpStatus.BAD_REQUEST);
         }catch (Exception e){
@@ -42,7 +40,7 @@ public class UserController {
     @PostMapping("/add-new-trainer")
     public ResponseEntity<?> addNewTrainer(@RequestBody CreateUserModel createUserModel ){
         try {
-            return new ResponseEntity<>(service.addNewTrainer(createUserModel), HttpStatus.OK);
+            return new ResponseEntity<>(userService.addNewTrainer(createUserModel), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
             return new ResponseEntity<>(badRequestException.getMessage(),HttpStatus.BAD_REQUEST);
         }catch (Exception e){
@@ -53,7 +51,7 @@ public class UserController {
     @PostMapping("/add-new-manager")
     public ResponseEntity<?> addNewManager(@RequestBody CreateUserModel createUserModel){
         try {
-            return new ResponseEntity<>(service.addNewManager(createUserModel), HttpStatus.OK);
+            return new ResponseEntity<>(userService.addNewManager(createUserModel), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
             return new ResponseEntity<>(badRequestException.getMessage(),HttpStatus.BAD_REQUEST);
         }catch (Exception e){
@@ -64,9 +62,22 @@ public class UserController {
     @PostMapping("/add-new-admin")
     public ResponseEntity<?> addNewAdmin(@RequestBody CreateUserModel createUserModel ){
         try {
-            return new ResponseEntity<>(service.addNewAdmin(createUserModel), HttpStatus.OK);
+            return new ResponseEntity<>(userService.addNewAdmin(createUserModel), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
             return new ResponseEntity<>(badRequestException.getMessage(),HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/get-user-by-userName")
+    public ResponseEntity<?> getUserByUserName(String username){
+        try {
+            return new ResponseEntity<>(userService.getUserByUserName(username), HttpStatus.OK);
+        }catch (BadRequestException badRequestException){
+            return new ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
+        }catch (NotFoundException notFoundException){
+            return new ResponseEntity<>(notFoundException.getMessage(), HttpStatus.NOT_FOUND);
         }catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -75,7 +86,7 @@ public class UserController {
     @GetMapping("/get-user-by-id/{id}")
     public ResponseEntity<?> getUserById (@PathVariable Long id){
         try {
-            return new ResponseEntity<>(service.getUserById(id), HttpStatus.OK);
+            return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
             return new  ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
         }catch (NotFoundException notFoundException){
@@ -88,7 +99,7 @@ public class UserController {
     @GetMapping("/get-trainer-by-id/{id}")
     public ResponseEntity<?> getTrainerById (@PathVariable Long id){
         try {
-            return new ResponseEntity<>(service.getTrainerById(id), HttpStatus.OK);
+            return new ResponseEntity<>(userService.getTrainerById(id), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
             return new  ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
         }catch (NotFoundException notFoundException){
@@ -101,7 +112,7 @@ public class UserController {
     @GetMapping("/get-manager-by-id/{id}")
     public ResponseEntity<?> getManagerById (@PathVariable Long id){
         try {
-            return new ResponseEntity<>(service.getManagerById(id), HttpStatus.OK);
+            return new ResponseEntity<>(userService.getManagerById(id), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
             return new  ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
         }catch (NotFoundException notFoundException){
@@ -114,7 +125,7 @@ public class UserController {
     @GetMapping("/get-admin-by-id/{id}")
     public ResponseEntity<?> getAdminById (@PathVariable Long id){
         try {
-            return new ResponseEntity<>(service.getAdminById(id), HttpStatus.OK);
+            return new ResponseEntity<>(userService.getAdminById(id), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
             return new  ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
         }catch (NotFoundException notFoundException){
@@ -127,7 +138,7 @@ public class UserController {
     @GetMapping("/get-all-users")
     public ResponseEntity<?> getAllUsers(){
         try {
-            return new ResponseEntity<>(service.getAllUsers(), HttpStatus.OK);
+            return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
         }catch (NotFoundException notFoundException){
             return new ResponseEntity<>(notFoundException.getMessage(),HttpStatus.NOT_FOUND);
         }catch (Exception e){
@@ -138,7 +149,7 @@ public class UserController {
     @DeleteMapping("/delete-user-by-id/{id}")
     public ResponseEntity<?> deleteUserById(@PathVariable Long id){
         try {
-            return new ResponseEntity<>(service.deleteUserById(id), HttpStatus.OK);
+            return new ResponseEntity<>(userService.deleteUserById(id), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
             return new ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
         }catch (Exception e){

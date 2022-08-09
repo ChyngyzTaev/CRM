@@ -3,7 +3,6 @@ package com.example.CRM.controller;
 import com.example.CRM.exception.BadRequestException;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.model.Role.CreateRoleModel;
-import com.example.CRM.model.Role.RoleModel;
 import com.example.CRM.model.Role.UpdateRoleModel;
 import com.example.CRM.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +18,27 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/role")
 public class RoleController {
     @Autowired
-    private RoleService service;
+    private RoleService roleService;
 
     @PostMapping("/add-new-role")
     public ResponseEntity<?> addNewRole(@RequestBody CreateRoleModel roleModel){
         try {
-            return new ResponseEntity<>(service.addNewRole(roleModel), HttpStatus.OK);
+            return new ResponseEntity<>(roleService.addNewRole(roleModel), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
             return new ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("get-role-by-roleName")
+    public ResponseEntity<?> getRoleByRoleName(String roleName){
+        try {
+            return new ResponseEntity<>(roleService.getRoleByRoleName(roleName), HttpStatus.OK);
+        }catch (BadRequestException badRequestException){
+            return new ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
+        }catch (NotFoundException notFoundException){
+            return new ResponseEntity<>(notFoundException.getMessage(), HttpStatus.NOT_FOUND);
         }catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -35,7 +47,7 @@ public class RoleController {
     @GetMapping("/get-role-by-id/{id}")
     public ResponseEntity<?> getRoleById(@PathVariable Long id){
         try {
-            return new ResponseEntity<>(service.getRoleById(id), HttpStatus.OK);
+            return new ResponseEntity<>(roleService.getRoleById(id), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
             return new ResponseEntity<>(badRequestException.getMessage(),HttpStatus.BAD_REQUEST);
         }catch (NotFoundException notFoundException){
@@ -48,7 +60,7 @@ public class RoleController {
     @GetMapping("/get-all-role")
     public ResponseEntity<?> getAllRole(){
         try {
-            return new ResponseEntity<>(service.getAllRole(),HttpStatus.OK);
+            return new ResponseEntity<>(roleService.getAllRole(),HttpStatus.OK);
         }catch (NotFoundException notFoundException){
             return new ResponseEntity<>(notFoundException.getMessage(), HttpStatus.NOT_FOUND);
         }catch (Exception e){
@@ -56,10 +68,10 @@ public class RoleController {
         }
     }
 
-    @PutMapping
+    @PutMapping("/update-role")
     public ResponseEntity<?> updateRole(UpdateRoleModel roleModel){
         try {
-            return new ResponseEntity<>(service.updateRole(roleModel), HttpStatus.OK);
+            return new ResponseEntity<>(roleService.updateRole(roleModel), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
             return new ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
         }catch (Exception e){
@@ -70,7 +82,7 @@ public class RoleController {
     @DeleteMapping("/delete-role-by-id/{id}")
     public ResponseEntity<?> deleteRoleById(@PathVariable Long id){
         try {
-            return new ResponseEntity<>(service.deleteRoleById(id), HttpStatus.OK);
+            return new ResponseEntity<>(roleService.deleteRoleById(id), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
             return new ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
         }catch (Exception e){

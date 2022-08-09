@@ -3,7 +3,6 @@ package com.example.CRM.controller;
 import com.example.CRM.exception.BadRequestException;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.model.ListExercises.CreateListExercisesModel;
-import com.example.CRM.model.ListExercises.ListExercisesModel;
 import com.example.CRM.model.ListExercises.UpdateListExercisesModel;
 import com.example.CRM.service.ListExercisesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +14,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/list-exercises")
 public class ListExercisesController {
     @Autowired
-    private ListExercisesService service;
+    private ListExercisesService listExercisesService;
 
     @PostMapping("/add-new-list-exercises")
     public ResponseEntity<?> addNewSchedule(@RequestBody CreateListExercisesModel scheduleModel){
         try {
-            return new ResponseEntity<>(service.addNewSchedule(scheduleModel), HttpStatus.OK);
+            return new ResponseEntity<>(listExercisesService.addNewSchedule(scheduleModel), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
             return new ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
         }catch (Exception e){
@@ -31,7 +30,7 @@ public class ListExercisesController {
     @GetMapping("/get-list-exercises-by-id/{id}")
     public ResponseEntity<?> getScheduleById(@PathVariable Long id){
         try {
-            return new ResponseEntity<>(service.getScheduleById(id), HttpStatus.OK);
+            return new ResponseEntity<>(listExercisesService.getScheduleById(id), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
             return new ResponseEntity<>(badRequestException.getMessage(),HttpStatus.BAD_REQUEST);
         }catch (NotFoundException notFoundException){
@@ -44,7 +43,7 @@ public class ListExercisesController {
     @GetMapping("/get-all-list-exercises")
     public ResponseEntity<?> getAllSchedule(){
         try {
-            return new ResponseEntity<>(service.getAllSchedule(), HttpStatus.OK);
+            return new ResponseEntity<>(listExercisesService.getAllSchedule(), HttpStatus.OK);
         }catch (NotFoundException notFoundException){
             return new ResponseEntity<>(notFoundException.getMessage(),HttpStatus.NOT_FOUND);
         }catch (Exception e){
@@ -55,7 +54,7 @@ public class ListExercisesController {
     @PutMapping("/update-list-exercises")
     public ResponseEntity<?> updateSchedule(@RequestBody UpdateListExercisesModel scheduleModel){
         try {
-            return new ResponseEntity<>(service.updateSchedule(scheduleModel), HttpStatus.OK);
+            return new ResponseEntity<>(listExercisesService.updateSchedule(scheduleModel), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
             return new ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
         }catch (Exception e){
@@ -66,7 +65,7 @@ public class ListExercisesController {
     @DeleteMapping("/delete-list-exercises-by-id/{id}")
     public ResponseEntity<?> deleteScheduleById(@PathVariable Long id){
         try {
-            return new ResponseEntity<>(service.deleteScheduleById(id), HttpStatus.OK);
+            return new ResponseEntity<>(listExercisesService.deleteScheduleById(id), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
             return new ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
         }catch (Exception e){

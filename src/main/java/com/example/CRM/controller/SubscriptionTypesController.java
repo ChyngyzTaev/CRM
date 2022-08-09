@@ -3,7 +3,6 @@ package com.example.CRM.controller;
 import com.example.CRM.exception.BadRequestException;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.model.subscriptionTypes.CreateSubscriptionTypesModel;
-import com.example.CRM.model.subscriptionTypes.SubscriptionTypesModel;
 import com.example.CRM.model.subscriptionTypes.UpdateSubscriptionTypesModel;
 import com.example.CRM.service.SubscriptionTypesService;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
@@ -16,12 +15,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/subscription")
 public class SubscriptionTypesController {
     @Autowired
-    private SubscriptionTypesService service;
+    private SubscriptionTypesService subscriptionTypesService;
 
     @PostMapping("/add-new-subscription")
     public ResponseEntity<?> addSubscription(@RequestBody CreateSubscriptionTypesModel subscriptionTypesModel){
         try {
-            return new ResponseEntity<>(service.addSubscription(subscriptionTypesModel) , HttpStatus.OK);
+            return new ResponseEntity<>(subscriptionTypesService.addSubscription(subscriptionTypesModel) , HttpStatus.OK);
         }catch (BadRequestException badRequestException){
             return new ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
         }catch (Exception e){
@@ -32,7 +31,7 @@ public class SubscriptionTypesController {
     @GetMapping("/get-subscription-by-id/{id}")
     public ResponseEntity<?> getSubscriptionById(@PathVariable Long id){
         try {
-            return new ResponseEntity<>(service.getSubscriptionById(id),HttpStatus.OK);
+            return new ResponseEntity<>(subscriptionTypesService.getSubscriptionById(id),HttpStatus.OK);
         }catch (BadRequestException badRequestException){
             return new ResponseEntity<>(badRequestException.getMessage(),HttpStatus.BAD_REQUEST);
         }catch (NotFoundException notFoundException){
@@ -45,7 +44,7 @@ public class SubscriptionTypesController {
     @PutMapping("/update-subscription")
     public ResponseEntity<?> updateSubscription(@RequestBody UpdateSubscriptionTypesModel subscriptionTypesModel){
         try {
-            return new ResponseEntity<>(service.updateSubscription(subscriptionTypesModel), HttpStatus.OK);
+            return new ResponseEntity<>(subscriptionTypesService.updateSubscription(subscriptionTypesModel), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
             return new ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
         }catch (Exception e){
@@ -56,7 +55,7 @@ public class SubscriptionTypesController {
     @DeleteMapping("/delete-subscription-by-id/{id}")
     public ResponseEntity<?> deleteSubscriptionById(@PathVariable Long id){
         try {
-            return new ResponseEntity<>(service.deleteSubscriptionById(id), HttpStatus.OK);
+            return new ResponseEntity<>(subscriptionTypesService.deleteSubscriptionById(id), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
             return new ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
         }catch (Exception e){

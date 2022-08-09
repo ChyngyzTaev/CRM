@@ -2,12 +2,16 @@ package com.example.CRM.service.impl;
 
 import com.example.CRM.entity.Role;
 import com.example.CRM.exception.NotFoundException;
-import com.example.CRM.model.RoleModel;
+import com.example.CRM.exception.UserNotFoundException;
+import com.example.CRM.model.Role.CreateRoleModel;
+import com.example.CRM.model.Role.RoleModel;
+import com.example.CRM.model.Role.UpdateRoleModel;
 import com.example.CRM.repository.RoleRepository;
 import com.example.CRM.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.security.InvalidParameterException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,41 +19,70 @@ import java.util.stream.Collectors;
 public class RoleServiceImpl implements RoleService {
 
     @Autowired
-    private RoleRepository repository;
+    private RoleRepository roleRepository;
 
 
     @Override
-    public RoleModel addNewRole(RoleModel roleModel) {
+    public CreateRoleModel addNewRole(CreateRoleModel roleModel) {
         Role role = new Role();
-        role.setId(roleModel.getId());
         role.setCreateDate(roleModel.getCreateDate());
         role.setActive(true);
-        role.setRoleName(roleModel.getRoleName());
-        repository.save(role);
+        role.setRolesEnum(roleModel.getRoleName());
+        roleRepository.save(role);
         return roleModel;
     }
 
     @Override
     public Role setInActiveRole(Role role, Long status) {
         role.setActive(true);
-        return repository.save(role);
+        return roleRepository.save(role);
     }
 
     @Override
     public RoleModel getRoleById(Long id) {
-        Role role = repository
+        Role role = roleRepository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException("Роль связанный с идентификатором " + id + " не найден"));
         return role.toModel();
     }
 
     @Override
+    public Role getRoleByRoleName(String roleName) {
+        return roleRepository.findByRolesEnum(roleName)
+                .orElseThrow(() -> new NotFoundException("Роль не найден"));
+    }
+
+
+
+    @Override
     public List<RoleModel> getAllRole() {
-        return repository
+        return roleRepository
                 .findAll()
                 .stream()
                 .map(Role::toModel)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public UpdateRoleModel updateRole(UpdateRoleModel roleModel) {
+        if (roleModel == null){
+            throw new UserNotFoundException("Созданная информация о пользователе имеет " + "пустое" + "значение");
+        }else if (roleModel.getId() == null){
+            throw new InvalidParameterException("Id роли не может иметь пустое значени");
+        }
+
+        Role role = roleRepository.getById(roleModel.getId());
+        if (role == null) {
+            throw new UserNotFoundException
+                    ("Роль по id не найден " + roleModel.getId());
+        }
+
+        role.setRolesEnum(roleModel.getRoleName());
+        role.setCreateDate(roleModel.getCreateDate());
+
+        role = roleRepository.save(role);
+
+        return roleModel;
     }
 
     @Override
@@ -61,7 +94,7 @@ public class RoleServiceImpl implements RoleService {
 
 
     public Role getById(Long id) {
-        return repository
+        return roleRepository
                 .findById(id)
                 .orElseThrow(() -> new
                         NotFoundException

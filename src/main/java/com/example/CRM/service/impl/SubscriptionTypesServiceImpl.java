@@ -3,44 +3,43 @@ package com.example.CRM.service.impl;
 import com.example.CRM.entity.SubscriptionTypes;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.exception.UserNotFoundException;
-import com.example.CRM.model.SubscriptionTypesModel;
+import com.example.CRM.model.subscriptionTypes.CreateSubscriptionTypesModel;
+import com.example.CRM.model.subscriptionTypes.SubscriptionTypesModel;
+import com.example.CRM.model.subscriptionTypes.UpdateSubscriptionTypesModel;
 import com.example.CRM.repository.SubscriptionTypesRepository;
 import com.example.CRM.service.SubscriptionTypesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.security.InvalidParameterException;
-import java.util.List;
 
 @Service
 public class SubscriptionTypesServiceImpl implements SubscriptionTypesService {
     @Autowired
-    private SubscriptionTypesRepository repository;
+    private SubscriptionTypesRepository subscriptionTypesRepository;
 
 
     @Override
-    public SubscriptionTypesModel addSubscription(SubscriptionTypesModel subscriptionTypesModel) {
+    public CreateSubscriptionTypesModel addSubscription(CreateSubscriptionTypesModel subscriptionTypesModel) {
         SubscriptionTypes subscriptionTypes = new SubscriptionTypes();
-        subscriptionTypes.setId(subscriptionTypesModel.getId());
         subscriptionTypes.setNumberOfMonth(subscriptionTypesModel.getNumberOfMonth());
         subscriptionTypes.setNumberOfWeek(subscriptionTypesModel.getNumberOfWeek());
         subscriptionTypes.setNumberOfDay(subscriptionTypesModel.getNumberOfDay());
         subscriptionTypes.setCreateDate(subscriptionTypesModel.getCreateDate());
-        subscriptionTypes.setUpdateDate(subscriptionTypesModel.getUpdateDate());
         subscriptionTypes.setActive(true);
-        repository.save(subscriptionTypes);
+        subscriptionTypesRepository.save(subscriptionTypes);
         return subscriptionTypesModel;
     }
 
     @Override
     public SubscriptionTypes setInActiveSubscriptionTypes(SubscriptionTypes subscriptionTypes, Long status) {
         subscriptionTypes.setActive(true);
-        return repository.save(subscriptionTypes);
+        return subscriptionTypesRepository.save(subscriptionTypes);
     }
 
     @Override
     public SubscriptionTypesModel getSubscriptionById(Long id) {
-        SubscriptionTypes subscriptionTypes = repository
+        SubscriptionTypes subscriptionTypes = subscriptionTypesRepository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException
                         ("Абонемент связанный с идентификатором " + id + " не найден"));
@@ -48,14 +47,14 @@ public class SubscriptionTypesServiceImpl implements SubscriptionTypesService {
     }
 
     @Override
-    public SubscriptionTypesModel updateSubscription(SubscriptionTypesModel subscriptionTypesModel) {
+    public UpdateSubscriptionTypesModel updateSubscription(UpdateSubscriptionTypesModel subscriptionTypesModel) {
         if (subscriptionTypesModel == null) {
             throw new UserNotFoundException("Созданная информация о пользователе имеет " + "пустое" + "значение");
         } else if (subscriptionTypesModel.getId() == null) {
-            throw new InvalidParameterException("Id информации не может быть пустым");
+            throw new InvalidParameterException("Id абонемента  не может иметь пустое значени");
         }
 
-        SubscriptionTypes subscriptionTypes = repository.getById(subscriptionTypesModel.getId());
+        SubscriptionTypes subscriptionTypes = subscriptionTypesRepository.getById(subscriptionTypesModel.getId());
         if (subscriptionTypes == null) {
             throw new UserNotFoundException
                     ("Абонимент по id не нанйдено " + subscriptionTypesModel.getId());
@@ -64,8 +63,9 @@ public class SubscriptionTypesServiceImpl implements SubscriptionTypesService {
         subscriptionTypes.setNumberOfMonth(subscriptionTypesModel.getNumberOfMonth());
         subscriptionTypes.setNumberOfWeek(subscriptionTypesModel.getNumberOfWeek());
         subscriptionTypes.setNumberOfDay(subscriptionTypesModel.getNumberOfDay());
+        subscriptionTypes.setCreateDate(subscriptionTypesModel.getCreateDate());
 
-        subscriptionTypes = repository.save(subscriptionTypes);
+        subscriptionTypes = subscriptionTypesRepository.save(subscriptionTypes);
 
         return subscriptionTypesModel;
     }
@@ -79,7 +79,7 @@ public class SubscriptionTypesServiceImpl implements SubscriptionTypesService {
 
 
     public SubscriptionTypes getById(Long id) {
-        return repository
+        return subscriptionTypesRepository
                 .findById(id)
                 .orElseThrow(() ->
                         new NotFoundException

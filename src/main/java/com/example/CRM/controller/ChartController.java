@@ -2,7 +2,8 @@ package com.example.CRM.controller;
 
 import com.example.CRM.exception.BadRequestException;
 import com.example.CRM.exception.NotFoundException;
-import com.example.CRM.model.ChartModel;
+import com.example.CRM.model.chart.ChartModel;
+import com.example.CRM.model.chart.CreateChartModel;
 import com.example.CRM.service.ChartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,7 +17,7 @@ public class ChartController {
     private ChartService service;
 
     @PostMapping("/add-new-chart")
-    public ResponseEntity<?> addNewChart(@RequestBody ChartModel chartModel){
+    public ResponseEntity<?> addNewChart(@RequestBody CreateChartModel chartModel){
         try {
             return new ResponseEntity<>(service.addNewChart(chartModel), HttpStatus.OK);
         }catch (BadRequestException badRequestException){

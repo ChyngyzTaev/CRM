@@ -1,13 +1,11 @@
 package com.example.CRM.entity;
 
-import com.example.CRM.model.SubscriptionTypesModel;
+import com.example.CRM.model.subscriptionTypes.SubscriptionTypesModel;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "subscription_types")
@@ -26,6 +24,7 @@ public class SubscriptionTypes extends BaseEntity {
 
     @Column(name = "number_of_day")
     Long numberOfDay;
+
 
     public SubscriptionTypesModel toModel(){
         return SubscriptionTypesModel.builder()

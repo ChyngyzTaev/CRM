@@ -2,7 +2,9 @@ package com.example.CRM.controller;
 
 import com.example.CRM.exception.BadRequestException;
 import com.example.CRM.exception.NotFoundException;
-import com.example.CRM.model.RoleModel;
+import com.example.CRM.model.Role.CreateRoleModel;
+import com.example.CRM.model.Role.RoleModel;
+import com.example.CRM.model.Role.UpdateRoleModel;
 import com.example.CRM.service.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,13 +16,13 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api-role")
+@RequestMapping("/api/role")
 public class RoleController {
     @Autowired
     private RoleService service;
 
     @PostMapping("/add-new-role")
-    public ResponseEntity<?> addNewRole(@RequestBody RoleModel roleModel){
+    public ResponseEntity<?> addNewRole(@RequestBody CreateRoleModel roleModel){
         try {
             return new ResponseEntity<>(service.addNewRole(roleModel), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
@@ -49,6 +51,17 @@ public class RoleController {
             return new ResponseEntity<>(service.getAllRole(),HttpStatus.OK);
         }catch (NotFoundException notFoundException){
             return new ResponseEntity<>(notFoundException.getMessage(), HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping
+    public ResponseEntity<?> updateRole(UpdateRoleModel roleModel){
+        try {
+            return new ResponseEntity<>(service.updateRole(roleModel), HttpStatus.OK);
+        }catch (BadRequestException badRequestException){
+            return new ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
         }catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }

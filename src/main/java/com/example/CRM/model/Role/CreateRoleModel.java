@@ -1,10 +1,12 @@
-package com.example.CRM.model;
+package com.example.CRM.model.Role;
 
+import com.example.CRM.enums.RolesEnum;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 
 import javax.validation.constraints.NotBlank;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -12,10 +14,14 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class TrainerModel extends BaseModel{
-    @NotBlank
-    String fullName;
+public class CreateRoleModel {
+
+    boolean isActive;
+
+    LocalDateTime createDate;
+
+    LocalDateTime updateDate;
 
     @NotBlank
-    Long age;
+    RolesEnum roleName;
 }

@@ -27,8 +27,13 @@ public class BaseEntity {
     @Column(name = "update_date")
     LocalDateTime updateDate;
 
-    @PrePersist
-    public void prePersist() {
+    @PostPersist
+    public void postPersist() {
         this.createDate = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        this.updateDate = LocalDateTime.now();
     }
 }

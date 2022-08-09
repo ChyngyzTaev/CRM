@@ -1,8 +1,10 @@
 package com.example.CRM.controller;
 
+import com.example.CRM.entity.Role;
 import com.example.CRM.exception.BadRequestException;
 import com.example.CRM.exception.NotFoundException;
-import com.example.CRM.model.UserModel;
+import com.example.CRM.model.user.CreateUserModel;
+import com.example.CRM.model.user.UserModel;
 import com.example.CRM.request.AuthenticationRequest;
 import com.example.CRM.response.AuthenticationResponse;
 import com.example.CRM.security.jwt.JwtUtil;
@@ -25,6 +27,124 @@ public class UserController {
 
     @Autowired
     private UserDetailsService userDetailsService;
+
+    @PostMapping("/add-new-user")
+    public ResponseEntity<?> addNewUser(@RequestBody CreateUserModel createUserModel){
+        try {
+            return new ResponseEntity<>(service.addNewUser(createUserModel), HttpStatus.OK);
+        }catch (BadRequestException badRequestException){
+            return new ResponseEntity<>(badRequestException.getMessage(),HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/add-new-trainer")
+    public ResponseEntity<?> addNewTrainer(@RequestBody CreateUserModel createUserModel ){
+        try {
+            return new ResponseEntity<>(service.addNewTrainer(createUserModel), HttpStatus.OK);
+        }catch (BadRequestException badRequestException){
+            return new ResponseEntity<>(badRequestException.getMessage(),HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/add-new-manager")
+    public ResponseEntity<?> addNewManager(@RequestBody CreateUserModel createUserModel){
+        try {
+            return new ResponseEntity<>(service.addNewManager(createUserModel), HttpStatus.OK);
+        }catch (BadRequestException badRequestException){
+            return new ResponseEntity<>(badRequestException.getMessage(),HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/add-new-admin")
+    public ResponseEntity<?> addNewAdmin(@RequestBody CreateUserModel createUserModel ){
+        try {
+            return new ResponseEntity<>(service.addNewAdmin(createUserModel), HttpStatus.OK);
+        }catch (BadRequestException badRequestException){
+            return new ResponseEntity<>(badRequestException.getMessage(),HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/get-user-by-id/{id}")
+    public ResponseEntity<?> getUserById (@PathVariable Long id){
+        try {
+            return new ResponseEntity<>(service.getUserById(id), HttpStatus.OK);
+        }catch (BadRequestException badRequestException){
+            return new  ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
+        }catch (NotFoundException notFoundException){
+            return new ResponseEntity<>(notFoundException.getMessage(), HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/get-trainer-by-id/{id}")
+    public ResponseEntity<?> getTrainerById (@PathVariable Long id){
+        try {
+            return new ResponseEntity<>(service.getTrainerById(id), HttpStatus.OK);
+        }catch (BadRequestException badRequestException){
+            return new  ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
+        }catch (NotFoundException notFoundException){
+            return new ResponseEntity<>(notFoundException.getMessage(), HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/get-manager-by-id/{id}")
+    public ResponseEntity<?> getManagerById (@PathVariable Long id){
+        try {
+            return new ResponseEntity<>(service.getManagerById(id), HttpStatus.OK);
+        }catch (BadRequestException badRequestException){
+            return new  ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
+        }catch (NotFoundException notFoundException){
+            return new ResponseEntity<>(notFoundException.getMessage(), HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/get-admin-by-id/{id}")
+    public ResponseEntity<?> getAdminById (@PathVariable Long id){
+        try {
+            return new ResponseEntity<>(service.getAdminById(id), HttpStatus.OK);
+        }catch (BadRequestException badRequestException){
+            return new  ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
+        }catch (NotFoundException notFoundException){
+            return new ResponseEntity<>(notFoundException.getMessage(), HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/get-all-users")
+    public ResponseEntity<?> getAllUsers(){
+        try {
+            return new ResponseEntity<>(service.getAllUsers(), HttpStatus.OK);
+        }catch (NotFoundException notFoundException){
+            return new ResponseEntity<>(notFoundException.getMessage(),HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping("/delete-user-by-id/{id}")
+    public ResponseEntity<?> deleteUserById(@PathVariable Long id){
+        try {
+            return new ResponseEntity<>(service.deleteUserById(id), HttpStatus.OK);
+        }catch (BadRequestException badRequestException){
+            return new ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody AuthenticationRequest authenticationRequest) {
@@ -54,51 +174,6 @@ public class UserController {
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }
 
-    @PostMapping("/add-new-user")
-    public ResponseEntity<?> addNewUser(@RequestBody UserModel usersModel){
-        try {
-            return new ResponseEntity<>(service.addNewUser(usersModel), HttpStatus.OK);
-        }catch (BadRequestException badRequestException){
-            return new ResponseEntity<>(badRequestException.getMessage(),HttpStatus.BAD_REQUEST);
-        }catch (Exception e){
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @GetMapping("/get-user-by-id/{id}")
-    public ResponseEntity<?> getUserById (@PathVariable Long id){
-        try {
-            return new ResponseEntity<>(service.getUserById(id), HttpStatus.OK);
-        }catch (BadRequestException badRequestException){
-            return new  ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
-        }catch (NotFoundException notFoundException){
-            return new ResponseEntity<>(notFoundException.getMessage(),HttpStatus.NOT_FOUND);
-        }catch (Exception e){
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @GetMapping("/get-all-users")
-    public ResponseEntity<?> getAllUsers(){
-        try {
-            return new ResponseEntity<>(service.getAllUsers(), HttpStatus.OK);
-        }catch (NotFoundException notFoundException){
-            return new ResponseEntity<>(notFoundException.getMessage(),HttpStatus.NOT_FOUND);
-        }catch (Exception e){
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @DeleteMapping("/delete-user-by-id/{id}")
-    public ResponseEntity<?> deleteUserById(@PathVariable Long id){
-        try {
-            return new ResponseEntity<>(service.deleteUserById(id), HttpStatus.OK);
-        }catch (BadRequestException badRequestException){
-            return new ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
-        }catch (Exception e){
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
 
     private ResponseEntity<?> getErrorAuthorizationMessage(String message) {
         return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);

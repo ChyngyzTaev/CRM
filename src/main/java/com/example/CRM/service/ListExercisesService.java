@@ -1,12 +1,14 @@
 package com.example.CRM.service;
 
 import com.example.CRM.entity.ListExercises;
-import com.example.CRM.model.ListExercisesModel;
+import com.example.CRM.model.ListExercises.CreateListExercisesModel;
+import com.example.CRM.model.ListExercises.ListExercisesModel;
+import com.example.CRM.model.ListExercises.UpdateListExercisesModel;
 
 import java.util.List;
 
 public interface ListExercisesService{
-    ListExercisesModel addNewSchedule(ListExercisesModel scheduleModel);
+    CreateListExercisesModel addNewSchedule(CreateListExercisesModel scheduleModel);
 
     ListExercises setInActiveSchedule(ListExercises schedule, Long status);
 
@@ -14,7 +16,7 @@ public interface ListExercisesService{
 
     List<ListExercisesModel> getAllSchedule();
 
-    ListExercisesModel updateSchedule(ListExercisesModel scheduleModel);
+    UpdateListExercisesModel updateSchedule(UpdateListExercisesModel scheduleModel);
 
     ListExercisesModel deleteScheduleById(Long id);
 }

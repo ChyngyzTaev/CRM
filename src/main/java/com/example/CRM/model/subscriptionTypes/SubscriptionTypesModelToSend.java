@@ -1,0 +1,29 @@
+package com.example.CRM.model.subscriptionTypes;
+
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
+
+import java.time.LocalDateTime;
+
+@Getter
+@Setter
+@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class SubscriptionTypesModelToSend {
+    Long id;
+
+    boolean isActive;
+
+    LocalDateTime createDate;
+
+    LocalDateTime updateDate;
+
+    Long numberOfMonth;
+
+    Long numberOfWeek;
+
+    Long numberOfDay;
+}

@@ -1,0 +1,29 @@
+package com.example.CRM.model.chart;
+
+import com.example.CRM.enums.WeekDayEnum;
+import com.example.CRM.model.ListExercises.ListExercisesModel;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
+
+import java.time.LocalDateTime;
+
+@Getter
+@Setter
+@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
+@FieldDefaults(level = AccessLevel.PRIVATE)
+public class ChartModel{
+    Long id;
+
+    boolean isActive;
+
+    LocalDateTime createDate;
+
+    LocalDateTime updateDate;
+
+    WeekDayEnum weekDayEnum;
+
+    ListExercisesModel scheduleModel;
+}

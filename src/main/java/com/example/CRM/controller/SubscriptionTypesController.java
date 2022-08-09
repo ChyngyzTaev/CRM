@@ -2,7 +2,9 @@ package com.example.CRM.controller;
 
 import com.example.CRM.exception.BadRequestException;
 import com.example.CRM.exception.NotFoundException;
-import com.example.CRM.model.SubscriptionTypesModel;
+import com.example.CRM.model.subscriptionTypes.CreateSubscriptionTypesModel;
+import com.example.CRM.model.subscriptionTypes.SubscriptionTypesModel;
+import com.example.CRM.model.subscriptionTypes.UpdateSubscriptionTypesModel;
 import com.example.CRM.service.SubscriptionTypesService;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,7 @@ public class SubscriptionTypesController {
     private SubscriptionTypesService service;
 
     @PostMapping("/add-new-subscription")
-    public ResponseEntity<?> addSubscription(@RequestBody SubscriptionTypesModel subscriptionTypesModel){
+    public ResponseEntity<?> addSubscription(@RequestBody CreateSubscriptionTypesModel subscriptionTypesModel){
         try {
             return new ResponseEntity<>(service.addSubscription(subscriptionTypesModel) , HttpStatus.OK);
         }catch (BadRequestException badRequestException){
@@ -41,7 +43,7 @@ public class SubscriptionTypesController {
     }
 
     @PutMapping("/update-subscription")
-    public ResponseEntity<?> updateSubscription(@RequestBody SubscriptionTypesModel subscriptionTypesModel){
+    public ResponseEntity<?> updateSubscription(@RequestBody UpdateSubscriptionTypesModel subscriptionTypesModel){
         try {
             return new ResponseEntity<>(service.updateSubscription(subscriptionTypesModel), HttpStatus.OK);
         }catch (BadRequestException badRequestException){

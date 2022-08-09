@@ -3,7 +3,9 @@ package com.example.CRM.service.impl;
 import com.example.CRM.entity.ListExercises;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.exception.UserNotFoundException;
-import com.example.CRM.model.ListExercisesModel;
+import com.example.CRM.model.ListExercises.CreateListExercisesModel;
+import com.example.CRM.model.ListExercises.ListExercisesModel;
+import com.example.CRM.model.ListExercises.UpdateListExercisesModel;
 import com.example.CRM.repository.ListExercisesRepository;
 import com.example.CRM.service.ListExercisesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,30 +18,29 @@ import java.util.stream.Collectors;
 @Service
 public class ListExercisesServiceImpl implements ListExercisesService {
     @Autowired
-    private ListExercisesRepository repository;
+    private ListExercisesRepository listExercisesRepository;
 
 
     @Override
-    public ListExercisesModel addNewSchedule(ListExercisesModel scheduleModel) {
+    public CreateListExercisesModel addNewSchedule(CreateListExercisesModel scheduleModel) {
         ListExercises schedule = new ListExercises();
-        schedule.setId(scheduleModel.getId());
         schedule.setNameExercise(scheduleModel.getNameExercise());
         schedule.setWeekDayEnum(scheduleModel.getWeekDayEnum());
-        schedule.prePersist();
+        schedule.setCreateDate(scheduleModel.getCreateDate());
         schedule.setActive(true);
-        repository.save(schedule);
+        listExercisesRepository.save(schedule);
         return scheduleModel;
     }
 
     @Override
     public ListExercises setInActiveSchedule(ListExercises schedule, Long status) {
         schedule.setActive(true);
-        return repository.save(schedule);
+        return listExercisesRepository.save(schedule);
     }
 
     @Override
     public ListExercisesModel getScheduleById(Long id) {
-        ListExercises schedule = repository
+        ListExercises schedule = listExercisesRepository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException
                         ("Список упражнений связанный с идентификатором " + id + " не найден"));
@@ -48,7 +49,7 @@ public class ListExercisesServiceImpl implements ListExercisesService {
 
     @Override
     public List<ListExercisesModel> getAllSchedule() {
-        return repository
+        return listExercisesRepository
                 .findAll()
                 .stream()
                 .map(ListExercises::toModel)
@@ -56,22 +57,24 @@ public class ListExercisesServiceImpl implements ListExercisesService {
     }
 
     @Override
-    public ListExercisesModel updateSchedule(ListExercisesModel scheduleModel) {
+    public UpdateListExercisesModel updateSchedule(UpdateListExercisesModel scheduleModel) {
         if (scheduleModel == null) {
             throw new UserNotFoundException("Созданная информация о пользователе имеет " + "пустое" + "значение");
         } else if (scheduleModel.getId() == null) {
-            throw new InvalidParameterException("Id информации не может быть пустым");
+            throw new InvalidParameterException("Id Списков упражнений не может иметь пустое значени");
         }
 
-        ListExercises schedule = repository.getById(scheduleModel.getId());
+        ListExercises schedule = listExercisesRepository.getById(scheduleModel.getId());
         if (schedule == null) {
             throw new UserNotFoundException
-                    ("Информация о пользоваетеле по id не найдена " + scheduleModel.getId());
+                    ("Список упражнений по id не найдена " + scheduleModel.getId());
         }
 
         schedule.setNameExercise(scheduleModel.getNameExercise());
+        schedule.setWeekDayEnum(scheduleModel.getWeekDayEnum());
+        schedule.setCreateDate(scheduleModel.getCreateDate());
 
-        schedule = repository.save(schedule);
+        schedule = listExercisesRepository.save(schedule);
 
         return scheduleModel;
     }
@@ -85,7 +88,7 @@ public class ListExercisesServiceImpl implements ListExercisesService {
 
 
     public ListExercises getById(Long id) {
-        return repository
+        return listExercisesRepository
                 .findById(id)
                 .orElseThrow(() ->
                         new NotFoundException

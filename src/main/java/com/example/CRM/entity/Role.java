@@ -1,6 +1,7 @@
 package com.example.CRM.entity;
 
-import com.example.CRM.model.RoleModel;
+import com.example.CRM.enums.RolesEnum;
+import com.example.CRM.model.Role.RoleModel;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -16,13 +17,18 @@ import javax.persistence.*;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Role extends BaseEntity{
-    @Column(name = "role_name")
+
+    @Column(name = "role_name", nullable = false)
     String roleName;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role_enum", nullable = false)
+    RolesEnum rolesEnum;
 
     public RoleModel toModel(){
         return RoleModel.builder()
                 .id(this.getId())
-                .roleName(roleName)
+                .roleName(rolesEnum)
                 .createDate(this.getCreateDate())
                 .updateDate(this.getUpdateDate())
                 .isActive(true)

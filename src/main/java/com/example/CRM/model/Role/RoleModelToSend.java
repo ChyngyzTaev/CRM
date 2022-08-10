@@ -17,12 +17,11 @@ import java.time.LocalDateTime;
 public class RoleModelToSend {
     Long id;
 
-    boolean isActive;
+    Long isActive;
 
     LocalDateTime createDate;
 
     LocalDateTime updateDate;
 
-    @NotBlank
     RolesEnum roleName;
 }

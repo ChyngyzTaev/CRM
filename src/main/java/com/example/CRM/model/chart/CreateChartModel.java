@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CreateChartModel {
-    boolean isActive;
+    Long isActive;
 
     LocalDateTime createDate;
 

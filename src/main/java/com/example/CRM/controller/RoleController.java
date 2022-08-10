@@ -31,7 +31,7 @@ public class RoleController {
         }
     }
 
-    @GetMapping("get-role-by-roleName")
+    @GetMapping("/get-role-by-roleName")
     public ResponseEntity<?> getRoleByRoleName(String roleName){
         try {
             return new ResponseEntity<>(roleService.getRoleByRoleName(roleName), HttpStatus.OK);

@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CreateListExercisesModel {
 
-    boolean isActive;
+    Long isActive;
 
     LocalDateTime createDate;
 

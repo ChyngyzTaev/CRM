@@ -19,7 +19,7 @@ import javax.persistence.*;
 public class Chart extends BaseEntity {
 
     @Enumerated
-    @Column(name = "weekday_enums")
+    @Column(name = "weekday_enums", nullable = false)
     WeekDayEnum weekDayEnum;
 
     @OneToOne
@@ -31,7 +31,6 @@ public class Chart extends BaseEntity {
                 .id(this.getId())
                 .weekDayEnum(weekDayEnum)
                 .createDate(this.getCreateDate())
-                .isActive(true)
                 .updateDate(this.getUpdateDate())
                 .build();
     }

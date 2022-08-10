@@ -22,6 +22,10 @@ public class ListExercises extends BaseEntity{
     String nameExercise;
 
 
+    @OneToOne
+    @JoinColumn(name = "chart_id")
+    Chart chart;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "weekday_enums")
     WeekDayEnum weekDayEnum;
@@ -39,7 +43,6 @@ public class ListExercises extends BaseEntity{
                 .nameExercise(nameExercise)
                 .createDate(this.getCreateDate())
                 .updateDate(this.getUpdateDate())
-                .isActive(true)
                 .build();
     }
 }

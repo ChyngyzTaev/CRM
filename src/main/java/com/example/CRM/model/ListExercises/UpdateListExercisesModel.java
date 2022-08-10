@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class UpdateListExercisesModel {
     Long id;
 
-    boolean isActive;
+    Long isActive;
 
     LocalDateTime createDate;
 

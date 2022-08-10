@@ -8,13 +8,13 @@ import com.example.CRM.model.user.UserModel;
 import java.util.List;
 
 public interface UserService {
-    CreateUserModel addNewUser(CreateUserModel createUserModel);
+    CreateUserModel addNewClient(CreateUserModel createUserModel, Role role);
 
-    CreateUserModel addNewTrainer(CreateUserModel createUserModel);
+    CreateUserModel addNewTrainer(CreateUserModel createUserModel, Role role);
 
-    CreateUserModel addNewManager(CreateUserModel createUserModel );
+    CreateUserModel addNewManager(CreateUserModel createUserModel, Role role );
 
-    CreateUserModel addNewAdmin(CreateUserModel createUserModel);
+    CreateUserModel addNewAdmin(CreateUserModel createUserModel, Role role);
 
     User setInActiveUser(User user, Long status);
 

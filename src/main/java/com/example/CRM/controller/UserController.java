@@ -1,5 +1,6 @@
 package com.example.CRM.controller;
 
+import com.example.CRM.entity.Role;
 import com.example.CRM.exception.BadRequestException;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.model.user.CreateUserModel;
@@ -27,9 +28,9 @@ public class UserController {
     private UserDetailsService userDetailsService;
 
     @PostMapping("/add-new-user")
-    public ResponseEntity<?> addNewUser(@RequestBody CreateUserModel createUserModel){
+    public ResponseEntity<?> addNewUser(@RequestBody CreateUserModel createUserModel, Role role){
         try {
-            return new ResponseEntity<>(userService.addNewUser(createUserModel), HttpStatus.OK);
+            return new ResponseEntity<>(userService.addNewClient(createUserModel, role), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
             return new ResponseEntity<>(badRequestException.getMessage(),HttpStatus.BAD_REQUEST);
         }catch (Exception e){
@@ -38,9 +39,9 @@ public class UserController {
     }
 
     @PostMapping("/add-new-trainer")
-    public ResponseEntity<?> addNewTrainer(@RequestBody CreateUserModel createUserModel ){
+    public ResponseEntity<?> addNewTrainer(@RequestBody CreateUserModel createUserModel, Role role ){
         try {
-            return new ResponseEntity<>(userService.addNewTrainer(createUserModel), HttpStatus.OK);
+            return new ResponseEntity<>(userService.addNewTrainer(createUserModel, role), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
             return new ResponseEntity<>(badRequestException.getMessage(),HttpStatus.BAD_REQUEST);
         }catch (Exception e){
@@ -49,9 +50,9 @@ public class UserController {
     }
 
     @PostMapping("/add-new-manager")
-    public ResponseEntity<?> addNewManager(@RequestBody CreateUserModel createUserModel){
+    public ResponseEntity<?> addNewManager(@RequestBody CreateUserModel createUserModel, Role role){
         try {
-            return new ResponseEntity<>(userService.addNewManager(createUserModel), HttpStatus.OK);
+            return new ResponseEntity<>(userService.addNewManager(createUserModel, role), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
             return new ResponseEntity<>(badRequestException.getMessage(),HttpStatus.BAD_REQUEST);
         }catch (Exception e){
@@ -60,9 +61,9 @@ public class UserController {
     }
 
     @PostMapping("/add-new-admin")
-    public ResponseEntity<?> addNewAdmin(@RequestBody CreateUserModel createUserModel ){
+    public ResponseEntity<?> addNewAdmin(@RequestBody CreateUserModel createUserModel , Role role){
         try {
-            return new ResponseEntity<>(userService.addNewAdmin(createUserModel), HttpStatus.OK);
+            return new ResponseEntity<>(userService.addNewAdmin(createUserModel, role), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
             return new ResponseEntity<>(badRequestException.getMessage(),HttpStatus.BAD_REQUEST);
         }catch (Exception e){

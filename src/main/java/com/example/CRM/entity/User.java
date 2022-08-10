@@ -28,7 +28,7 @@ public class User extends BaseEntity{
     @Column(name = "age", nullable = false)
     Long age;
 
-    @Column(name = "birth_day", nullable = false)
+    @Column(name = "birth_day")
     LocalDate birthDay;
 
     @Column(name = "phone_number", nullable = false)
@@ -45,6 +45,10 @@ public class User extends BaseEntity{
     @JoinColumn(name = "role_id")
     Role role;
 
+    @OneToOne
+    @JoinColumn(name = "subscription_types_id")
+    SubscriptionTypes subscriptionTypes;
+
     @ManyToMany
     @JoinColumn(name = "chart_id")
     List<Chart> charts;
@@ -52,6 +56,8 @@ public class User extends BaseEntity{
     @ManyToMany
     @JoinColumn(name = "exercises_id")
     List<ListExercises> exercises;
+
+
 
     public UserModel toModel(){
         return UserModel.builder()
@@ -65,7 +71,6 @@ public class User extends BaseEntity{
                 .age(age)
                 .createDate(this.getCreateDate())
                 .updateDate(this.getUpdateDate())
-                .isActive(true)
                 .build();
     }
 }

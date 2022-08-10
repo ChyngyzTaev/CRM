@@ -34,4 +34,6 @@ public class CreateUserModel {
 
     @NotBlank
     String password;
+
+    Long isActive;
 }

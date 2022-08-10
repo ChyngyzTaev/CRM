@@ -30,36 +30,36 @@ public class UserServiceImpl implements UserService {
     RolesEnum rolesEnum;
 
     @Override
-    public CreateUserModel addNewUser(CreateUserModel createUserModel) {
-        User user = initClient(createUserModel, new Role("Client", RolesEnum.CLIENT));
+    public CreateUserModel addNewClient(CreateUserModel createUserModel, Role role) {
+        User user = initClient(createUserModel, role);
         userRepository.save(user);
         return createUserModel;
     }
 
     @Override
-    public CreateUserModel addNewTrainer(CreateUserModel createUserModel) {
-        User trainer = initTrainer(createUserModel, new Role("Trainer", RolesEnum.TRAINER));
+    public CreateUserModel addNewTrainer(CreateUserModel createUserModel, Role role) {
+        User trainer = initTrainer(createUserModel);
         userRepository.save(trainer);
         return createUserModel;
     }
 
     @Override
-    public CreateUserModel addNewManager(CreateUserModel createUserModel ) {
-        User manager = initManager(createUserModel, new Role("Manager", RolesEnum.MANAGER));
+    public CreateUserModel addNewManager(CreateUserModel createUserModel , Role role) {
+        User manager = initManager(createUserModel);
         userRepository.save(manager);
         return createUserModel;
     }
 
     @Override
-    public CreateUserModel addNewAdmin(CreateUserModel createUserModel) {
-        User admin = initAdmin(createUserModel, new Role("Admin", RolesEnum.ADMIN));
+    public CreateUserModel addNewAdmin(CreateUserModel createUserModel, Role role) {
+        User admin = initAdmin(createUserModel);
         userRepository.save(admin);
         return createUserModel;
     }
 
     @Override
     public User setInActiveUser(User user, Long status) {
-        user.setActive(true);
+        user.setIsActive(user.getIsActive());
         return userRepository.save(user);
     }
 
@@ -131,24 +131,23 @@ public class UserServiceImpl implements UserService {
                                 ("Пользоватлеь связанный с идентификатором " + id + " не найдено"));
     }
 
-    private User initClient(CreateUserModel createClientModel, Role role) {
+    private User initClient(CreateUserModel createClientModel, Role role ) {
         User client = new User();
         role.setRolesEnum(rolesEnum);
-        client.setEmail(createClientModel.getEmail());
         client.setFullName(createClientModel.getFullName());
         client.setUsername(createClientModel.getUsername());
+        client.setAge(createClientModel.getAge());
         client.setBirthDay(createClientModel.getBirthday());
         client.setPhoneNumber(createClientModel.getPhoneNumber());
-        client.setAge(createClientModel.getAge());
-        client.setRole(null);
-        client.setActive(true);
+        client.setIsActive(createClientModel.getIsActive());
+        client.setEmail(createClientModel.getEmail());
         client.setPassword(passwordEncoder.encode(createClientModel.getPassword()));
+        userRepository.save(client);
         return client;
     }
 
-    private User initTrainer(CreateUserModel createTrainerModel, Role role) {
+    private User initTrainer(CreateUserModel createTrainerModel) {
         User trainer = new User();
-        role.setRolesEnum(rolesEnum);
         trainer.setEmail(createTrainerModel.getEmail());
         trainer.setFullName(createTrainerModel.getFullName());
         trainer.setUsername(createTrainerModel.getUsername());
@@ -156,15 +155,14 @@ public class UserServiceImpl implements UserService {
         trainer.setPhoneNumber(createTrainerModel.getPhoneNumber());
         trainer.setAge(createTrainerModel.getAge());
         trainer.setRole(null);
-        trainer.setActive(true);
+        trainer.setIsActive(createTrainerModel.getIsActive());
         trainer.setPassword(passwordEncoder.encode(createTrainerModel.getPassword()));
         return trainer;
     }
 
 
-    private User initManager(CreateUserModel createManagerModel, Role role) {
+    private User initManager(CreateUserModel createManagerModel) {
         User manager = new User();
-        role.setRolesEnum(rolesEnum);
         manager.setEmail(createManagerModel.getEmail());
         manager.setFullName(createManagerModel.getFullName());
         manager.setUsername(createManagerModel.getUsername());
@@ -172,15 +170,14 @@ public class UserServiceImpl implements UserService {
         manager.setPhoneNumber(createManagerModel.getPhoneNumber());
         manager.setAge(createManagerModel.getAge());
         manager.setRole(null);
-        manager.setActive(true);
+        manager.setIsActive(createManagerModel.getIsActive());
         manager.setPassword(passwordEncoder.encode(createManagerModel.getPassword()));
         return manager;
     }
 
 
-    private User initAdmin(CreateUserModel createAdminModel, Role role) {
+    private User initAdmin(CreateUserModel createAdminModel) {
         User admin = new User();
-        role.setRolesEnum(rolesEnum);
         admin.setEmail(createAdminModel.getEmail());
         admin.setFullName(createAdminModel.getFullName());
         admin.setBirthDay(createAdminModel.getBirthday());
@@ -188,7 +185,7 @@ public class UserServiceImpl implements UserService {
         admin.setUsername(createAdminModel.getUsername());
         admin.setAge(createAdminModel.getAge());
         admin.setRole(null);
-        admin.setActive(true);
+        admin.setIsActive(createAdminModel.getIsActive());
         admin.setPassword(passwordEncoder.encode(createAdminModel.getPassword()));
         return admin;
     }

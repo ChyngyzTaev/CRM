@@ -27,14 +27,14 @@ public class ListExercisesServiceImpl implements ListExercisesService {
         schedule.setNameExercise(scheduleModel.getNameExercise());
         schedule.setWeekDayEnum(scheduleModel.getWeekDayEnum());
         schedule.setCreateDate(scheduleModel.getCreateDate());
-        schedule.setActive(true);
+        schedule.setIsActive(scheduleModel.getIsActive());
         listExercisesRepository.save(schedule);
         return scheduleModel;
     }
 
     @Override
     public ListExercises setInActiveSchedule(ListExercises schedule, Long status) {
-        schedule.setActive(true);
+        schedule.setIsActive(schedule.getIsActive());
         return listExercisesRepository.save(schedule);
     }
 

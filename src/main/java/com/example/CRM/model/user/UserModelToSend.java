@@ -15,32 +15,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserModelToSend{
-    Long id;
-
-    boolean isActive;
-
-    LocalDateTime createDate;
-
-    LocalDateTime updateDate;
-
     @NotBlank
     String fullName;
 
     @NotBlank
     String username;
-
-    @NotBlank
-    Long age;
-
-    @NotBlank
-    LocalDate birthday;
-
-    @NotBlank
-    String phoneNumber;
-
-    @NotBlank
-    String email;
-
-    @NotBlank
-    String password;
 }

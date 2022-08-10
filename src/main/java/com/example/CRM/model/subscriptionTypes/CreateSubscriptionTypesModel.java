@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CreateSubscriptionTypesModel {
 
-    boolean isActive;
+    Long isActive;
 
     LocalDateTime createDate;
 

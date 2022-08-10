@@ -34,7 +34,6 @@ public class SubscriptionTypes extends BaseEntity {
                 .numberOfDay(numberOfDay)
                 .createDate(this.getCreateDate())
                 .updateDate(this.getUpdateDate())
-                .isActive(true)
                 .build();
     }
 }

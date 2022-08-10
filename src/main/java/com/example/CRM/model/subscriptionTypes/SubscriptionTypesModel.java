@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 public class SubscriptionTypesModel{
     Long id;
 
-    boolean isActive;
+    Long isActive;
 
     LocalDateTime createDate;
 

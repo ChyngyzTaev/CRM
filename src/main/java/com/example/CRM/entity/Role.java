@@ -17,21 +17,20 @@ import javax.persistence.*;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Role extends BaseEntity{
-
     @Column(name = "role_name", nullable = false)
     String roleName;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "role_enum", nullable = false)
+    @Column(name = "role_enum")
     RolesEnum rolesEnum;
 
     public RoleModel toModel(){
         return RoleModel.builder()
                 .id(this.getId())
-                .roleName(rolesEnum)
+                .rolesEnum(rolesEnum)
+                .rolesEnum(rolesEnum)
                 .createDate(this.getCreateDate())
                 .updateDate(this.getUpdateDate())
-                .isActive(true)
                 .build();
     }
 }

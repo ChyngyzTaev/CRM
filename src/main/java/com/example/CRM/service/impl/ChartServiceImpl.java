@@ -26,6 +26,7 @@ public class ChartServiceImpl implements ChartService {
     public CreateChartModel addNewChart(CreateChartModel chartModel) {
         Chart chart = new Chart();
         chart.setWeekDayEnum(chartModel.getWeekDayEnum());
+        chart.setIsActive(chartModel.getIsActive());
         chart.setCreateDate(chartModel.getCreateDate());
         chartRepository.save(chart);
         return chartModel;

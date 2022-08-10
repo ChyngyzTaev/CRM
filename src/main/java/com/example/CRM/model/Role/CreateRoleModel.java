@@ -16,12 +16,15 @@ import java.time.LocalDateTime;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CreateRoleModel {
 
-    boolean isActive;
+    Long isActive;
 
     LocalDateTime createDate;
 
     LocalDateTime updateDate;
 
     @NotBlank
-    RolesEnum roleName;
+    String roleName;
+
+    @NotBlank
+    RolesEnum rolesEnum;
 }

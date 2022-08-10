@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class UpdateChartModel {
     Long id;
 
-    boolean isActive;
+    Long isActive;
 
     LocalDateTime createDate;
 

@@ -21,8 +21,8 @@ public class BaseEntity {
     @Column(name = "create_date")
     LocalDateTime createDate;
 
-    @Column(name = "is_active")
-    boolean isActive;
+    @Column(name = "is_active", nullable = false)
+    Long isActive;
 
     @Column(name = "update_date")
     LocalDateTime updateDate;

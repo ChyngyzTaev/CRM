@@ -26,14 +26,14 @@ public class SubscriptionTypesServiceImpl implements SubscriptionTypesService {
         subscriptionTypes.setNumberOfWeek(subscriptionTypesModel.getNumberOfWeek());
         subscriptionTypes.setNumberOfDay(subscriptionTypesModel.getNumberOfDay());
         subscriptionTypes.setCreateDate(subscriptionTypesModel.getCreateDate());
-        subscriptionTypes.setActive(true);
+        subscriptionTypes.setIsActive(subscriptionTypesModel.getIsActive());
         subscriptionTypesRepository.save(subscriptionTypes);
         return subscriptionTypesModel;
     }
 
     @Override
     public SubscriptionTypes setInActiveSubscriptionTypes(SubscriptionTypes subscriptionTypes, Long status) {
-        subscriptionTypes.setActive(true);
+        subscriptionTypes.setIsActive(subscriptionTypes.getIsActive());
         return subscriptionTypesRepository.save(subscriptionTypes);
     }
 

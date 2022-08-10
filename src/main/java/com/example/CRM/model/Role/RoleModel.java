@@ -16,12 +16,13 @@ import java.time.LocalDateTime;
 public class RoleModel{
     Long id;
 
-    boolean isActive;
+    Long isActive;
 
     LocalDateTime createDate;
 
     LocalDateTime updateDate;
 
-    @NotBlank
-    RolesEnum roleName;
+    String roleName;
+
+    RolesEnum rolesEnum;
 }

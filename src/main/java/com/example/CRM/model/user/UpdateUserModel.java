@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 public class UpdateUserModel {
     Long id;
 
-    boolean isActive;
+    Long isActive;
 
     LocalDateTime createDate;
 

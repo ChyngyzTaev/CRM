@@ -1,6 +1,7 @@
 package com.example.CRM.service.impl;
 
 import com.example.CRM.entity.Role;
+import com.example.CRM.enums.RolesEnum;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.exception.UserNotFoundException;
 import com.example.CRM.model.Role.CreateRoleModel;
@@ -21,20 +22,21 @@ public class RoleServiceImpl implements RoleService {
     @Autowired
     private RoleRepository roleRepository;
 
+    RolesEnum rolesEnum;
 
     @Override
     public CreateRoleModel addNewRole(CreateRoleModel roleModel) {
         Role role = new Role();
-        role.setCreateDate(roleModel.getCreateDate());
-        role.setActive(true);
-        role.setRolesEnum(roleModel.getRoleName());
+        role.setRoleName(roleModel.getRoleName());
+        role.setRolesEnum(rolesEnum);
+        role.setIsActive(roleModel.getIsActive());
         roleRepository.save(role);
         return roleModel;
     }
 
     @Override
     public Role setInActiveRole(Role role, Long status) {
-        role.setActive(true);
+        role.setIsActive(role.getIsActive());
         return roleRepository.save(role);
     }
 

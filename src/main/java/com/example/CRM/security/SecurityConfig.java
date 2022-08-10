@@ -37,50 +37,32 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/user/login").permitAll()
 
                 .antMatchers(HttpMethod.POST, "/api/user/add-new-user").permitAll()
-                .antMatchers(HttpMethod.GET,"/api/user/get-user-by-id/{id}").hasAnyRole("Admin", "Manager")
-                .antMatchers(HttpMethod.GET,"/api/user/get-all-users").hasRole("Admin")
-                .antMatchers(HttpMethod.DELETE, "/api/user/delete-user-by-id/{id}").hasRole("Admin")
-
-                .antMatchers(HttpMethod.GET, "/api/trainer/get-trainer-by-id/{id}").hasRole("Admin")
-                .antMatchers(HttpMethod.GET, "/api/trainer/get-all-trainer").hasRole("Admin")
-                .antMatchers(HttpMethod.DELETE, "/api/trainer/delete-trainer-by-id/{id}").hasRole("Admin")
+                .antMatchers(HttpMethod.GET,"/api/user/get-user-by-id/{id}").permitAll()
+                .antMatchers(HttpMethod.GET,"/api/user/get-all-users").permitAll()
+                .antMatchers(HttpMethod.GET,"/api/user/get-user-by-userName").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/api/user/delete-user-by-id/{id}").permitAll()
 
 
-
-//
-//                .antMatchers(HttpMethod.POST, "/api/add-new-user").hasRole("Manager")
-//                .antMatchers(HttpMethod.GET,"/api/user/get-user-by-id/{id}").hasRole("Manager")
-//                .antMatchers(HttpMethod.GET,"/api/user/get-all-users").hasRole("Manager")
-//                .antMatchers(HttpMethod.DELETE, "/api/user/delete-user-by-id/{id}").hasRole("Manager")
-
-                .antMatchers(HttpMethod.POST, "/api/trainer/add-new-trainer").hasRole("Manager")
-                .antMatchers(HttpMethod.GET, "/api/trainer/get-trainer-by-id/{id}").hasRole("Manager")
-                .antMatchers(HttpMethod.GET, "/api/trainer/get-all-trainer").hasRole("Manager")
-                .antMatchers(HttpMethod.DELETE, "/api/trainer/delete-trainer-by-id/{id}").hasRole("Manager")
-
-                .antMatchers(HttpMethod.POST, "/api/subscription/add-new-subscription").hasRole("Manager")
-                .antMatchers(HttpMethod.DELETE, "/api/subscription/delete-subscription-by-id/{id}").hasRole("Manager")
-                .antMatchers(HttpMethod.PUT, "/api/subscription/update-subscription").hasRole("Manager")
-
-                .antMatchers(HttpMethod.POST, "/api/user-information/add-new-user-info").hasRole("Manager")
-                .antMatchers(HttpMethod.GET, "/api/user-information/get-user-info/{id}").hasRole("Manager")
+                .antMatchers(HttpMethod.POST, "/api/role/add-new-role").permitAll()
+                .antMatchers(HttpMethod.GET,"/api/role/get-role-by-id/{id}").permitAll()
+                .antMatchers(HttpMethod.GET,"/api/role/get-role-by-roleName").permitAll()
 
 
+                .antMatchers(HttpMethod.POST, "/api/chart/add-new-chart").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/chart/get-chart-by-id/{id}").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/chart/get-all-chart").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/api/chart/delete-chart-by-id/{id}").permitAll()
 
 
-                .antMatchers(HttpMethod.POST, "/api/chart/add-new-chart").hasRole("Trainer")
-                .antMatchers(HttpMethod.GET, "/api/chart/get-chart-by-id/{id}").hasRole("Trainer")
-                .antMatchers(HttpMethod.GET, "/api/chart/get-all-chart").hasRole("Trainer")
-                .antMatchers(HttpMethod.DELETE, "/api/chart/delete-chart-by-id/{id}").hasRole("Trainer")
-
-                .antMatchers(HttpMethod.POST, "/api/list-exercises/add-new-list-exercises").hasRole("Trainer")
-                .antMatchers(HttpMethod.GET, "/api/list-exercises/get-list-exercises-by-id/{id}").hasRole("Trainer")
-                .antMatchers(HttpMethod.GET, "/api/list-exercises/get-all-list-exercises").hasRole("Trainer")
-                .antMatchers(HttpMethod.DELETE, "/api/list-exercises/delete-list-exercises-by-id/{id}").hasRole("Trainer")
+                .antMatchers(HttpMethod.POST, "/api/subscription/add-new-subscription").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/api/subscription/delete-subscription-by-id/{id}").permitAll()
+                .antMatchers(HttpMethod.PUT, "/api/subscription/update-subscription").permitAll()
 
 
-
-
+                .antMatchers(HttpMethod.POST, "/api/list-exercises/add-new-list-exercises").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/list-exercises/get-list-exercises-by-id/{id}").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/list-exercises/get-all-list-exercises").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/api/list-exercises/delete-list-exercises-by-id/{id}").permitAll()
 
                 .anyRequest()
                 .authenticated()

@@ -5,10 +5,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface UserRepository extends JpaRepository<User, Long> {
-    Optional<User> findClientByUsername(String username);
+public interface AdminRepository extends JpaRepository<User ,Long> {
+    Optional<User> findAdminByUsername(String username);
 
-    Optional<User> findUserByEmail(String email);
+    Optional<User> findAdminByEmail(String email);
 
     Optional<User> deleteByUsername(String username);
 }

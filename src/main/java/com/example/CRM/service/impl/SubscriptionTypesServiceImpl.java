@@ -20,15 +20,10 @@ public class SubscriptionTypesServiceImpl implements SubscriptionTypesService {
 
 
     @Override
-    public CreateSubscriptionTypesModel addSubscription(CreateSubscriptionTypesModel subscriptionTypesModel) {
-        SubscriptionTypes subscriptionTypes = new SubscriptionTypes();
-        subscriptionTypes.setNumberOfMonth(subscriptionTypesModel.getNumberOfMonth());
-        subscriptionTypes.setNumberOfWeek(subscriptionTypesModel.getNumberOfWeek());
-        subscriptionTypes.setNumberOfDay(subscriptionTypesModel.getNumberOfDay());
-        subscriptionTypes.setCreateDate(subscriptionTypesModel.getCreateDate());
-        subscriptionTypes.setIsActive(subscriptionTypesModel.getIsActive());
+    public SubscriptionTypesModel addSubscription(CreateSubscriptionTypesModel subscriptionTypesModel) {
+        SubscriptionTypes subscriptionTypes = subscriptionTypesModel.toSubscriptionTypes();
         subscriptionTypesRepository.save(subscriptionTypes);
-        return subscriptionTypesModel;
+        return subscriptionTypes.toModel();
     }
 
     @Override

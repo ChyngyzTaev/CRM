@@ -1,5 +1,6 @@
 package com.example.CRM.model.subscriptionTypes;
 
+import com.example.CRM.entity.SubscriptionTypes;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -8,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@SuperBuilder
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
@@ -25,4 +26,14 @@ public class CreateSubscriptionTypesModel {
     Long numberOfWeek;
 
     Long numberOfDay;
+
+
+    public SubscriptionTypes toSubscriptionTypes(){
+        return SubscriptionTypes.builder()
+                .id(null)
+                .numberOfMonth(numberOfMonth)
+                .numberOfWeek(numberOfWeek)
+                .numberOfDay(numberOfDay)
+                .build();
+    }
 }

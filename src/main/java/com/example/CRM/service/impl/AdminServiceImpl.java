@@ -1,17 +1,14 @@
 package com.example.CRM.service.impl;
 
 import com.example.CRM.entity.User;
-import com.example.CRM.enums.RolesEnum;
 import com.example.CRM.exception.ApiFailException;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.exception.UserNotFoundException;
-import com.example.CRM.model.user.AuthModel;
 import com.example.CRM.model.user.CreateUserModel;
 import com.example.CRM.model.user.UpdateUserModel;
 import com.example.CRM.model.user.UserModel;
-import com.example.CRM.repository.UserRepository;
-import com.example.CRM.service.RoleService;
-import com.example.CRM.service.UserService;
+import com.example.CRM.repository.AdminRepository;
+import com.example.CRM.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,61 +18,53 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class AdminServiceImpl implements AdminService {
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private RoleService roleService;
+    private AdminRepository adminRepository;
 
     @Autowired
-    private  PasswordEncoder passwordEncoder;
-
-
-    RolesEnum rolesEnum;
+    private PasswordEncoder passwordEncoder;
 
     @Override
-    public UserModel addNewClient(CreateUserModel createUserModel) {
+    public UserModel addNewAdmin(CreateUserModel createUserModel) {
         validateVariablesForNull(createUserModel);
-        User user = createUserModel.toUser();
-        userRepository.save(user);
-        return user.toModel();
+        User admin = createUserModel.toUser();
+        adminRepository.save(admin);
+        return admin.toModel();
     }
 
     @Override
-    public User setInActiveClient(User user, Long status) {
+    public User setInActiveAdmin(User user, Long status) {
         user.setIsActive(user.getIsActive());
-        return userRepository.save(user);
+        return adminRepository.save(user);
     }
 
     @Override
-    public UserModel getClientById(Long id) {
-        User user = userRepository
+    public UserModel getAdminById(Long id) {
+        User user = adminRepository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException
-                        ("Клиент связанный с идентификатором " + id + " не найден"));
+                        ("Админ связанный с идентификатором " + id + " не найден"));
         return user.toModel();
     }
 
     @Override
-    public User getClientByEmail(String email) {
-        return userRepository
-                .findUserByEmail(email)
+    public User getAdminByEmail(String email) {
+        return adminRepository
+                .findAdminByEmail(email)
                 .orElseThrow(() -> new NotFoundException("Клиент связанный с таким email не найден."));
     }
 
-
     @Override
-    public User getClientByUserName(String username) {
-        return userRepository
-                .findClientByUsername(username)
+    public User getAdminByUserName(String username) {
+        return adminRepository
+                .findAdminByUsername(username)
                 .orElseThrow(() -> new NotFoundException("Клиент не найден"));
     }
 
-
     @Override
-    public List<UserModel> getAllClients() {
-        return userRepository
+    public List<UserModel> getAllAdmins() {
+        return adminRepository
                 .findAll()
                 .stream()
                 .map(User::toModel)
@@ -83,14 +72,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UpdateUserModel updateClient(UpdateUserModel updateUserModel) {
+    public UpdateUserModel updateAdmin(UpdateUserModel updateUserModel) {
         if (updateUserModel == null) {
             throw new UserNotFoundException("Созданная информация о пользователе имеет " + "пустое" + "значение");
         } else if (updateUserModel.getId() == null) {
             throw new InvalidParameterException("Id абонемента  не может иметь пустое значени");
         }
 
-        User user = userRepository.getById(updateUserModel.getId());
+        User user = adminRepository.getById(updateUserModel.getId());
         if (user == null) {
             throw new UserNotFoundException
                     ("Клиент по id не нанйдено " + updateUserModel.getId());
@@ -104,32 +93,26 @@ public class UserServiceImpl implements UserService {
         user.setPhoneNumber(updateUserModel.getPhoneNumber());
         user.setCreateDate(updateUserModel.getCreateDate());
 
-        user = userRepository.save(user);
+        user = adminRepository.save(user);
 
         return updateUserModel;
     }
 
     @Override
-    public User deleteClientByUserName(String username) {
-       return userRepository.deleteByUsername(username)
-               .orElseThrow(() -> new ApiFailException("Удаление не выполнено, возможно ошибка в username"));
+    public User deleteAdminByUserName(String username) {
+        return adminRepository.deleteByUsername(username)
+                .orElseThrow(() -> new ApiFailException("Удаление не выполнено, возможно ошибка в username"));
     }
 
     @Override
-    public UserModel deleteClientById(Long id){
-        User user = getById(id);
-        User deleteClient = setInActiveClient(user, -1L);
-        return deleteClient.toModel();
+    public UserModel deleteAdminById(Long id) {
+        User admin = getById(id);
+        User deleteAdmin = setInActiveAdmin(admin, -1L);
+        return deleteAdmin.toModel();
     }
-
-    @Override
-    public String login(AuthModel authModel) {
-        return null;
-    }
-
 
     public User getById(Long id) {
-        return userRepository
+        return adminRepository
                 .findById(id)
                 .orElseThrow(() ->
                         new NotFoundException

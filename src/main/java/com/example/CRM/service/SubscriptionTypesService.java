@@ -6,7 +6,7 @@ import com.example.CRM.model.subscriptionTypes.SubscriptionTypesModel;
 import com.example.CRM.model.subscriptionTypes.UpdateSubscriptionTypesModel;
 
 public interface SubscriptionTypesService{
-    CreateSubscriptionTypesModel addSubscription(CreateSubscriptionTypesModel subscriptionTypesModel);
+    SubscriptionTypesModel addSubscription(CreateSubscriptionTypesModel subscriptionTypesModel);
 
     SubscriptionTypes setInActiveSubscriptionTypes(SubscriptionTypes subscriptionTypes, Long status);
 

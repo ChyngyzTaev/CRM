@@ -1,35 +1,28 @@
 package com.example.CRM.controller;
 
+import com.example.CRM.entity.UserRole;
 import com.example.CRM.exception.BadRequestException;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.model.user.CreateUserModel;
 import com.example.CRM.model.user.UpdateUserModel;
-import com.example.CRM.request.AuthenticationRequest;
-import com.example.CRM.response.AuthenticationResponse;
-import com.example.CRM.service.UserService;
+import com.example.CRM.service.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/user")
-public class UserController {
-    @Autowired
-    private UserService userService;
-
-//    @Autowired
-//    private JwtUtil jwtUtil;
+@RequestMapping("/api/trainer")
+public class TrainerController {
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private TrainerService trainerService;
 
-    @PostMapping("/add-new-client")
-    public ResponseEntity<?> addNewClient(@RequestBody CreateUserModel createUserModel){
+
+    @PostMapping("/add-new-trainer")
+    public ResponseEntity<?> addNewTrainer(@RequestBody CreateUserModel createUserModel, UserRole userRole){
         try {
-            return new ResponseEntity<>(userService.addNewClient(createUserModel), HttpStatus.OK);
+            return new ResponseEntity<>(trainerService.addNewTrainer(createUserModel), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
             return new ResponseEntity<>(badRequestException.getMessage(),HttpStatus.BAD_REQUEST);
         }catch (Exception e){
@@ -37,11 +30,10 @@ public class UserController {
         }
     }
 
-
-    @GetMapping("/get-client-by-id/{id}")
-    public ResponseEntity<?> getUserById (@PathVariable Long id){
+    @GetMapping("/get-trainer-by-id/{id}")
+    public ResponseEntity<?> getTrainerById (@PathVariable Long id){
         try {
-            return new ResponseEntity<>(userService.getClientById(id), HttpStatus.OK);
+            return new ResponseEntity<>(trainerService.getTrainerById(id), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
             return new  ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
         }catch (NotFoundException notFoundException){
@@ -51,10 +43,10 @@ public class UserController {
         }
     }
 
-    @GetMapping("/get-client-by-userName")
-    public ResponseEntity<?> getUserByUserName(String username){
+    @GetMapping("/get-trainer-by-userName")
+    public ResponseEntity<?> getTrainerByUserName(@RequestBody String username){
         try {
-            return new ResponseEntity<>(userService.getClientByUserName(username), HttpStatus.OK);
+            return new ResponseEntity<>(trainerService.getTrainerByUserName(username), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
             return new ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
         }catch (NotFoundException notFoundException){
@@ -65,10 +57,10 @@ public class UserController {
     }
 
 
-    @GetMapping("/get-client-by-email")
-    public ResponseEntity<?> getClientByEmail(@RequestBody String email){
+    @GetMapping("/get-trainer-by-email")
+    public ResponseEntity<?> getTrainerByEmail(@RequestBody String email){
         try {
-            return new ResponseEntity<>(userService.getClientByEmail(email), HttpStatus.OK);
+            return new ResponseEntity<>(trainerService.getTrainerByEmail(email), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
             return new  ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
         }catch (NotFoundException notFoundException){
@@ -78,11 +70,10 @@ public class UserController {
         }
     }
 
-
-    @GetMapping("/get-all-clients")
-    public ResponseEntity<?> getAllUsers(){
+    @GetMapping("/get-all-trainers")
+    public ResponseEntity<?> getAllTrainers(){
         try {
-            return new ResponseEntity<>(userService.getAllClients(), HttpStatus.OK);
+            return new ResponseEntity<>(trainerService.getAllTrainers(), HttpStatus.OK);
         }catch (NotFoundException notFoundException){
             return new ResponseEntity<>(notFoundException.getMessage(),HttpStatus.NOT_FOUND);
         }catch (Exception e){
@@ -90,10 +81,10 @@ public class UserController {
         }
     }
 
-    @PutMapping("/update-client")
-    public ResponseEntity<?> updateClient(@RequestBody  UpdateUserModel updateUserModel){
+    @PutMapping("/update-trainer")
+    public ResponseEntity<?> updateTrainer(@RequestBody UpdateUserModel updateUserModel){
         try {
-            return new ResponseEntity<>(userService.updateClient(updateUserModel), HttpStatus.OK);
+            return new ResponseEntity<>(trainerService.updateTrainer(updateUserModel), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
             return new ResponseEntity<>(badRequestException.getMessage(),HttpStatus.BAD_REQUEST);
         }catch (Exception e){
@@ -101,10 +92,11 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/delete-client-by-userName")
-    public ResponseEntity<?> deleteClientByUserName(@RequestBody String username){
+
+    @DeleteMapping("/delete-trainer-by-userName")
+    public ResponseEntity<?> deleteTrainerByUserName(@RequestBody String username){
         try {
-            return new ResponseEntity<>(userService.deleteClientByUserName(username), HttpStatus.OK);
+            return new ResponseEntity<>(trainerService.deleteTrainerByUserName(username), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
             return new ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
         }catch (Exception e){
@@ -113,14 +105,16 @@ public class UserController {
     }
 
 
-    @DeleteMapping("/delete-client-by-id/{id}")
-    public ResponseEntity<?> deleteClientById(@PathVariable Long id){
+    @DeleteMapping("/delete-trainer-by-id/{id}")
+    public ResponseEntity<?> deleteTrainerById(@PathVariable Long id){
         try {
-            return new ResponseEntity<>(userService.deleteClientById(id), HttpStatus.OK);
+            return new ResponseEntity<>(trainerService.deleteTrainerById(id), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
             return new ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
         }catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
 }

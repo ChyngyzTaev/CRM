@@ -25,15 +25,12 @@ public class SubscriptionTypes extends BaseEntity {
     @Column(name = "number_of_day")
     Long numberOfDay;
 
-
     public SubscriptionTypesModel toModel(){
         return SubscriptionTypesModel.builder()
                 .id(this.getId())
                 .numberOfMonth(numberOfMonth)
                 .numberOfWeek(numberOfWeek)
                 .numberOfDay(numberOfDay)
-                .createDate(this.getCreateDate())
-                .updateDate(this.getUpdateDate())
                 .build();
     }
 }

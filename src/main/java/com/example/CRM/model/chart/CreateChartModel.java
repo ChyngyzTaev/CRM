@@ -1,5 +1,6 @@
 package com.example.CRM.model.chart;
 
+import com.example.CRM.entity.Chart;
 import com.example.CRM.enums.WeekDayEnum;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -21,4 +22,13 @@ public class CreateChartModel {
     LocalDateTime updateDate;
 
     WeekDayEnum weekDayEnum;
+
+    public Chart toChart(){
+        return Chart.builder()
+                .id(null)
+                .isActive(isActive)
+                .createDate(createDate)
+                .weekDayEnum(weekDayEnum)
+                .build();
+    }
 }

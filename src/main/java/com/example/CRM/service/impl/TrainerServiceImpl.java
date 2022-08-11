@@ -1,17 +1,14 @@
 package com.example.CRM.service.impl;
 
 import com.example.CRM.entity.User;
-import com.example.CRM.enums.RolesEnum;
 import com.example.CRM.exception.ApiFailException;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.exception.UserNotFoundException;
-import com.example.CRM.model.user.AuthModel;
 import com.example.CRM.model.user.CreateUserModel;
 import com.example.CRM.model.user.UpdateUserModel;
 import com.example.CRM.model.user.UserModel;
-import com.example.CRM.repository.UserRepository;
-import com.example.CRM.service.RoleService;
-import com.example.CRM.service.UserService;
+import com.example.CRM.repository.TrainerRepository;
+import com.example.CRM.service.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -21,61 +18,47 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class TrainerServiceImpl implements TrainerService {
     @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private RoleService roleService;
+    private TrainerRepository trainerRepository;
 
     @Autowired
-    private  PasswordEncoder passwordEncoder;
+    private PasswordEncoder passwordEncoder;
 
-
-    RolesEnum rolesEnum;
 
     @Override
-    public UserModel addNewClient(CreateUserModel createUserModel) {
+    public UserModel addNewTrainer(CreateUserModel createUserModel) {
         validateVariablesForNull(createUserModel);
-        User user = createUserModel.toUser();
-        userRepository.save(user);
-        return user.toModel();
+        User trainer = createUserModel.toUser();
+        trainerRepository.save(trainer);
+        return trainer.toModel();
     }
 
     @Override
-    public User setInActiveClient(User user, Long status) {
+    public User setInActiveTrainer(User user, Long status) {
         user.setIsActive(user.getIsActive());
-        return userRepository.save(user);
+        return trainerRepository.save(user);
     }
 
     @Override
-    public UserModel getClientById(Long id) {
-        User user = userRepository
+    public UserModel getTrainerById(Long id) {
+        User user = trainerRepository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException
-                        ("Клиент связанный с идентификатором " + id + " не найден"));
+                        ("Тренер связанный с идентификатором " + id + " не найден"));
         return user.toModel();
     }
 
     @Override
-    public User getClientByEmail(String email) {
-        return userRepository
-                .findUserByEmail(email)
+    public User getTrainerByEmail(String email) {
+        return trainerRepository
+                .findTrainerByEmail(email)
                 .orElseThrow(() -> new NotFoundException("Клиент связанный с таким email не найден."));
     }
 
-
     @Override
-    public User getClientByUserName(String username) {
-        return userRepository
-                .findClientByUsername(username)
-                .orElseThrow(() -> new NotFoundException("Клиент не найден"));
-    }
-
-
-    @Override
-    public List<UserModel> getAllClients() {
-        return userRepository
+    public List<UserModel> getAllTrainers() {
+        return trainerRepository
                 .findAll()
                 .stream()
                 .map(User::toModel)
@@ -83,17 +66,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UpdateUserModel updateClient(UpdateUserModel updateUserModel) {
+    public User getTrainerByUserName(String username) {
+        return trainerRepository
+                .findTrainerByUsername(username)
+                .orElseThrow(() -> new NotFoundException("Тренер не найден"));
+    }
+
+    @Override
+    public UpdateUserModel updateTrainer(UpdateUserModel updateUserModel) {
         if (updateUserModel == null) {
             throw new UserNotFoundException("Созданная информация о пользователе имеет " + "пустое" + "значение");
         } else if (updateUserModel.getId() == null) {
             throw new InvalidParameterException("Id абонемента  не может иметь пустое значени");
         }
 
-        User user = userRepository.getById(updateUserModel.getId());
+        User user = trainerRepository.getById(updateUserModel.getId());
         if (user == null) {
             throw new UserNotFoundException
-                    ("Клиент по id не нанйдено " + updateUserModel.getId());
+                    ("Тренер по id не нанйдено " + updateUserModel.getId());
         }
 
         user.setFullName(updateUserModel.getFullName());
@@ -104,32 +94,27 @@ public class UserServiceImpl implements UserService {
         user.setPhoneNumber(updateUserModel.getPhoneNumber());
         user.setCreateDate(updateUserModel.getCreateDate());
 
-        user = userRepository.save(user);
+        user = trainerRepository.save(user);
 
         return updateUserModel;
     }
 
     @Override
-    public User deleteClientByUserName(String username) {
-       return userRepository.deleteByUsername(username)
-               .orElseThrow(() -> new ApiFailException("Удаление не выполнено, возможно ошибка в username"));
+    public User deleteTrainerByUserName(String username) {
+        return trainerRepository.deleteByUsername(username)
+                .orElseThrow(() -> new ApiFailException("Удаление не выполнено, возможно ошибка в username"));
     }
 
     @Override
-    public UserModel deleteClientById(Long id){
-        User user = getById(id);
-        User deleteClient = setInActiveClient(user, -1L);
-        return deleteClient.toModel();
-    }
-
-    @Override
-    public String login(AuthModel authModel) {
-        return null;
+    public UserModel deleteTrainerById(Long id) {
+        User trainer = getById(id);
+        User deleteTrainer = setInActiveTrainer(trainer, -1L);
+        return deleteTrainer.toModel();
     }
 
 
     public User getById(Long id) {
-        return userRepository
+        return trainerRepository
                 .findById(id)
                 .orElseThrow(() ->
                         new NotFoundException

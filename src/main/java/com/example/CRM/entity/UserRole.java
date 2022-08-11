@@ -9,28 +9,25 @@ import lombok.experimental.SuperBuilder;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "role")
+@Table(name = "user_role")
 @Getter
 @Setter
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Role extends BaseEntity{
-    @Column(name = "role_name", nullable = false)
-    String roleName;
-
+public class UserRole extends BaseEntity{
     @Enumerated(EnumType.STRING)
-    @Column(name = "role_enum")
-    RolesEnum rolesEnum;
+    @Column(name = "role_name", nullable = false)
+    RolesEnum roleName;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    User user;
     public RoleModel toModel(){
         return RoleModel.builder()
                 .id(this.getId())
-                .rolesEnum(rolesEnum)
-                .rolesEnum(rolesEnum)
-                .createDate(this.getCreateDate())
-                .updateDate(this.getUpdateDate())
+                .rolesEnum(roleName)
                 .build();
     }
 }

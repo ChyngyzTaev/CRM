@@ -63,11 +63,13 @@ public class ChartController {
     }
 
     @DeleteMapping("/delete-chart-by-id/{id}")
-    public void deleteChartById(Long id){
+    public ResponseEntity<?> deleteChartById(@PathVariable Long id){
         try {
-            chartService.deleteChartById(id);
+            return new ResponseEntity<>(chartService.deleteChartById(id), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
-            System.out.println(badRequestException.getMessage());
+            return new ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

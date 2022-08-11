@@ -18,22 +18,16 @@ import java.util.List;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class ListExercises extends BaseEntity{
-    @Column(name = "name_exercise")
+    @Column(name = "name_exercise", nullable = false)
     String nameExercise;
 
-
-    @OneToOne
-    @JoinColumn(name = "chart_id")
-    Chart chart;
-
     @Enumerated(EnumType.STRING)
-    @Column(name = "weekday_enums")
+    @Column(name = "weekday_enums", nullable = false)
     WeekDayEnum weekDayEnum;
 
-
-    @OneToMany
-    @JoinColumn(name = "user_id")
-    List<User> user;
+    @ManyToOne
+    @JoinColumn(name = "chart_id")
+    Chart chart;
 
 
     public ListExercisesModel toModel(){
@@ -41,8 +35,6 @@ public class ListExercises extends BaseEntity{
                 .id(this.getId())
                 .weekDayEnum(weekDayEnum)
                 .nameExercise(nameExercise)
-                .createDate(this.getCreateDate())
-                .updateDate(this.getUpdateDate())
                 .build();
     }
 }

@@ -7,6 +7,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "chart")
@@ -17,21 +18,18 @@ import javax.persistence.*;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Chart extends BaseEntity {
-
     @Enumerated
     @Column(name = "weekday_enums", nullable = false)
     WeekDayEnum weekDayEnum;
 
-    @OneToOne
+    @OneToMany
     @JoinColumn(name = "list_exercises_id")
-    ListExercises listExercises;
+    List<ListExercises> listExercises;
 
     public ChartModel toModel() {
         return ChartModel.builder()
                 .id(this.getId())
                 .weekDayEnum(weekDayEnum)
-                .createDate(this.getCreateDate())
-                .updateDate(this.getUpdateDate())
                 .build();
     }
 }

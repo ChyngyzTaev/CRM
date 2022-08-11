@@ -1,5 +1,7 @@
 package com.example.CRM.service;
 
+import com.example.CRM.entity.Chart;
+import com.example.CRM.entity.ListExercises;
 import com.example.CRM.model.chart.ChartModel;
 import com.example.CRM.model.chart.CreateChartModel;
 import com.example.CRM.model.chart.UpdateChartModel;
@@ -7,7 +9,9 @@ import com.example.CRM.model.chart.UpdateChartModel;
 import java.util.List;
 
 public interface ChartService{
-    CreateChartModel addNewChart(CreateChartModel chartModel);
+    ChartModel addNewChart(CreateChartModel chartModel);
+
+    Chart setInActiveSchedule(Chart chart, Long status);
 
     ChartModel getChartById(Long id);
 
@@ -15,5 +19,5 @@ public interface ChartService{
 
     List<ChartModel> getAllChart();
 
-    void deleteChartById(Long id);
+    ChartModel deleteChartById(Long id);
 }

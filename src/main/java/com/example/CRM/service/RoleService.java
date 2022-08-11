@@ -1,6 +1,6 @@
 package com.example.CRM.service;
 
-import com.example.CRM.entity.Role;
+import com.example.CRM.entity.UserRole;
 import com.example.CRM.model.Role.CreateRoleModel;
 import com.example.CRM.model.Role.RoleModel;
 import com.example.CRM.model.Role.UpdateRoleModel;
@@ -8,13 +8,13 @@ import com.example.CRM.model.Role.UpdateRoleModel;
 import java.util.List;
 
 public interface RoleService{
-    CreateRoleModel addNewRole(CreateRoleModel roleModel);
+    RoleModel addNewRole(CreateRoleModel createRoleModel);
 
-    Role setInActiveRole(Role role, Long status);
+    UserRole setInActiveRole(UserRole userRole, Long status);
 
     RoleModel getRoleById(Long id);
 
-    Role getRoleByRoleName(String roleName);
+    UserRole getRoleByRoleName(String roleName);
 
     List<RoleModel> getAllRole();
 

@@ -1,6 +1,9 @@
 package com.example.CRM.service.impl;
 
 import com.example.CRM.entity.Chart;
+import com.example.CRM.entity.ListExercises;
+import com.example.CRM.entity.User;
+import com.example.CRM.exception.ApiFailException;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.exception.UserNotFoundException;
 import com.example.CRM.model.chart.ChartModel;
@@ -23,13 +26,17 @@ public class ChartServiceImpl implements ChartService {
 
 
     @Override
-    public CreateChartModel addNewChart(CreateChartModel chartModel) {
-        Chart chart = new Chart();
-        chart.setWeekDayEnum(chartModel.getWeekDayEnum());
-        chart.setIsActive(chartModel.getIsActive());
-        chart.setCreateDate(chartModel.getCreateDate());
+    public ChartModel addNewChart(CreateChartModel createChartModel) {
+        validateVariablesForNull(createChartModel);
+        Chart chart = createChartModel.toChart();
         chartRepository.save(chart);
-        return chartModel;
+        return chart.toModel();
+    }
+
+    @Override
+    public Chart setInActiveSchedule(Chart chart, Long status) {
+        chart.setIsActive(chart.getIsActive());
+        return chartRepository.save(chart);
     }
 
 
@@ -73,7 +80,22 @@ public class ChartServiceImpl implements ChartService {
     }
 
     @Override
-    public void deleteChartById(Long id) {
-        chartRepository.deleteById(id);
+    public ChartModel deleteChartById(Long id) {
+        Chart chart = getById(id);
+        Chart deleteChart = setInActiveSchedule(chart, -1L);
+        return deleteChart.toModel();
+    }
+
+    public Chart getById(Long id) {
+        return chartRepository
+                .findById(id)
+                .orElseThrow(() ->
+                        new NotFoundException
+                                ("Пользоватлеь связанный с идентификатором " + id + " не найдено"));
+    }
+
+    public void validateVariablesForNull(CreateChartModel chartModel){
+        if (chartModel.getWeekDayEnum() == null)
+            throw new ApiFailException(("День недели не заполнен"));
     }
 }

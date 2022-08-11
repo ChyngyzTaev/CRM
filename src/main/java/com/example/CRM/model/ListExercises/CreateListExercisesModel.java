@@ -1,5 +1,6 @@
 package com.example.CRM.model.ListExercises;
 
+import com.example.CRM.entity.ListExercises;
 import com.example.CRM.enums.WeekDayEnum;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -24,4 +25,13 @@ public class CreateListExercisesModel {
     WeekDayEnum weekDayEnum;
 
     String nameExercise;
+
+    public ListExercises toListExercises(){
+        return ListExercises.builder()
+                .id(null)
+                .isActive(isActive)
+                .weekDayEnum(weekDayEnum)
+                .nameExercise(nameExercise)
+                .build();
+    }
 }

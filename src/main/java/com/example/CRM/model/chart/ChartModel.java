@@ -24,6 +24,4 @@ public class ChartModel{
     LocalDateTime updateDate;
 
     WeekDayEnum weekDayEnum;
-
-    ListExercisesModel scheduleModel;
 }

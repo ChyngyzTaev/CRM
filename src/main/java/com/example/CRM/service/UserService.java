@@ -1,34 +1,31 @@
 package com.example.CRM.service;
 
-import com.example.CRM.entity.Role;
 import com.example.CRM.entity.User;
+import com.example.CRM.model.user.AuthModel;
 import com.example.CRM.model.user.CreateUserModel;
+import com.example.CRM.model.user.UpdateUserModel;
 import com.example.CRM.model.user.UserModel;
 
 import java.util.List;
 
 public interface UserService {
-    CreateUserModel addNewClient(CreateUserModel createUserModel, Role role);
+    UserModel addNewClient(CreateUserModel createUserModel);
 
-    CreateUserModel addNewTrainer(CreateUserModel createUserModel, Role role);
+    User setInActiveClient(User user, Long status);
 
-    CreateUserModel addNewManager(CreateUserModel createUserModel, Role role );
+    UserModel getClientById(Long id);
 
-    CreateUserModel addNewAdmin(CreateUserModel createUserModel, Role role);
+    User getClientByEmail(String email);
 
-    User setInActiveUser(User user, Long status);
+    User getClientByUserName(String username);
 
-    UserModel getUserById(Long id);
+    List<UserModel> getAllClients();
 
-    UserModel getTrainerById(Long id);
+    UpdateUserModel updateClient(UpdateUserModel updateUserModel);
 
-    UserModel getManagerById(Long id);
+    User deleteClientByUserName(String username);
 
-    UserModel getAdminById(Long id);
+    UserModel deleteClientById(Long id);
 
-    User getUserByUserName(String username);
-
-    List<UserModel> getAllUsers();
-
-    UserModel deleteUserById(Long id);
+    String login(AuthModel authModel);
 }

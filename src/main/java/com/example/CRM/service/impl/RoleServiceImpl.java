@@ -1,7 +1,8 @@
 package com.example.CRM.service.impl;
 
-import com.example.CRM.entity.Role;
+import com.example.CRM.entity.UserRole;
 import com.example.CRM.enums.RolesEnum;
+import com.example.CRM.exception.ApiFailException;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.exception.UserNotFoundException;
 import com.example.CRM.model.Role.CreateRoleModel;
@@ -25,32 +26,30 @@ public class RoleServiceImpl implements RoleService {
     RolesEnum rolesEnum;
 
     @Override
-    public CreateRoleModel addNewRole(CreateRoleModel roleModel) {
-        Role role = new Role();
-        role.setRoleName(roleModel.getRoleName());
-        role.setRolesEnum(rolesEnum);
-        role.setIsActive(roleModel.getIsActive());
-        roleRepository.save(role);
-        return roleModel;
+    public RoleModel addNewRole(CreateRoleModel createRoleModel) {
+        validateVariablesForNull(createRoleModel);
+        UserRole userRole = createRoleModel.toRole();
+        roleRepository.save(userRole);
+        return userRole.toModel();
     }
 
     @Override
-    public Role setInActiveRole(Role role, Long status) {
-        role.setIsActive(role.getIsActive());
-        return roleRepository.save(role);
+    public UserRole setInActiveRole(UserRole userRole, Long status) {
+        userRole.setIsActive(userRole.getIsActive());
+        return roleRepository.save(userRole);
     }
 
     @Override
     public RoleModel getRoleById(Long id) {
-        Role role = roleRepository
+        UserRole userRole = roleRepository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException("Роль связанный с идентификатором " + id + " не найден"));
-        return role.toModel();
+        return userRole.toModel();
     }
 
     @Override
-    public Role getRoleByRoleName(String roleName) {
-        return roleRepository.findByRolesEnum(roleName)
+    public UserRole getRoleByRoleName(String roleName) {
+        return roleRepository.findByRoleName(roleName)
                 .orElseThrow(() -> new NotFoundException("Роль не найден"));
     }
 
@@ -61,7 +60,7 @@ public class RoleServiceImpl implements RoleService {
         return roleRepository
                 .findAll()
                 .stream()
-                .map(Role::toModel)
+                .map(UserRole::toModel)
                 .collect(Collectors.toList());
     }
 
@@ -73,33 +72,38 @@ public class RoleServiceImpl implements RoleService {
             throw new InvalidParameterException("Id роли не может иметь пустое значени");
         }
 
-        Role role = roleRepository.getById(roleModel.getId());
-        if (role == null) {
+        UserRole userRole = roleRepository.getById(roleModel.getId());
+        if (userRole == null) {
             throw new UserNotFoundException
                     ("Роль по id не найден " + roleModel.getId());
         }
 
-        role.setRolesEnum(roleModel.getRoleName());
-        role.setCreateDate(roleModel.getCreateDate());
+        userRole.setRoleName(roleModel.getRoleName());
+        userRole.setCreateDate(roleModel.getCreateDate());
 
-        role = roleRepository.save(role);
+        userRole = roleRepository.save(userRole);
 
         return roleModel;
     }
 
     @Override
     public RoleModel deleteRoleById(Long id) {
-        Role role = getById(id);
-        Role deleteRole = setInActiveRole(role, -1L);
-        return deleteRole.toModel();
+        UserRole userRole = getById(id);
+        UserRole deleteUserRole = setInActiveRole(userRole, -1L);
+        return deleteUserRole.toModel();
     }
 
 
-    public Role getById(Long id) {
+    public UserRole getById(Long id) {
         return roleRepository
                 .findById(id)
                 .orElseThrow(() -> new
                         NotFoundException
                         ("Роль связанный с идентификатором " + id + " не найдено "));
+    }
+
+    public void validateVariablesForNull(CreateRoleModel createRoleModel){
+        if (createRoleModel.getRolesEnum()== null)
+            throw new ApiFailException("RoleEnum не заполнен");
     }
 }

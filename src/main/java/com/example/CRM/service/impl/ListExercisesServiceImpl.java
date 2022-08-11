@@ -1,6 +1,7 @@
 package com.example.CRM.service.impl;
 
 import com.example.CRM.entity.ListExercises;
+import com.example.CRM.exception.ApiFailException;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.exception.UserNotFoundException;
 import com.example.CRM.model.ListExercises.CreateListExercisesModel;
@@ -22,20 +23,17 @@ public class ListExercisesServiceImpl implements ListExercisesService {
 
 
     @Override
-    public CreateListExercisesModel addNewSchedule(CreateListExercisesModel scheduleModel) {
-        ListExercises schedule = new ListExercises();
-        schedule.setNameExercise(scheduleModel.getNameExercise());
-        schedule.setWeekDayEnum(scheduleModel.getWeekDayEnum());
-        schedule.setCreateDate(scheduleModel.getCreateDate());
-        schedule.setIsActive(scheduleModel.getIsActive());
-        listExercisesRepository.save(schedule);
-        return scheduleModel;
+    public ListExercisesModel addNewSchedule(CreateListExercisesModel createListExercisesModel) {
+        ListExercises listExercises = createListExercisesModel.toListExercises();
+        validateVariablesForNull(createListExercisesModel);
+        listExercisesRepository.save(listExercises);
+        return listExercises.toModel();
     }
 
     @Override
-    public ListExercises setInActiveSchedule(ListExercises schedule, Long status) {
-        schedule.setIsActive(schedule.getIsActive());
-        return listExercisesRepository.save(schedule);
+    public ListExercises setInActiveSchedule(ListExercises listExercises, Long status) {
+        listExercises.setIsActive(listExercises.getIsActive());
+        return listExercisesRepository.save(listExercises);
     }
 
     @Override
@@ -81,9 +79,9 @@ public class ListExercisesServiceImpl implements ListExercisesService {
 
     @Override
     public ListExercisesModel deleteScheduleById(Long id) {
-        ListExercises schedule = getById(id);
-        ListExercises deleteSchedule = setInActiveSchedule(schedule, -1L);
-        return deleteSchedule.toModel();
+        ListExercises listExercises = getById(id);
+        ListExercises deleteListExercises = setInActiveSchedule(listExercises, -1L);
+        return deleteListExercises.toModel();
     }
 
 
@@ -93,5 +91,12 @@ public class ListExercisesServiceImpl implements ListExercisesService {
                 .orElseThrow(() ->
                         new NotFoundException
                                 ("Расписание связанный с идентификатором " + id + " не найдено"));
+    }
+
+    public void validateVariablesForNull (CreateListExercisesModel createListExercisesModel){
+        if (createListExercisesModel.getWeekDayEnum() == null)
+            throw new ApiFailException("WeekDay не заполнен");
+        if (createListExercisesModel.getNameExercise() == null)
+            throw new ApiFailException("NameExercises не заполнен");
     }
 }

@@ -1,5 +1,6 @@
 package com.example.CRM.model.Role;
 
+import com.example.CRM.entity.UserRole;
 import com.example.CRM.enums.RolesEnum;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -23,8 +24,13 @@ public class CreateRoleModel {
     LocalDateTime updateDate;
 
     @NotBlank
-    String roleName;
-
-    @NotBlank
     RolesEnum rolesEnum;
+
+    public UserRole toRole(){
+        return UserRole.builder()
+                .id(null)
+                .isActive(isActive)
+                .roleName(rolesEnum)
+                .build();
+    }
 }

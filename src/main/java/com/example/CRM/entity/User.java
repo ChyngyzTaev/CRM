@@ -1,12 +1,12 @@
 package com.example.CRM.entity;
 
+import com.example.CRM.enums.RolesEnum;
 import com.example.CRM.model.user.UserModel;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -25,25 +25,17 @@ public class User extends BaseEntity{
     @Column(name = "username", nullable = false, unique = true)
     String username;
 
-    @Column(name = "age", nullable = false)
-    Long age;
-
-    @Column(name = "birth_day")
+    @Column(name = "birth_day" )
     LocalDate birthDay;
 
-    @Column(name = "phone_number", nullable = false)
-    String phoneNumber;
-
-    @Column(name = "email", length = 100, nullable = false, unique = true)
-    @Email
+    @Column(name = "email", length = 100, unique = true)
     String email;
 
     @Column(name = "password", length = 100, nullable = false)
     String password;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    Role role;
+    @Column(name = "phone_number")
+    String phoneNumber;
 
     @OneToOne
     @JoinColumn(name = "subscription_types_id")
@@ -57,20 +49,15 @@ public class User extends BaseEntity{
     @JoinColumn(name = "exercises_id")
     List<ListExercises> exercises;
 
-
-
     public UserModel toModel(){
         return UserModel.builder()
                 .id(this.getId())
                 .fullName(fullName)
                 .username(username)
                 .birthday(birthDay)
-                .phoneNumber(phoneNumber)
                 .email(email)
                 .password(password)
-                .age(age)
-                .createDate(this.getCreateDate())
-                .updateDate(this.getUpdateDate())
+                .phoneNumber(phoneNumber)
                 .build();
     }
 }

@@ -8,9 +8,9 @@ import com.example.CRM.model.ListExercises.UpdateListExercisesModel;
 import java.util.List;
 
 public interface ListExercisesService{
-    CreateListExercisesModel addNewSchedule(CreateListExercisesModel scheduleModel);
+    ListExercisesModel addNewSchedule(CreateListExercisesModel createListExercisesModel);
 
-    ListExercises setInActiveSchedule(ListExercises schedule, Long status);
+    ListExercises setInActiveSchedule(ListExercises listExercises, Long status);
 
     ListExercisesModel getScheduleById(Long id);
 

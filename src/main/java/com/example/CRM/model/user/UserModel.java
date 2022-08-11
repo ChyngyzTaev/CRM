@@ -1,5 +1,6 @@
 package com.example.CRM.model.user;
 
+import com.example.CRM.enums.RolesEnum;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
@@ -29,8 +30,6 @@ public class UserModel{
     @NotBlank
     String username;
 
-    @NotBlank
-    Long age;
 
     @NotBlank
     LocalDate birthday;
@@ -43,4 +42,7 @@ public class UserModel{
 
     @NotBlank
     String password;
+
+
+    RolesEnum rolesEnum;
 }

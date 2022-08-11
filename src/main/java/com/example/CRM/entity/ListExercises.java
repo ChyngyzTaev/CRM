@@ -7,7 +7,6 @@ import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "list_exercises")
@@ -28,7 +27,6 @@ public class ListExercises extends BaseEntity{
     @ManyToOne
     @JoinColumn(name = "chart_id")
     Chart chart;
-
 
     public ListExercisesModel toModel(){
         return ListExercisesModel.builder()

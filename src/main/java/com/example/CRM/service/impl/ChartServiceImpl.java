@@ -1,8 +1,6 @@
 package com.example.CRM.service.impl;
 
 import com.example.CRM.entity.Chart;
-import com.example.CRM.entity.ListExercises;
-import com.example.CRM.entity.User;
 import com.example.CRM.exception.ApiFailException;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.exception.UserNotFoundException;
@@ -11,6 +9,7 @@ import com.example.CRM.model.chart.CreateChartModel;
 import com.example.CRM.model.chart.UpdateChartModel;
 import com.example.CRM.repository.ChartRepository;
 import com.example.CRM.service.ChartService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,7 +19,6 @@ import java.util.stream.Collectors;
 
 @Service
 public class ChartServiceImpl implements ChartService {
-
     @Autowired
     private ChartRepository chartRepository;
 

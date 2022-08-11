@@ -7,8 +7,9 @@ import com.example.CRM.exception.UserNotFoundException;
 import com.example.CRM.model.user.CreateUserModel;
 import com.example.CRM.model.user.UpdateUserModel;
 import com.example.CRM.model.user.UserModel;
-import com.example.CRM.repository.ManagerRepository;
+import com.example.CRM.repository.UserRepository;
 import com.example.CRM.service.ManagerService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 @Service
 public class ManagerServiceImpl implements ManagerService {
     @Autowired
-    private ManagerRepository managerRepository;
+    private UserRepository managerRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -51,14 +52,14 @@ public class ManagerServiceImpl implements ManagerService {
     @Override
     public User getManagerByEmail(String email) {
         return managerRepository
-                .findManagerByEmail(email)
+                .findByEmail(email)
                 .orElseThrow(() -> new NotFoundException("Менеджер связанный с таким email не найден."));
     }
 
     @Override
     public User getManagerByUserName(String username) {
         return managerRepository
-                .findManagerByUsername(username)
+                .findByUsername(username)
                 .orElseThrow(() -> new NotFoundException("Менеджер не найден"));
     }
 
@@ -100,8 +101,9 @@ public class ManagerServiceImpl implements ManagerService {
 
     @Override
     public User deleteManagerByUserName(String username) {
-        return managerRepository.deleteByUsername(username)
-                .orElseThrow(() -> new ApiFailException("Удаление не выполнено, возможно ошибка в username"));
+        User manager = getManagerByUserName(username);
+        managerRepository.delete(manager);
+        return manager;
     }
 
     @Override

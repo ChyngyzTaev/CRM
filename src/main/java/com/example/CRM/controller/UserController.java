@@ -4,13 +4,11 @@ import com.example.CRM.exception.BadRequestException;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.model.user.CreateUserModel;
 import com.example.CRM.model.user.UpdateUserModel;
-import com.example.CRM.request.AuthenticationRequest;
-import com.example.CRM.response.AuthenticationResponse;
 import com.example.CRM.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
@@ -105,10 +103,10 @@ public class UserController {
     public ResponseEntity<?> deleteClientByUserName(@RequestBody String username){
         try {
             return new ResponseEntity<>(userService.deleteClientByUserName(username), HttpStatus.OK);
-        }catch (BadRequestException badRequestException){
-            return new ResponseEntity<>(badRequestException.getMessage(), HttpStatus.BAD_REQUEST);
-        }catch (Exception e){
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }catch (NotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        } catch (Exception e){
+            return new ResponseEntity<>("Ошибка сервера", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

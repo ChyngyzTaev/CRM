@@ -1,11 +1,11 @@
 package com.example.CRM.enums;
 
 public enum RolesEnum {
-    ADMIN,
+    ROLE_ADMIN,
 
-    TRAINER,
+    ROLE_TRAINER,
 
-    MANAGER,
+    ROLE_MANAGER,
 
-    CLIENT
+    ROLE_CLIENT
 }

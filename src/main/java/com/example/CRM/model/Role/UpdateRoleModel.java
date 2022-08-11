@@ -5,7 +5,6 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.SuperBuilder;
 
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 @Getter
@@ -22,7 +21,6 @@ public class UpdateRoleModel {
     LocalDateTime createDate;
 
     LocalDateTime updateDate;
-
 
     RolesEnum roleName;
 }

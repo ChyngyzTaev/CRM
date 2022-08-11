@@ -3,6 +3,7 @@ package com.example.CRM.controller;
 import com.example.CRM.exception.BadRequestException;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.service.GeneralRecordService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/general-record")
+@RequestMapping("/general-record")
 public class GeneralRecordController {
     @Autowired
     private GeneralRecordService generalRecordService;

@@ -3,14 +3,11 @@ package com.example.CRM.controller;
 import com.example.CRM.exception.BadRequestException;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.model.user.AuthModel;
-import com.example.CRM.request.AuthenticationRequest;
-import com.example.CRM.response.AuthenticationResponse;
 import com.example.CRM.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,11 +31,6 @@ public class AuthController {
         } catch (Exception e) {
             return new ResponseEntity<>("Ошибка сервера", HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
-
-
-    private ResponseEntity<?> getErrorAuthorizationMessage(String message) {
-        return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
     }
 }
 

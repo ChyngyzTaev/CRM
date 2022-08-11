@@ -21,5 +21,5 @@ public class RoleModel{
 
     LocalDateTime updateDate;
 
-    RolesEnum rolesEnum;
+    RolesEnum roleName;
 }

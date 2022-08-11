@@ -5,6 +5,7 @@ import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.model.ListExercises.CreateListExercisesModel;
 import com.example.CRM.model.ListExercises.UpdateListExercisesModel;
 import com.example.CRM.service.ListExercisesService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

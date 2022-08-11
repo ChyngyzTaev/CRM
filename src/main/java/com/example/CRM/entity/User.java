@@ -1,6 +1,5 @@
 package com.example.CRM.entity;
 
-import com.example.CRM.enums.RolesEnum;
 import com.example.CRM.model.user.UserModel;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -55,8 +54,6 @@ public class User extends BaseEntity{
                 .fullName(fullName)
                 .username(username)
                 .birthday(birthDay)
-                .email(email)
-                .password(password)
                 .phoneNumber(phoneNumber)
                 .build();
     }

@@ -13,8 +13,6 @@ public interface ManagerService {
 
     User setInActiveManager(User user, Long status);
 
-
-
     UserModel getManagerById(Long id);
 
     User getManagerByEmail(String email);
@@ -23,11 +21,7 @@ public interface ManagerService {
 
     List<UserModel> getAllManagers();
 
-
-
     UpdateUserModel updateManager(UpdateUserModel updateUserModel);
-
-
 
     User deleteManagerByUserName(String username);
 

@@ -3,7 +3,6 @@ package com.example.CRM.model.subscriptionTypes;
 import com.example.CRM.entity.SubscriptionTypes;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 

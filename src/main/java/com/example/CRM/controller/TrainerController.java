@@ -6,6 +6,7 @@ import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.model.user.CreateUserModel;
 import com.example.CRM.model.user.UpdateUserModel;
 import com.example.CRM.service.TrainerService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,7 +57,6 @@ public class TrainerController {
         }
     }
 
-
     @GetMapping("/get-trainer-by-email")
     public ResponseEntity<?> getTrainerByEmail(@RequestBody String email){
         try {
@@ -103,7 +103,6 @@ public class TrainerController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
     @DeleteMapping("/delete-trainer-by-id/{id}")
     public ResponseEntity<?> deleteTrainerById(@PathVariable Long id){

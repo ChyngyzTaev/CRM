@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CreateRoleModel {
-
     Long isActive;
 
     LocalDateTime createDate;
@@ -24,13 +23,13 @@ public class CreateRoleModel {
     LocalDateTime updateDate;
 
     @NotBlank
-    RolesEnum rolesEnum;
+    RolesEnum roleName;
 
     public UserRole toRole(){
         return UserRole.builder()
                 .id(null)
                 .isActive(isActive)
-                .roleName(rolesEnum)
+                .roleName(roleName)
                 .build();
     }
 }

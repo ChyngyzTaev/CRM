@@ -12,8 +12,6 @@ public interface TrainerService {
 
     User setInActiveTrainer(User user, Long status);
 
-
-
     UserModel getTrainerById(Long id);
 
     User getTrainerByEmail(String email);
@@ -22,11 +20,7 @@ public interface TrainerService {
 
     User getTrainerByUserName(String username);
 
-
-
     UpdateUserModel updateTrainer(UpdateUserModel updateUserModel);
-
-
 
     User deleteTrainerByUserName(String username);
 

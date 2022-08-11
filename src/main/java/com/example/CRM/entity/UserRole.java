@@ -27,7 +27,7 @@ public class UserRole extends BaseEntity{
     public RoleModel toModel(){
         return RoleModel.builder()
                 .id(this.getId())
-                .rolesEnum(roleName)
+                .roleName(roleName)
                 .build();
     }
 }

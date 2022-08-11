@@ -6,6 +6,7 @@ import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.model.user.CreateUserModel;
 import com.example.CRM.model.user.UpdateUserModel;
 import com.example.CRM.service.ManagerService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -67,8 +68,6 @@ public class ManagerController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-
 
     @GetMapping("/get-all-managers")
     public ResponseEntity<?> getAllManagers(){

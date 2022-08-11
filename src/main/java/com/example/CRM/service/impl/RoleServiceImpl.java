@@ -1,7 +1,6 @@
 package com.example.CRM.service.impl;
 
 import com.example.CRM.entity.UserRole;
-import com.example.CRM.enums.RolesEnum;
 import com.example.CRM.exception.ApiFailException;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.exception.UserNotFoundException;
@@ -10,6 +9,7 @@ import com.example.CRM.model.Role.RoleModel;
 import com.example.CRM.model.Role.UpdateRoleModel;
 import com.example.CRM.repository.RoleRepository;
 import com.example.CRM.service.RoleService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +19,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class RoleServiceImpl implements RoleService {
-
     @Autowired
     private RoleRepository roleRepository;
-
-    RolesEnum rolesEnum;
 
     @Override
     public RoleModel addNewRole(CreateRoleModel createRoleModel) {
@@ -52,8 +49,6 @@ public class RoleServiceImpl implements RoleService {
         return roleRepository.findByRoleName(roleName)
                 .orElseThrow(() -> new NotFoundException("Роль не найден"));
     }
-
-
 
     @Override
     public List<RoleModel> getAllRole() {
@@ -103,7 +98,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     public void validateVariablesForNull(CreateRoleModel createRoleModel){
-        if (createRoleModel.getRolesEnum()== null)
+        if (createRoleModel.getRoleName()== null)
             throw new ApiFailException("RoleEnum не заполнен");
     }
 }

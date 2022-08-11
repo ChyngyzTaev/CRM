@@ -8,6 +8,7 @@ import com.example.CRM.model.subscriptionTypes.SubscriptionTypesModel;
 import com.example.CRM.model.subscriptionTypes.UpdateSubscriptionTypesModel;
 import com.example.CRM.repository.SubscriptionTypesRepository;
 import com.example.CRM.service.SubscriptionTypesService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -71,7 +72,6 @@ public class SubscriptionTypesServiceImpl implements SubscriptionTypesService {
         SubscriptionTypes deleteSubscription = setInActiveSubscriptionTypes(subscriptionTypes, -1L);
         return deleteSubscription.toModel();
     }
-
 
     public SubscriptionTypes getById(Long id) {
         return subscriptionTypesRepository

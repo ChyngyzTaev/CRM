@@ -7,8 +7,9 @@ import com.example.CRM.exception.UserNotFoundException;
 import com.example.CRM.model.user.CreateUserModel;
 import com.example.CRM.model.user.UpdateUserModel;
 import com.example.CRM.model.user.UserModel;
-import com.example.CRM.repository.AdminRepository;
+import com.example.CRM.repository.UserRepository;
 import com.example.CRM.service.AdminService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 @Service
 public class AdminServiceImpl implements AdminService {
     @Autowired
-    private AdminRepository adminRepository;
+    private UserRepository adminRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -51,14 +52,14 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public User getAdminByEmail(String email) {
         return adminRepository
-                .findAdminByEmail(email)
+                .findByEmail(email)
                 .orElseThrow(() -> new NotFoundException("Клиент связанный с таким email не найден."));
     }
 
     @Override
     public User getAdminByUserName(String username) {
         return adminRepository
-                .findAdminByUsername(username)
+                .findByUsername(username)
                 .orElseThrow(() -> new NotFoundException("Клиент не найден"));
     }
 
@@ -100,8 +101,9 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public User deleteAdminByUserName(String username) {
-        return adminRepository.deleteByUsername(username)
-                .orElseThrow(() -> new ApiFailException("Удаление не выполнено, возможно ошибка в username"));
+        User admin = getAdminByUserName(username);
+        adminRepository.delete(admin);
+        return admin;
     }
 
     @Override
@@ -118,7 +120,6 @@ public class AdminServiceImpl implements AdminService {
                         new NotFoundException
                                 ("Пользоватлеь связанный с идентификатором " + id + " не найдено"));
     }
-
 
     private void validateVariablesForNull(CreateUserModel createUserModel) {
         if (createUserModel.getRolesEnum() == null)

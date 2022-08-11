@@ -12,8 +12,6 @@ public interface AdminService {
 
     User setInActiveAdmin(User user, Long status);
 
-
-
     UserModel getAdminById(Long id);
 
     User getAdminByEmail(String email);
@@ -22,11 +20,7 @@ public interface AdminService {
 
     List<UserModel> getAllAdmins();
 
-
-
     UpdateUserModel updateAdmin(UpdateUserModel updateUserModel);
-
-
 
     User deleteAdminByUserName(String username);
 

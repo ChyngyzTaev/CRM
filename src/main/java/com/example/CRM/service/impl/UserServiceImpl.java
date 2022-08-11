@@ -1,8 +1,8 @@
 package com.example.CRM.service.impl;
 
 import com.example.CRM.entity.User;
-import com.example.CRM.enums.RolesEnum;
 import com.example.CRM.exception.ApiFailException;
+import com.example.CRM.exception.BadRequestException;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.exception.UserNotFoundException;
 import com.example.CRM.model.user.AuthModel;
@@ -12,16 +12,19 @@ import com.example.CRM.model.user.UserModel;
 import com.example.CRM.repository.UserRepository;
 import com.example.CRM.service.RoleService;
 import com.example.CRM.service.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.security.InvalidParameterException;
+import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
+    private static final String INCORRECT_PASSWORD_LOGIN = "Не правильный логин или пароль";
     @Autowired
     private UserRepository userRepository;
 
@@ -30,9 +33,6 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private  PasswordEncoder passwordEncoder;
-
-
-    RolesEnum rolesEnum;
 
     @Override
     public UserModel addNewClient(CreateUserModel createUserModel) {
@@ -60,18 +60,16 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getClientByEmail(String email) {
         return userRepository
-                .findUserByEmail(email)
+                .findByEmail(email)
                 .orElseThrow(() -> new NotFoundException("Клиент связанный с таким email не найден."));
     }
-
 
     @Override
     public User getClientByUserName(String username) {
         return userRepository
-                .findClientByUsername(username)
-                .orElseThrow(() -> new NotFoundException("Клиент не найден"));
+                .findByUsername(username)
+                .orElseThrow(() -> new NotFoundException("Пользователь не найден по username " + username));
     }
-
 
     @Override
     public List<UserModel> getAllClients() {
@@ -111,8 +109,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User deleteClientByUserName(String username) {
-       return userRepository.deleteByUsername(username)
-               .orElseThrow(() -> new ApiFailException("Удаление не выполнено, возможно ошибка в username"));
+        User user = getClientByUserName(username);
+        userRepository.delete(user);
+        return user;
     }
 
     @Override
@@ -124,9 +123,23 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String login(AuthModel authModel) {
-        return null;
+        String username = authModel.getUsername();
+        String password = authModel.getPassword();
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new BadRequestException(INCORRECT_PASSWORD_LOGIN));
+
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new BadRequestException(INCORRECT_PASSWORD_LOGIN);
+        }
+        return getBasicToken(username, password);
     }
 
+    private String getBasicToken(String username, String password) {
+        String usernamePasswordPair = username + ":" + password;
+        String authHeader = new String(Base64.getEncoder().encode(usernamePasswordPair.getBytes()));
+        return "Basic " + authHeader;
+    }
 
     public User getById(Long id) {
         return userRepository

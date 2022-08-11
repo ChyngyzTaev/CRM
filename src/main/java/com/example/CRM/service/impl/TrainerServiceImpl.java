@@ -7,7 +7,7 @@ import com.example.CRM.exception.UserNotFoundException;
 import com.example.CRM.model.user.CreateUserModel;
 import com.example.CRM.model.user.UpdateUserModel;
 import com.example.CRM.model.user.UserModel;
-import com.example.CRM.repository.TrainerRepository;
+import com.example.CRM.repository.UserRepository;
 import com.example.CRM.service.TrainerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Service
 public class TrainerServiceImpl implements TrainerService {
     @Autowired
-    private TrainerRepository trainerRepository;
+    private UserRepository trainerRepository;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -52,7 +52,7 @@ public class TrainerServiceImpl implements TrainerService {
     @Override
     public User getTrainerByEmail(String email) {
         return trainerRepository
-                .findTrainerByEmail(email)
+                .findByEmail(email)
                 .orElseThrow(() -> new NotFoundException("Клиент связанный с таким email не найден."));
     }
 
@@ -68,7 +68,7 @@ public class TrainerServiceImpl implements TrainerService {
     @Override
     public User getTrainerByUserName(String username) {
         return trainerRepository
-                .findTrainerByUsername(username)
+                .findByUsername(username)
                 .orElseThrow(() -> new NotFoundException("Тренер не найден"));
     }
 
@@ -101,8 +101,9 @@ public class TrainerServiceImpl implements TrainerService {
 
     @Override
     public User deleteTrainerByUserName(String username) {
-        return trainerRepository.deleteByUsername(username)
-                .orElseThrow(() -> new ApiFailException("Удаление не выполнено, возможно ошибка в username"));
+        User trainer = getTrainerByUserName(username);
+        trainerRepository.delete(trainer);
+        return trainer;
     }
 
     @Override
@@ -112,7 +113,6 @@ public class TrainerServiceImpl implements TrainerService {
         return deleteTrainer.toModel();
     }
 
-
     public User getById(Long id) {
         return trainerRepository
                 .findById(id)
@@ -120,7 +120,6 @@ public class TrainerServiceImpl implements TrainerService {
                         new NotFoundException
                                 ("Пользоватлеь связанный с идентификатором " + id + " не найдено"));
     }
-
 
     private void validateVariablesForNull(CreateUserModel createUserModel) {
         if (createUserModel.getRolesEnum() == null)

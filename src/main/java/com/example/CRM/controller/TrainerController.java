@@ -1,5 +1,6 @@
 package com.example.CRM.controller;
 
+import com.example.CRM.entity.User;
 import com.example.CRM.entity.UserRole;
 import com.example.CRM.exception.BadRequestException;
 import com.example.CRM.exception.NotFoundException;
@@ -45,7 +46,7 @@ public class TrainerController {
     }
 
     @GetMapping("/get-trainer-by-userName")
-    public ResponseEntity<?> getTrainerByUserName(@RequestBody String username){
+    public ResponseEntity<?> getTrainerByUserName(@RequestBody User username){
         try {
             return new ResponseEntity<>(trainerService.getTrainerByUserName(username), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
@@ -58,7 +59,7 @@ public class TrainerController {
     }
 
     @GetMapping("/get-trainer-by-email")
-    public ResponseEntity<?> getTrainerByEmail(@RequestBody String email){
+    public ResponseEntity<?> getTrainerByEmail(@RequestBody User email){
         try {
             return new ResponseEntity<>(trainerService.getTrainerByEmail(email), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
@@ -94,7 +95,7 @@ public class TrainerController {
 
 
     @DeleteMapping("/delete-trainer-by-userName")
-    public ResponseEntity<?> deleteTrainerByUserName(@RequestBody String username){
+    public ResponseEntity<?> deleteTrainerByUserName(@RequestBody User username){
         try {
             return new ResponseEntity<>(trainerService.deleteTrainerByUserName(username), HttpStatus.OK);
         }catch (BadRequestException badRequestException){

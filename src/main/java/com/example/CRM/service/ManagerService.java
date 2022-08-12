@@ -15,15 +15,15 @@ public interface ManagerService {
 
     UserModel getManagerById(Long id);
 
-    User getManagerByEmail(String email);
+    UserModel getManagerByEmail(User email);
 
-    User getManagerByUserName(String username);
+    UserModel getManagerByUserName(User username);
 
     List<UserModel> getAllManagers();
 
     UpdateUserModel updateManager(UpdateUserModel updateUserModel);
 
-    User deleteManagerByUserName(String username);
+    UserModel deleteManagerByUserName(User username);
 
     UserModel deleteManagerById(Long id);
 }

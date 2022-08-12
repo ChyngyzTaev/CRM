@@ -58,17 +58,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getClientByEmail(String email) {
-        return userRepository
-                .findByEmail(email)
-                .orElseThrow(() -> new NotFoundException("Клиент связанный с таким email не найден."));
+    public UserModel getClientByEmail(User email) {
+        userRepository.findByEmail(email.getEmail());
+        return email.toModel();
     }
 
     @Override
-    public User getClientByUserName(String username) {
-        return userRepository
-                .findByUsername(username)
-                .orElseThrow(() -> new NotFoundException("Пользователь не найден по username " + username));
+    public UserModel getClientByUserName(User username) {
+        userRepository.findByUsername(username.getUsername());
+        return username.toModel();
     }
 
     @Override
@@ -108,10 +106,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User deleteClientByUserName(String username) {
-        User user = getClientByUserName(username);
-        userRepository.delete(user);
-        return user;
+    public UserModel deleteClientByUserName(User username) {
+        userRepository.delete(username);
+        return username.toModel();
     }
 
     @Override

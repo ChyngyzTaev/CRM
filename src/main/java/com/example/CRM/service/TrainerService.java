@@ -14,15 +14,15 @@ public interface TrainerService {
 
     UserModel getTrainerById(Long id);
 
-    User getTrainerByEmail(String email);
-
     List<UserModel> getAllTrainers();
 
-    User getTrainerByUserName(String username);
+    UserModel getTrainerByUserName(User username);
+
+    UserModel getTrainerByEmail(User email);
 
     UpdateUserModel updateTrainer(UpdateUserModel updateUserModel);
 
-    User deleteTrainerByUserName(String username);
+    UserModel deleteTrainerByUserName(User username);
 
     UserModel deleteTrainerById(Long id);
 }

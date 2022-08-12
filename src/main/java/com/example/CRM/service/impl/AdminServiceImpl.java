@@ -50,17 +50,15 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public User getAdminByEmail(String email) {
-        return adminRepository
-                .findByEmail(email)
-                .orElseThrow(() -> new NotFoundException("Клиент связанный с таким email не найден."));
+    public UserModel getAdminByEmail(User email) {
+        adminRepository.findByEmail(email.getEmail());
+        return email.toModel();
     }
 
     @Override
-    public User getAdminByUserName(String username) {
-        return adminRepository
-                .findByUsername(username)
-                .orElseThrow(() -> new NotFoundException("Клиент не найден"));
+    public UserModel getAdminByUserName(User username) {
+        adminRepository.findByUsername(username.getUsername());
+        return username.toModel();
     }
 
     @Override
@@ -100,10 +98,9 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public User deleteAdminByUserName(String username) {
-        User admin = getAdminByUserName(username);
-        adminRepository.delete(admin);
-        return admin;
+    public UserModel deleteAdminByUserName(User username) {
+        adminRepository.delete(username);
+        return username.toModel();
     }
 
     @Override

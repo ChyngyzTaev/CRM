@@ -49,12 +49,6 @@ public class TrainerServiceImpl implements TrainerService {
         return user.toModel();
     }
 
-    @Override
-    public User getTrainerByEmail(String email) {
-        return trainerRepository
-                .findByEmail(email)
-                .orElseThrow(() -> new NotFoundException("Клиент связанный с таким email не найден."));
-    }
 
     @Override
     public List<UserModel> getAllTrainers() {
@@ -66,10 +60,15 @@ public class TrainerServiceImpl implements TrainerService {
     }
 
     @Override
-    public User getTrainerByUserName(String username) {
-        return trainerRepository
-                .findByUsername(username)
-                .orElseThrow(() -> new NotFoundException("Тренер не найден"));
+    public UserModel getTrainerByUserName(User username) {
+        trainerRepository.findByUsername(username.getUsername());
+        return username.toModel();
+    }
+
+    @Override
+    public UserModel getTrainerByEmail(User email) {
+        trainerRepository.findByEmail(email.getEmail());
+        return email.toModel();
     }
 
     @Override
@@ -100,10 +99,9 @@ public class TrainerServiceImpl implements TrainerService {
     }
 
     @Override
-    public User deleteTrainerByUserName(String username) {
-        User trainer = getTrainerByUserName(username);
-        trainerRepository.delete(trainer);
-        return trainer;
+    public UserModel deleteTrainerByUserName(User username) {
+        trainerRepository.delete(username);
+        return username.toModel();
     }
 
     @Override

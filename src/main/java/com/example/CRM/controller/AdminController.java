@@ -1,5 +1,6 @@
 package com.example.CRM.controller;
 
+import com.example.CRM.entity.User;
 import com.example.CRM.entity.UserRole;
 import com.example.CRM.exception.BadRequestException;
 import com.example.CRM.exception.NotFoundException;
@@ -43,7 +44,7 @@ public class AdminController {
     }
 
     @GetMapping("/get-admin-by-userName")
-    public ResponseEntity<?> getAdminByUserName(@RequestBody String username){
+    public ResponseEntity<?> getAdminByUserName(@RequestBody User username){
         try {
             return new ResponseEntity<>(adminService.getAdminByUserName(username), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
@@ -56,7 +57,7 @@ public class AdminController {
     }
 
     @GetMapping("/get-admin-by-email")
-    public ResponseEntity<?> getAdminByEmail(@RequestBody String email){
+    public ResponseEntity<?> getAdminByEmail(@RequestBody User email){
         try {
             return new ResponseEntity<>(adminService.getAdminByEmail(email), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
@@ -93,7 +94,7 @@ public class AdminController {
 
 
     @DeleteMapping("/delete-admin-by-userName")
-    public ResponseEntity<?> deleteManagerByUserName(@RequestBody String username){
+    public ResponseEntity<?> deleteManagerByUserName(@RequestBody User username){
         try {
             return new ResponseEntity<>(adminService.deleteAdminByUserName(username), HttpStatus.OK);
         }catch (BadRequestException badRequestException){

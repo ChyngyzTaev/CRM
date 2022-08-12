@@ -50,17 +50,15 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public User getManagerByEmail(String email) {
-        return managerRepository
-                .findByEmail(email)
-                .orElseThrow(() -> new NotFoundException("Менеджер связанный с таким email не найден."));
+    public UserModel getManagerByEmail(User email) {
+        managerRepository.findByEmail(email.getEmail());
+        return email.toModel();
     }
 
     @Override
-    public User getManagerByUserName(String username) {
-        return managerRepository
-                .findByUsername(username)
-                .orElseThrow(() -> new NotFoundException("Менеджер не найден"));
+    public UserModel getManagerByUserName(User username) {
+        managerRepository.findByUsername(username.getUsername());
+        return username.toModel();
     }
 
     @Override
@@ -100,10 +98,9 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public User deleteManagerByUserName(String username) {
-        User manager = getManagerByUserName(username);
-        managerRepository.delete(manager);
-        return manager;
+    public UserModel deleteManagerByUserName(User username) {
+        managerRepository.delete(username);
+        return username.toModel();
     }
 
     @Override

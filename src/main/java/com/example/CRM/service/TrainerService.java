@@ -20,7 +20,7 @@ public interface TrainerService {
 
     UserModel getTrainerByEmail(User email);
 
-    UpdateUserModel updateTrainer(UpdateUserModel updateUserModel);
+    boolean updateTrainer(UpdateUserModel updateUserModel);
 
     UserModel deleteTrainerByUserName(User username);
 

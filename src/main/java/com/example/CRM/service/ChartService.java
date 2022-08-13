@@ -1,7 +1,6 @@
 package com.example.CRM.service;
 
 import com.example.CRM.entity.Chart;
-import com.example.CRM.entity.ListExercises;
 import com.example.CRM.model.chart.ChartModel;
 import com.example.CRM.model.chart.CreateChartModel;
 import com.example.CRM.model.chart.UpdateChartModel;
@@ -15,7 +14,7 @@ public interface ChartService{
 
     ChartModel getChartById(Long id);
 
-    UpdateChartModel updateChart(UpdateChartModel chartModel);
+    boolean updateChart(UpdateChartModel chartModel);
 
     List<ChartModel> getAllChart();
 

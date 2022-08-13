@@ -48,7 +48,7 @@ public class ChartServiceImpl implements ChartService {
     }
 
     @Override
-    public UpdateChartModel updateChart(UpdateChartModel chartModel) {
+    public boolean updateChart(UpdateChartModel chartModel) {
         if (chartModel == null){
             throw new UserNotFoundException("Созданная информация о пользователе имеет " + "пустое" + "значение");
         } else if (chartModel.getId() == null) {
@@ -66,7 +66,7 @@ public class ChartServiceImpl implements ChartService {
 
         chart = chartRepository.save(chart);
 
-        return chartModel;
+        return chart.getId() != null;
     }
 
     @Override

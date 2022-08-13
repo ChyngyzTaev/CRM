@@ -55,26 +55,26 @@ public class ListExercisesServiceImpl implements ListExercisesService {
     }
 
     @Override
-    public UpdateListExercisesModel updateSchedule(UpdateListExercisesModel scheduleModel) {
+    public boolean updateSchedule(UpdateListExercisesModel scheduleModel) {
         if (scheduleModel == null) {
             throw new UserNotFoundException("Созданная информация о пользователе имеет " + "пустое" + "значение");
         } else if (scheduleModel.getId() == null) {
             throw new InvalidParameterException("Id Списков упражнений не может иметь пустое значени");
         }
 
-        ListExercises schedule = listExercisesRepository.getById(scheduleModel.getId());
-        if (schedule == null) {
+        ListExercises listExercises = listExercisesRepository.getById(scheduleModel.getId());
+        if (listExercises == null) {
             throw new UserNotFoundException
                     ("Список упражнений по id не найдена " + scheduleModel.getId());
         }
 
-        schedule.setNameExercise(scheduleModel.getNameExercise());
-        schedule.setWeekDayEnum(scheduleModel.getWeekDayEnum());
-        schedule.setCreateDate(scheduleModel.getCreateDate());
+        listExercises.setNameExercise(scheduleModel.getNameExercise());
+        listExercises.setWeekDayEnum(scheduleModel.getWeekDayEnum());
+        listExercises.setCreateDate(scheduleModel.getCreateDate());
 
-        schedule = listExercisesRepository.save(schedule);
+        listExercises = listExercisesRepository.save(listExercises);
 
-        return scheduleModel;
+        return listExercises.getId() != null;
     }
 
     @Override

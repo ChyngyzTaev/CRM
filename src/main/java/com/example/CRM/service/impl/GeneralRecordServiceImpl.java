@@ -30,7 +30,6 @@ public class GeneralRecordServiceImpl implements GeneralRecordService {
                         ("Информация о Списке упражнений связанная с идентификатором " + id + " не найден"));
     }
 
-
     @Override
     public UserRole getRolById(Long id) {
         return generalRecordRepository
@@ -39,7 +38,6 @@ public class GeneralRecordServiceImpl implements GeneralRecordService {
                         ("Информация о Роли связанная с идентификатором " + id + " не найден"));
     }
 
-
     @Override
     public SubscriptionTypes getSubscriptionTypesById(Long id) {
         return generalRecordRepository
@@ -47,7 +45,6 @@ public class GeneralRecordServiceImpl implements GeneralRecordService {
                 .orElseThrow(() -> new NotFoundException
                         ("Информация о Абонименте связанная с идентификатором " + id + " не найден"));
     }
-
 
     @Override
     public User getUserById(Long id) {

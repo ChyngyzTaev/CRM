@@ -16,7 +16,7 @@ public interface ListExercisesService{
 
     List<ListExercisesModel> getAllSchedule();
 
-    UpdateListExercisesModel updateSchedule(UpdateListExercisesModel scheduleModel);
+    boolean updateSchedule(UpdateListExercisesModel scheduleModel);
 
     ListExercisesModel deleteScheduleById(Long id);
 }

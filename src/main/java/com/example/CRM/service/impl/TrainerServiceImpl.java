@@ -72,30 +72,30 @@ public class TrainerServiceImpl implements TrainerService {
     }
 
     @Override
-    public UpdateUserModel updateTrainer(UpdateUserModel updateUserModel) {
+    public boolean updateTrainer(UpdateUserModel updateUserModel) {
         if (updateUserModel == null) {
             throw new UserNotFoundException("Созданная информация о пользователе имеет " + "пустое" + "значение");
         } else if (updateUserModel.getId() == null) {
             throw new InvalidParameterException("Id абонемента  не может иметь пустое значени");
         }
 
-        User user = trainerRepository.getById(updateUserModel.getId());
-        if (user == null) {
+        User trainer = trainerRepository.getById(updateUserModel.getId());
+        if (trainer == null) {
             throw new UserNotFoundException
                     ("Тренер по id не нанйдено " + updateUserModel.getId());
         }
 
-        user.setFullName(updateUserModel.getFullName());
-        user.setUsername(updateUserModel.getUsername());
-        user.setBirthDay(updateUserModel.getBirthday());
-        user.setEmail(updateUserModel.getEmail());
-        user.setPassword(updateUserModel.getPassword());
-        user.setPhoneNumber(updateUserModel.getPhoneNumber());
-        user.setCreateDate(updateUserModel.getCreateDate());
+        trainer.setFullName(updateUserModel.getFullName());
+        trainer.setUsername(updateUserModel.getUsername());
+        trainer.setBirthDay(updateUserModel.getBirthday());
+        trainer.setEmail(updateUserModel.getEmail());
+        trainer.setPassword(updateUserModel.getPassword());
+        trainer.setPhoneNumber(updateUserModel.getPhoneNumber());
+        trainer.setCreateDate(updateUserModel.getCreateDate());
 
-        user = trainerRepository.save(user);
+        trainer = trainerRepository.save(trainer);
 
-        return updateUserModel;
+        return trainer.getId() != null;
     }
 
     @Override

@@ -43,7 +43,7 @@ public class SubscriptionTypesServiceImpl implements SubscriptionTypesService {
     }
 
     @Override
-    public UpdateSubscriptionTypesModel updateSubscription(UpdateSubscriptionTypesModel subscriptionTypesModel) {
+    public boolean updateSubscription(UpdateSubscriptionTypesModel subscriptionTypesModel) {
         if (subscriptionTypesModel == null) {
             throw new UserNotFoundException("Созданная информация о пользователе имеет " + "пустое" + "значение");
         } else if (subscriptionTypesModel.getId() == null) {
@@ -63,7 +63,7 @@ public class SubscriptionTypesServiceImpl implements SubscriptionTypesService {
 
         subscriptionTypes = subscriptionTypesRepository.save(subscriptionTypes);
 
-        return subscriptionTypesModel;
+        return subscriptionTypes.getId() != null;
     }
 
     @Override

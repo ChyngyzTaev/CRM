@@ -21,7 +21,7 @@ public interface ManagerService {
 
     List<UserModel> getAllManagers();
 
-    UpdateUserModel updateManager(UpdateUserModel updateUserModel);
+    boolean updateManager(UpdateUserModel updateUserModel);
 
     UserModel deleteManagerByUserName(User username);
 

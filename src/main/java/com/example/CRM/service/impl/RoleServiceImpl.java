@@ -60,7 +60,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public UpdateRoleModel updateRole(UpdateRoleModel roleModel) {
+    public boolean updateRole(UpdateRoleModel roleModel) {
         if (roleModel == null){
             throw new UserNotFoundException("Созданная информация о пользователе имеет " + "пустое" + "значение");
         }else if (roleModel.getId() == null){
@@ -78,7 +78,7 @@ public class RoleServiceImpl implements RoleService {
 
         userRole = roleRepository.save(userRole);
 
-        return roleModel;
+        return userRole.getId() != null;
     }
 
     @Override

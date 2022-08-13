@@ -12,7 +12,7 @@ public interface SubscriptionTypesService{
 
     SubscriptionTypesModel getSubscriptionById(Long id);
 
-    UpdateSubscriptionTypesModel updateSubscription(UpdateSubscriptionTypesModel subscriptionTypesModel);
+    boolean updateSubscription(UpdateSubscriptionTypesModel subscriptionTypesModel);
 
     SubscriptionTypesModel deleteSubscriptionById(Long id);
 }

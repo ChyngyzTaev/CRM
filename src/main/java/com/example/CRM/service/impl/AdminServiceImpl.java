@@ -71,30 +71,30 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public UpdateUserModel updateAdmin(UpdateUserModel updateUserModel) {
+    public boolean updateAdmin(UpdateUserModel updateUserModel) {
         if (updateUserModel == null) {
             throw new UserNotFoundException("Созданная информация о пользователе имеет " + "пустое" + "значение");
         } else if (updateUserModel.getId() == null) {
             throw new InvalidParameterException("Id абонемента  не может иметь пустое значени");
         }
 
-        User user = adminRepository.getById(updateUserModel.getId());
-        if (user == null) {
+        User admin = adminRepository.getById(updateUserModel.getId());
+        if (admin == null) {
             throw new UserNotFoundException
                     ("Клиент по id не нанйдено " + updateUserModel.getId());
         }
 
-        user.setFullName(updateUserModel.getFullName());
-        user.setUsername(updateUserModel.getUsername());
-        user.setBirthDay(updateUserModel.getBirthday());
-        user.setEmail(updateUserModel.getEmail());
-        user.setPassword(updateUserModel.getPassword());
-        user.setPhoneNumber(updateUserModel.getPhoneNumber());
-        user.setCreateDate(updateUserModel.getCreateDate());
+        admin.setFullName(updateUserModel.getFullName());
+        admin.setUsername(updateUserModel.getUsername());
+        admin.setBirthDay(updateUserModel.getBirthday());
+        admin.setEmail(updateUserModel.getEmail());
+        admin.setPassword(updateUserModel.getPassword());
+        admin.setPhoneNumber(updateUserModel.getPhoneNumber());
+        admin.setCreateDate(updateUserModel.getCreateDate());
 
-        user = adminRepository.save(user);
+        admin = adminRepository.save(admin);
 
-        return updateUserModel;
+        return admin.getId() != null;
     }
 
     @Override

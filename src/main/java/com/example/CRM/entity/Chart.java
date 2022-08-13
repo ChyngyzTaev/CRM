@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class Chart extends BaseEntity {
-    @Enumerated
+    @Enumerated(EnumType.STRING)
     @Column(name = "weekday_enums", nullable = false)
     WeekDayEnum weekDayEnum;
 

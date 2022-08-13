@@ -15,15 +15,15 @@ public interface UserService {
 
     UserModel getClientById(Long id);
 
-    UserModel getClientByEmail(User email);
+    UserModel getClientByEmail(String email);
 
-    UserModel getClientByUserName(User username);
+    UserModel getClientByUserName(String username);
 
     List<UserModel> getAllClients();
 
-    UpdateUserModel updateClient(UpdateUserModel updateUserModel);
+    boolean updateClient(UpdateUserModel updateUserModel);
 
-    UserModel deleteClientByUserName(User username);
+    UserModel deleteClientByUserName(String username);
 
     UserModel deleteClientById(Long id);
 

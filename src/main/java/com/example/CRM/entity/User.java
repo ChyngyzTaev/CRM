@@ -54,6 +54,7 @@ public class User extends BaseEntity{
                 .fullName(fullName)
                 .username(username)
                 .birthday(birthDay)
+                .email(email)
                 .phoneNumber(phoneNumber)
                 .build();
     }

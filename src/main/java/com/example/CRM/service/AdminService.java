@@ -20,7 +20,7 @@ public interface AdminService {
 
     List<UserModel> getAllAdmins();
 
-    UpdateUserModel updateAdmin(UpdateUserModel updateUserModel);
+    boolean updateAdmin(UpdateUserModel updateUserModel);
 
     UserModel deleteAdminByUserName(User username);
 

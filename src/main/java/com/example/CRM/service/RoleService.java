@@ -18,7 +18,7 @@ public interface RoleService{
 
     List<RoleModel> getAllRole();
 
-    UpdateRoleModel updateRole(UpdateRoleModel roleModel);
+    boolean updateRole(UpdateRoleModel roleModel);
 
     RoleModel deleteRoleById(Long id);
 }

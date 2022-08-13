@@ -71,30 +71,30 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public UpdateUserModel updateManager(UpdateUserModel updateUserModel) {
+    public boolean updateManager(UpdateUserModel updateUserModel) {
         if (updateUserModel == null) {
             throw new UserNotFoundException("Созданная информация о пользователе имеет " + "пустое" + "значение");
         } else if (updateUserModel.getId() == null) {
             throw new InvalidParameterException("Id абонемента  не может иметь пустое значени");
         }
 
-        User user = managerRepository.getById(updateUserModel.getId());
-        if (user == null) {
+        User manager = managerRepository.getById(updateUserModel.getId());
+        if (manager == null) {
             throw new UserNotFoundException
                     ("Менеджер по id не нанйдено " + updateUserModel.getId());
         }
 
-        user.setFullName(updateUserModel.getFullName());
-        user.setUsername(updateUserModel.getUsername());
-        user.setBirthDay(updateUserModel.getBirthday());
-        user.setEmail(updateUserModel.getEmail());
-        user.setPassword(updateUserModel.getPassword());
-        user.setPhoneNumber(updateUserModel.getPhoneNumber());
-        user.setCreateDate(updateUserModel.getCreateDate());
+        manager.setFullName(updateUserModel.getFullName());
+        manager.setUsername(updateUserModel.getUsername());
+        manager.setBirthDay(updateUserModel.getBirthday());
+        manager.setEmail(updateUserModel.getEmail());
+        manager.setPassword(updateUserModel.getPassword());
+        manager.setPhoneNumber(updateUserModel.getPhoneNumber());
+        manager.setCreateDate(updateUserModel.getCreateDate());
 
-        user = managerRepository.save(user);
+        manager = managerRepository.save(manager);
 
-        return updateUserModel;
+        return manager.getId() != null;
     }
 
     @Override

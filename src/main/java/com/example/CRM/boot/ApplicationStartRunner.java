@@ -1,8 +1,11 @@
 package com.example.CRM.boot;
 
+import com.example.CRM.entity.Chart;
 import com.example.CRM.entity.User;
 import com.example.CRM.entity.UserRole;
 import com.example.CRM.enums.RolesEnum;
+import com.example.CRM.enums.WeekDayEnum;
+import com.example.CRM.repository.ChartRepository;
 import com.example.CRM.repository.RoleRepository;
 import com.example.CRM.repository.UserRepository;
 
@@ -20,13 +23,18 @@ import java.util.List;
 public class ApplicationStartRunner implements CommandLineRunner {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
+    private final ChartRepository chartRepository;
     private final PasswordEncoder passwordEncoder;
+
+    WeekDayEnum weekDayEnum;
 
     @Override
     public void run(String... args) throws Exception {
         User admin = new User();
         admin.setUsername("admin");
         admin.setFullName("adminov admin adminovich");
+        admin.setEmail("Admin@gmail.com");
+        admin.setPhoneNumber("0773112113");
         String adminPassword = passwordEncoder.encode("admin");
         admin.setPassword(adminPassword);
         admin.setIsActive(1L);
@@ -34,6 +42,8 @@ public class ApplicationStartRunner implements CommandLineRunner {
         User manager = new User();
         manager.setUsername("manager");
         manager.setFullName("managerov manager managerovich");
+        manager.setEmail("Manager@gmail.com");
+        manager.setPhoneNumber("0773556677");
         String managerPassword = passwordEncoder.encode("manager");
         manager.setPassword(managerPassword);
         manager.setIsActive(1L);
@@ -41,6 +51,8 @@ public class ApplicationStartRunner implements CommandLineRunner {
         User trainer = new User();
         trainer.setUsername("trainer");
         trainer.setFullName("trainerov trainer trainerovich");
+        trainer.setEmail("Trainer@gmail.com");
+        trainer.setPhoneNumber("0700349088");
         String trainerPassword = passwordEncoder.encode("trainer");
         trainer.setPassword(trainerPassword);
         trainer.setIsActive(1L);
@@ -48,6 +60,8 @@ public class ApplicationStartRunner implements CommandLineRunner {
         User client = new User();
         client.setUsername("client");
         client.setFullName("clientov client clientovich");
+        client.setEmail("Client@gmail.com");
+        client.setPhoneNumber("0704665783");
         String clientPassword = passwordEncoder.encode("client");
         client.setPassword(clientPassword);
         client.setIsActive(1L);
@@ -87,5 +101,11 @@ public class ApplicationStartRunner implements CommandLineRunner {
         userRoles.add(roleManger);
         userRoles.add(roleTrainer);
         roleRepository.saveAll(userRoles);
+
+
+        Chart chart = new Chart();
+        chart.setIsActive(1L);
+        chart.setWeekDayEnum(WeekDayEnum.MONDAY);
+        chartRepository.save(chart);
     }
 }

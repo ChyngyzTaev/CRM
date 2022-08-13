@@ -5,7 +5,6 @@ import com.example.CRM.exception.BadRequestException;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.model.user.CreateUserModel;
 import com.example.CRM.model.user.UpdateUserModel;
-import com.example.CRM.model.user.UserModel;
 import com.example.CRM.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +48,7 @@ public class UserController {
     }
 
     @GetMapping("/get-client-by-userName")
-    public ResponseEntity<?> getUserByUserName(User username){
+    public ResponseEntity<?> getUserByUserName(String username){
         try {
             return new ResponseEntity<>(userService.getClientByUserName(username), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
@@ -63,7 +62,7 @@ public class UserController {
 
 
     @GetMapping("/get-client-by-email")
-    public ResponseEntity<?> getClientByEmail(@RequestBody User email){
+    public ResponseEntity<?> getClientByEmail(@RequestBody String email){
         try {
             return new ResponseEntity<>(userService.getClientByEmail(email), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
@@ -98,8 +97,8 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/delete-client-by-userName")
-    public ResponseEntity<?> deleteClientByUserName(@RequestBody User username){
+    @DeleteMapping("/delete-client-by-username")
+    public ResponseEntity<?> deleteClientByUserName(@RequestBody String username){
         try {
             return new ResponseEntity<>(userService.deleteClientByUserName(username), HttpStatus.OK);
         }catch (NotFoundException e) {

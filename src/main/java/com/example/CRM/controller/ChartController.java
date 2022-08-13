@@ -52,8 +52,8 @@ public class ChartController {
         }
     }
 
-    @PutMapping
-    public ResponseEntity<?> updateChart(UpdateChartModel chartModel){
+    @PutMapping("/update-chart")
+    public ResponseEntity<?> updateChart(@RequestBody UpdateChartModel chartModel){
         try {
             return new ResponseEntity<>(chartService.updateChart(chartModel), HttpStatus.OK);
         }catch (BadRequestException badRequestException){

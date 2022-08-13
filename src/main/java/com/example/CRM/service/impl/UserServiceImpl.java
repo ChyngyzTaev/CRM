@@ -58,15 +58,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserModel getClientByEmail(User email) {
-        userRepository.findByEmail(email.getEmail());
-        return email.toModel();
+    public UserModel getClientByEmail(String email) {
+        User client = userRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException
+                        ("Информация о клиенте связанная с email" + email + "не найдена."));
+        return client.toModel();
     }
 
     @Override
-    public UserModel getClientByUserName(User username) {
-        userRepository.findByUsername(username.getUsername());
-        return username.toModel();
+    public UserModel getClientByUserName(String username) {
+        User client = userRepository.findByUsername(username)
+                .orElseThrow(() -> new NotFoundException("not found"));
+        return client.toModel();
     }
 
     @Override
@@ -79,36 +82,38 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UpdateUserModel updateClient(UpdateUserModel updateUserModel) {
+    public boolean updateClient(UpdateUserModel updateUserModel) {
         if (updateUserModel == null) {
             throw new UserNotFoundException("Созданная информация о пользователе имеет " + "пустое" + "значение");
         } else if (updateUserModel.getId() == null) {
             throw new InvalidParameterException("Id абонемента  не может иметь пустое значени");
         }
 
-        User user = userRepository.getById(updateUserModel.getId());
-        if (user == null) {
+        User client = userRepository.getById(updateUserModel.getId());
+        if (client == null) {
             throw new UserNotFoundException
                     ("Клиент по id не нанйдено " + updateUserModel.getId());
         }
 
-        user.setFullName(updateUserModel.getFullName());
-        user.setUsername(updateUserModel.getUsername());
-        user.setBirthDay(updateUserModel.getBirthday());
-        user.setEmail(updateUserModel.getEmail());
-        user.setPassword(updateUserModel.getPassword());
-        user.setPhoneNumber(updateUserModel.getPhoneNumber());
-        user.setCreateDate(updateUserModel.getCreateDate());
+        client.setFullName(updateUserModel.getFullName());
+        client.setUsername(updateUserModel.getUsername());
+        client.setBirthDay(updateUserModel.getBirthday());
+        client.setEmail(updateUserModel.getEmail());
+        client.setPassword(updateUserModel.getPassword());
+        client.setPhoneNumber(updateUserModel.getPhoneNumber());
+        client.setCreateDate(updateUserModel.getCreateDate());
 
-        user = userRepository.save(user);
+        client = userRepository.save(client);
 
-        return updateUserModel;
+        return client.getId() != null;
     }
 
     @Override
-    public UserModel deleteClientByUserName(User username) {
-        userRepository.delete(username);
-        return username.toModel();
+    public UserModel deleteClientByUserName(String username) {
+        User client = userRepository.findByEmail(username)
+                .orElseThrow(() -> new ApiFailException("Ошибка при удалении пользователя"));
+        userRepository.delete(client);
+        return client.toModel();
     }
 
     @Override

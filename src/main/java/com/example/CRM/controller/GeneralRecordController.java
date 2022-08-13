@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/general-record")
+@RequestMapping("api/general-record")
 public class GeneralRecordController {
     @Autowired
     private GeneralRecordService generalRecordService;
@@ -82,5 +82,4 @@ public class GeneralRecordController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }

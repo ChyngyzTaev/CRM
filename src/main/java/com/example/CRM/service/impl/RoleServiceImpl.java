@@ -40,14 +40,16 @@ public class RoleServiceImpl implements RoleService {
     public RoleModel getRoleById(Long id) {
         UserRole userRole = roleRepository
                 .findById(id)
-                .orElseThrow(() -> new NotFoundException("Роль связанный с идентификатором " + id + " не найден"));
+                .orElseThrow(() -> new NotFoundException
+                        ("Роль связанный с идентификатором " + id + " не найден"));
         return userRole.toModel();
     }
 
     @Override
     public UserRole getRoleByRoleName(String roleName) {
         return roleRepository.findByRoleName(roleName)
-                .orElseThrow(() -> new NotFoundException("Роль не найден"));
+                .orElseThrow(() -> new NotFoundException
+                        ("Информация связанная с " + roleName + " не найдена"));
     }
 
     @Override

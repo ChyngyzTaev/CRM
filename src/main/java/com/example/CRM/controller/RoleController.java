@@ -32,8 +32,8 @@ public class RoleController {
         }
     }
 
-    @GetMapping("/get-role-by-roleName")
-    public ResponseEntity<?> getRoleByRoleName(String roleName){
+    @GetMapping("/get-role-by-roleName/{username}")
+    public ResponseEntity<?> getRoleByRoleName(@PathVariable  String roleName){
         try {
             return new ResponseEntity<>(roleService.getRoleByRoleName(roleName), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
@@ -58,7 +58,7 @@ public class RoleController {
         }
     }
 
-    @GetMapping("/get-all-role")
+    @GetMapping("/get-all-users")
     public ResponseEntity<?> getAllRole(){
         try {
             return new ResponseEntity<>(roleService.getAllRole(),HttpStatus.OK);
@@ -70,7 +70,7 @@ public class RoleController {
     }
 
     @PutMapping("/update-role")
-    public ResponseEntity<?> updateRole(UpdateRoleModel roleModel){
+    public ResponseEntity<?> updateRole(@RequestBody UpdateRoleModel roleModel){
         try {
             return new ResponseEntity<>(roleService.updateRole(roleModel), HttpStatus.OK);
         }catch (BadRequestException badRequestException){

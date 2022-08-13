@@ -50,15 +50,19 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public UserModel getManagerByEmail(User email) {
-        managerRepository.findByEmail(email.getEmail());
-        return email.toModel();
+    public UserModel getManagerByEmail(String email) {
+        User manager = managerRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException
+                        ("Информация о клиенте связанная с " + email + "не найдена"));
+        return manager.toModel();
     }
 
     @Override
-    public UserModel getManagerByUserName(User username) {
-        managerRepository.findByUsername(username.getUsername());
-        return username.toModel();
+    public UserModel getManagerByUserName(String username) {
+        User manager = managerRepository.findByUsername(username)
+                .orElseThrow(() -> new NotFoundException
+                        ("Информация о клиенте связанная с " + username + "не найдена"));
+        return manager.toModel();
     }
 
     @Override
@@ -98,9 +102,11 @@ public class ManagerServiceImpl implements ManagerService {
     }
 
     @Override
-    public UserModel deleteManagerByUserName(User username) {
-        managerRepository.delete(username);
-        return username.toModel();
+    public UserModel deleteManagerByUserName(String username) {
+        User client = managerRepository.findByEmail(username)
+                .orElseThrow(() -> new ApiFailException("Ошибка при удалении пользователя"));
+        managerRepository.delete(client);
+        return client.toModel();
     }
 
     @Override

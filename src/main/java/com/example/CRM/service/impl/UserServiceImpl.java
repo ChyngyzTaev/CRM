@@ -68,7 +68,8 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserModel getClientByUserName(String username) {
         User client = userRepository.findByUsername(username)
-                .orElseThrow(() -> new NotFoundException("not found"));
+                .orElseThrow(() -> new NotFoundException
+                        ("Информация о клиенте связанная с " + username + "не найдена"));
         return client.toModel();
     }
 

@@ -47,8 +47,8 @@ public class UserController {
         }
     }
 
-    @GetMapping("/get-client-by-userName")
-    public ResponseEntity<?> getUserByUserName(String username){
+    @GetMapping("/get-client-by-userName/{username}")
+    public ResponseEntity<?> getUserByUserName(@PathVariable String username){
         try {
             return new ResponseEntity<>(userService.getClientByUserName(username), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
@@ -61,8 +61,8 @@ public class UserController {
     }
 
 
-    @GetMapping("/get-client-by-email")
-    public ResponseEntity<?> getClientByEmail(@RequestBody String email){
+    @GetMapping("/get-client-by-email/{email}")
+    public ResponseEntity<?> getClientByEmail(@PathVariable String email){
         try {
             return new ResponseEntity<>(userService.getClientByEmail(email), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
@@ -75,7 +75,7 @@ public class UserController {
     }
 
 
-    @GetMapping("/get-all-clients")
+    @GetMapping("/get-all-users")
     public ResponseEntity<?> getAllUsers(){
         try {
             return new ResponseEntity<>(userService.getAllClients(), HttpStatus.OK);
@@ -97,8 +97,8 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/delete-client-by-username")
-    public ResponseEntity<?> deleteClientByUserName(@RequestBody String username){
+    @DeleteMapping("/delete-client-by-username/{username}")
+    public ResponseEntity<?> deleteClientByUserName(@PathVariable String username){
         try {
             return new ResponseEntity<>(userService.deleteClientByUserName(username), HttpStatus.OK);
         }catch (NotFoundException e) {

@@ -16,13 +16,13 @@ public interface TrainerService {
 
     List<UserModel> getAllTrainers();
 
-    UserModel getTrainerByUserName(User username);
+    UserModel getTrainerByUserName(String username);
 
-    UserModel getTrainerByEmail(User email);
+    UserModel getTrainerByEmail(String email);
 
     boolean updateTrainer(UpdateUserModel updateUserModel);
 
-    UserModel deleteTrainerByUserName(User username);
+    UserModel deleteTrainerByUserName(String username);
 
     UserModel deleteTrainerById(Long id);
 }

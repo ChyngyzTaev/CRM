@@ -58,7 +58,7 @@ public class ChartServiceImpl implements ChartService {
         Chart chart = chartRepository.getById(chartModel.getId());
         if (chart == null) {
             throw new UserNotFoundException
-                    ("Роль по id не нанйдено " + chartModel.getId());
+                    ("График по id не нанйдено " + chartModel.getId());
         }
 
         chart.setWeekDayEnum(chartModel.getWeekDayEnum());

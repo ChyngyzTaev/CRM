@@ -45,8 +45,8 @@ public class TrainerController {
         }
     }
 
-    @GetMapping("/get-trainer-by-userName")
-    public ResponseEntity<?> getTrainerByUserName(@RequestBody User username){
+    @GetMapping("/get-trainer-by-userName/{username}")
+    public ResponseEntity<?> getTrainerByUserName(@PathVariable String username){
         try {
             return new ResponseEntity<>(trainerService.getTrainerByUserName(username), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
@@ -58,8 +58,8 @@ public class TrainerController {
         }
     }
 
-    @GetMapping("/get-trainer-by-email")
-    public ResponseEntity<?> getTrainerByEmail(@RequestBody User email){
+    @GetMapping("/get-trainer-by-email/{email}")
+    public ResponseEntity<?> getTrainerByEmail(@PathVariable String email){
         try {
             return new ResponseEntity<>(trainerService.getTrainerByEmail(email), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
@@ -71,7 +71,7 @@ public class TrainerController {
         }
     }
 
-    @GetMapping("/get-all-trainers")
+    @GetMapping("/get-all-users")
     public ResponseEntity<?> getAllTrainers(){
         try {
             return new ResponseEntity<>(trainerService.getAllTrainers(), HttpStatus.OK);
@@ -94,8 +94,8 @@ public class TrainerController {
     }
 
 
-    @DeleteMapping("/delete-trainer-by-userName")
-    public ResponseEntity<?> deleteTrainerByUserName(@RequestBody User username){
+    @DeleteMapping("/delete-trainer-by-userName/{username}")
+    public ResponseEntity<?> deleteTrainerByUserName(@PathVariable String username){
         try {
             return new ResponseEntity<>(trainerService.deleteTrainerByUserName(username), HttpStatus.OK);
         }catch (BadRequestException badRequestException){

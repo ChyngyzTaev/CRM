@@ -44,8 +44,8 @@ public class ManagerController {
         }
     }
 
-    @GetMapping("/get-manager-by-userName")
-    public ResponseEntity<?> getManagerByUserName(@RequestBody User username){
+    @GetMapping("/get-manager-by-userName/{username}")
+    public ResponseEntity<?> getManagerByUserName(@PathVariable String username){
         try {
             return new ResponseEntity<>(managerService.getManagerByUserName(username), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
@@ -57,8 +57,8 @@ public class ManagerController {
         }
     }
 
-    @GetMapping("/get-manager-by-email")
-    public ResponseEntity<?> getManagerByEmail(@RequestBody User email){
+    @GetMapping("/get-manager-by-email/{email}")
+    public ResponseEntity<?> getManagerByEmail(@PathVariable String email){
         try {
             return new ResponseEntity<>(managerService.getManagerByEmail(email), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
@@ -70,7 +70,7 @@ public class ManagerController {
         }
     }
 
-    @GetMapping("/get-all-managers")
+    @GetMapping("/get-all-users")
     public ResponseEntity<?> getAllManagers(){
         try {
             return new ResponseEntity<>(managerService.getAllManagers(), HttpStatus.OK);
@@ -93,8 +93,8 @@ public class ManagerController {
     }
 
 
-    @DeleteMapping("/delete-manager-by-userName")
-    public ResponseEntity<?> deleteManagerByUserName(@RequestBody User username){
+    @DeleteMapping("/delete-manager-by-userName/{username}")
+    public ResponseEntity<?> deleteManagerByUserName(@PathVariable String username){
         try {
             return new ResponseEntity<>(managerService.deleteManagerByUserName(username), HttpStatus.OK);
         }catch (BadRequestException badRequestException){

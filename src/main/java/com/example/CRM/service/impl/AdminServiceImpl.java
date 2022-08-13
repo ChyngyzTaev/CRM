@@ -50,15 +50,19 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public UserModel getAdminByEmail(User email) {
-        adminRepository.findByEmail(email.getEmail());
-        return email.toModel();
+    public UserModel getAdminByEmail(String email) {
+        User trainer = adminRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException
+                        ("Информация о клиенте связанная с " + email + "не найдена"));
+        return trainer.toModel();
     }
 
     @Override
-    public UserModel getAdminByUserName(User username) {
-        adminRepository.findByUsername(username.getUsername());
-        return username.toModel();
+    public UserModel getAdminByUserName(String username) {
+        User trainer = adminRepository.findByUsername(username)
+                .orElseThrow(() -> new NotFoundException
+                        ("Информация о клиенте связанная с " + username + "не найдена"));
+        return trainer.toModel();
     }
 
     @Override
@@ -98,9 +102,11 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public UserModel deleteAdminByUserName(User username) {
-        adminRepository.delete(username);
-        return username.toModel();
+    public UserModel deleteAdminByUserName(String username) {
+        User client = adminRepository.findByEmail(username)
+                .orElseThrow(() -> new ApiFailException("Ошибка при удалении пользователя"));
+        adminRepository.delete(client);
+        return client.toModel();
     }
 
     @Override

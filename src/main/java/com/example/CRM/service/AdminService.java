@@ -14,15 +14,15 @@ public interface AdminService {
 
     UserModel getAdminById(Long id);
 
-    UserModel getAdminByEmail(User email);
+    UserModel getAdminByEmail(String email);
 
-    UserModel getAdminByUserName(User username);
+    UserModel getAdminByUserName(String username);
 
     List<UserModel> getAllAdmins();
 
     boolean updateAdmin(UpdateUserModel updateUserModel);
 
-    UserModel deleteAdminByUserName(User username);
+    UserModel deleteAdminByUserName(String username);
 
     UserModel deleteAdminById(Long id);
 }

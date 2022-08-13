@@ -60,15 +60,19 @@ public class TrainerServiceImpl implements TrainerService {
     }
 
     @Override
-    public UserModel getTrainerByUserName(User username) {
-        trainerRepository.findByUsername(username.getUsername());
-        return username.toModel();
+    public UserModel getTrainerByUserName(String username) {
+        User trainer = trainerRepository.findByUsername(username)
+                .orElseThrow(() -> new NotFoundException
+                        ("Информация о клиенте связанная с " + username + "не найдена"));
+        return trainer.toModel();
     }
 
     @Override
-    public UserModel getTrainerByEmail(User email) {
-        trainerRepository.findByEmail(email.getEmail());
-        return email.toModel();
+    public UserModel getTrainerByEmail(String email) {
+        User trainer = trainerRepository.findByEmail(email)
+                .orElseThrow(() -> new NotFoundException
+                        ("Информация о клиенте связанная с " + email + "не найдена"));
+        return trainer.toModel();
     }
 
     @Override
@@ -99,9 +103,11 @@ public class TrainerServiceImpl implements TrainerService {
     }
 
     @Override
-    public UserModel deleteTrainerByUserName(User username) {
-        trainerRepository.delete(username);
-        return username.toModel();
+    public UserModel deleteTrainerByUserName(String username) {
+        User client = trainerRepository.findByEmail(username)
+                .orElseThrow(() -> new ApiFailException("Ошибка при удалении пользователя"));
+        trainerRepository.delete(client);
+        return client.toModel();
     }
 
     @Override

@@ -1,6 +1,5 @@
 package com.example.CRM.controller;
 
-import com.example.CRM.entity.User;
 import com.example.CRM.entity.UserRole;
 import com.example.CRM.exception.BadRequestException;
 import com.example.CRM.exception.NotFoundException;
@@ -19,7 +18,6 @@ public class TrainerController {
 
     @Autowired
     private TrainerService trainerService;
-
 
     @PostMapping("/add-new-trainer")
     public ResponseEntity<?> addNewTrainer(@RequestBody CreateUserModel createUserModel, UserRole userRole){
@@ -92,7 +90,6 @@ public class TrainerController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
     @DeleteMapping("/delete-trainer-by-userName/{username}")
     public ResponseEntity<?> deleteTrainerByUserName(@PathVariable String username){

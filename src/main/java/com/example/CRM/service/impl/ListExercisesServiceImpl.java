@@ -61,19 +61,15 @@ public class ListExercisesServiceImpl implements ListExercisesService {
         } else if (scheduleModel.getId() == null) {
             throw new InvalidParameterException("Id Списков упражнений не может иметь пустое значени");
         }
-
         ListExercises listExercises = listExercisesRepository.getById(scheduleModel.getId());
         if (listExercises == null) {
             throw new UserNotFoundException
                     ("Список упражнений по id не найдена " + scheduleModel.getId());
         }
-
         listExercises.setNameExercise(scheduleModel.getNameExercise());
         listExercises.setWeekDayEnum(scheduleModel.getWeekDayEnum());
         listExercises.setCreateDate(scheduleModel.getCreateDate());
-
         listExercises = listExercisesRepository.save(listExercises);
-
         return listExercises.getId() != null;
     }
 

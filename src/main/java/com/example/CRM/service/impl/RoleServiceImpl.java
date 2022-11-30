@@ -68,18 +68,14 @@ public class RoleServiceImpl implements RoleService {
         }else if (roleModel.getId() == null){
             throw new InvalidParameterException("Id роли не может иметь пустое значени");
         }
-
         UserRole userRole = roleRepository.getById(roleModel.getId());
         if (userRole == null) {
             throw new UserNotFoundException
                     ("Роль по id не найден " + roleModel.getId());
         }
-
         userRole.setRoleName(roleModel.getRoleName());
         userRole.setCreateDate(roleModel.getCreateDate());
-
         userRole = roleRepository.save(userRole);
-
         return userRole.getId() != null;
     }
 

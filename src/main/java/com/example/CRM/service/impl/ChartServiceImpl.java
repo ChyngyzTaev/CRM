@@ -54,18 +54,14 @@ public class ChartServiceImpl implements ChartService {
         } else if (chartModel.getId() == null) {
             throw new InvalidParameterException("Id роли не может иметь пустое значени");
         }
-
         Chart chart = chartRepository.getById(chartModel.getId());
         if (chart == null) {
             throw new UserNotFoundException
                     ("График по id не нанйдено " + chartModel.getId());
         }
-
         chart.setWeekDayEnum(chartModel.getWeekDayEnum());
         chart.setCreateDate(chartModel.getCreateDate());
-
         chart = chartRepository.save(chart);
-
         return chart.getId() != null;
     }
 

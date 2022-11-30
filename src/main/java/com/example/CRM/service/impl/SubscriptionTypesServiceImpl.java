@@ -49,20 +49,16 @@ public class SubscriptionTypesServiceImpl implements SubscriptionTypesService {
         } else if (subscriptionTypesModel.getId() == null) {
             throw new InvalidParameterException("Id абонемента  не может иметь пустое значени");
         }
-
         SubscriptionTypes subscriptionTypes = subscriptionTypesRepository.getById(subscriptionTypesModel.getId());
         if (subscriptionTypes == null) {
             throw new UserNotFoundException
                     ("Абонимент по id не нанйдено " + subscriptionTypesModel.getId());
         }
-
         subscriptionTypes.setNumberOfMonth(subscriptionTypesModel.getNumberOfMonth());
         subscriptionTypes.setNumberOfWeek(subscriptionTypesModel.getNumberOfWeek());
         subscriptionTypes.setNumberOfDay(subscriptionTypesModel.getNumberOfDay());
         subscriptionTypes.setCreateDate(subscriptionTypesModel.getCreateDate());
-
         subscriptionTypes = subscriptionTypesRepository.save(subscriptionTypes);
-
         return subscriptionTypes.getId() != null;
     }
 

@@ -81,13 +81,11 @@ public class AdminServiceImpl implements AdminService {
         } else if (updateUserModel.getId() == null) {
             throw new InvalidParameterException("Id абонемента  не может иметь пустое значени");
         }
-
         User admin = adminRepository.getById(updateUserModel.getId());
         if (admin == null) {
             throw new UserNotFoundException
                     ("Клиент по id не нанйдено " + updateUserModel.getId());
         }
-
         admin.setFullName(updateUserModel.getFullName());
         admin.setUsername(updateUserModel.getUsername());
         admin.setBirthDay(updateUserModel.getBirthday());
@@ -95,9 +93,7 @@ public class AdminServiceImpl implements AdminService {
         admin.setPassword(updateUserModel.getPassword());
         admin.setPhoneNumber(updateUserModel.getPhoneNumber());
         admin.setCreateDate(updateUserModel.getCreateDate());
-
         admin = adminRepository.save(admin);
-
         return admin.getId() != null;
     }
 

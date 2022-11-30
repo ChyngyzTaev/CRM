@@ -1,6 +1,5 @@
 package com.example.CRM.controller;
 
-import com.example.CRM.entity.User;
 import com.example.CRM.entity.UserRole;
 import com.example.CRM.exception.BadRequestException;
 import com.example.CRM.exception.NotFoundException;

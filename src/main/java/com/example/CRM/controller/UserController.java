@@ -1,6 +1,5 @@
 package com.example.CRM.controller;
 
-import com.example.CRM.entity.User;
 import com.example.CRM.exception.BadRequestException;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.model.user.CreateUserModel;
@@ -33,7 +32,6 @@ public class UserController {
         }
     }
 
-
     @GetMapping("/get-client-by-id/{id}")
     public ResponseEntity<?> getUserById (@PathVariable Long id){
         try {
@@ -59,7 +57,6 @@ public class UserController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
     @GetMapping("/get-client-by-email/{email}")
     public ResponseEntity<?> getClientByEmail(@PathVariable String email){
@@ -107,7 +104,6 @@ public class UserController {
             return new ResponseEntity<>("Ошибка сервера", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
     @DeleteMapping("/delete-client-by-id/{id}")
     public ResponseEntity<?> deleteClientById(@PathVariable Long id){

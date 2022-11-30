@@ -81,13 +81,11 @@ public class ManagerServiceImpl implements ManagerService {
         } else if (updateUserModel.getId() == null) {
             throw new InvalidParameterException("Id абонемента  не может иметь пустое значени");
         }
-
         User manager = managerRepository.getById(updateUserModel.getId());
         if (manager == null) {
             throw new UserNotFoundException
                     ("Менеджер по id не нанйдено " + updateUserModel.getId());
         }
-
         manager.setFullName(updateUserModel.getFullName());
         manager.setUsername(updateUserModel.getUsername());
         manager.setBirthDay(updateUserModel.getBirthday());
@@ -95,9 +93,7 @@ public class ManagerServiceImpl implements ManagerService {
         manager.setPassword(updateUserModel.getPassword());
         manager.setPhoneNumber(updateUserModel.getPhoneNumber());
         manager.setCreateDate(updateUserModel.getCreateDate());
-
         manager = managerRepository.save(manager);
-
         return manager.getId() != null;
     }
 

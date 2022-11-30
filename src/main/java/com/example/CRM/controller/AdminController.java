@@ -1,7 +1,5 @@
 package com.example.CRM.controller;
 
-import com.example.CRM.entity.User;
-import com.example.CRM.entity.UserRole;
 import com.example.CRM.exception.BadRequestException;
 import com.example.CRM.exception.NotFoundException;
 import com.example.CRM.model.user.CreateUserModel;
@@ -20,7 +18,7 @@ public class AdminController {
     private AdminService adminService;
 
     @PostMapping("/add-new-admin")
-    public ResponseEntity<?> addNewManager(@RequestBody CreateUserModel createUserModel, UserRole userRole){
+    public ResponseEntity<?> addNewManager(@RequestBody CreateUserModel createUserModel){
         try {
             return new ResponseEntity<>(adminService.addNewAdmin(createUserModel), HttpStatus.OK);
         }catch (BadRequestException badRequestException){
@@ -69,7 +67,6 @@ public class AdminController {
         }
     }
 
-
     @GetMapping("/get-all-users")
     public ResponseEntity<?> getAllUsers(){
         try {
@@ -92,7 +89,6 @@ public class AdminController {
         }
     }
 
-
     @DeleteMapping("/delete-admin-by-userName/{username}")
     public ResponseEntity<?> deleteManagerByUserName(@PathVariable String username){
         try {
@@ -103,7 +99,6 @@ public class AdminController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 
     @DeleteMapping("/delete-admin-by-id/{id}")
     public ResponseEntity<?> deleteUserById(@PathVariable Long id){

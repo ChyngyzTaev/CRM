@@ -82,13 +82,11 @@ public class TrainerServiceImpl implements TrainerService {
         } else if (updateUserModel.getId() == null) {
             throw new InvalidParameterException("Id абонемента  не может иметь пустое значени");
         }
-
         User trainer = trainerRepository.getById(updateUserModel.getId());
         if (trainer == null) {
             throw new UserNotFoundException
                     ("Тренер по id не нанйдено " + updateUserModel.getId());
         }
-
         trainer.setFullName(updateUserModel.getFullName());
         trainer.setUsername(updateUserModel.getUsername());
         trainer.setBirthDay(updateUserModel.getBirthday());
@@ -96,9 +94,7 @@ public class TrainerServiceImpl implements TrainerService {
         trainer.setPassword(updateUserModel.getPassword());
         trainer.setPhoneNumber(updateUserModel.getPhoneNumber());
         trainer.setCreateDate(updateUserModel.getCreateDate());
-
         trainer = trainerRepository.save(trainer);
-
         return trainer.getId() != null;
     }
 

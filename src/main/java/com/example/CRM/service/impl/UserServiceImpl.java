@@ -89,13 +89,11 @@ public class UserServiceImpl implements UserService {
         } else if (updateUserModel.getId() == null) {
             throw new InvalidParameterException("Id абонемента  не может иметь пустое значени");
         }
-
         User client = userRepository.getById(updateUserModel.getId());
         if (client == null) {
             throw new UserNotFoundException
                     ("Клиент по id не нанйдено " + updateUserModel.getId());
         }
-
         client.setFullName(updateUserModel.getFullName());
         client.setUsername(updateUserModel.getUsername());
         client.setBirthDay(updateUserModel.getBirthday());
@@ -103,9 +101,7 @@ public class UserServiceImpl implements UserService {
         client.setPassword(updateUserModel.getPassword());
         client.setPhoneNumber(updateUserModel.getPhoneNumber());
         client.setCreateDate(updateUserModel.getCreateDate());
-
         client = userRepository.save(client);
-
         return client.getId() != null;
     }
 
